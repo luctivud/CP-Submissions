@@ -16,6 +16,8 @@ int main() {
     //     cout << "ok\n";
     // }
 
+    cout << "Test";
+
     cout << "ok";
     return 0;
 }

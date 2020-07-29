@@ -2,7 +2,7 @@
         █▄█ █▀█ █   ▄█ █▀█ █▀▄ ██▄ ██▄   █▀▄ █▀█ █░▀░█     */
 
 
-// [hello-world.cpp] => [27-07-2020 @ 22:31:04] 
+// [temp2.cpp] => [27-07-2020 @ 22:33:34] 
 // Author & Template by : Udit "luctivud" Gupta
 // https://www.linkedin.com/in/udit-gupta-1b7863135/
 
@@ -68,7 +68,7 @@ typedef pair<lld, lld> p_lld;
 void solveEachTest(lld T35TC453N = 1) {
     // auto S34t = chrono:: high_resolution_clock::now(); 
 
-    cout << "hello";
+    for4(i, 0, 5, 1) cout << "okwiorl";
 
     cout << "\n"; 
 

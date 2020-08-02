@@ -36,18 +36,8 @@ INF = float('inf')
 
 S34t = time.time()
 # for _testcases_ in range(int(input())): 
-
-f = open('input.txt', 'r')
-lines = f.readlines()
-for line in lines:
-    printxsp('\"')
-    line = line.strip('\n')
-    for letter in line:
-        if letter in '\\\'\"':
-            printxsp('\\')
-        printxsp(letter)
-    print("\",")
+sys.stdout = open('input.txt', 'w')
+from random import randint
 
 
-S34p = time.time()
 # print("Time Elapsed: {}".format(float(S34p-S34t)))

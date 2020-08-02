@@ -33,29 +33,20 @@ INF = float('inf')
 
 # Custom input output is now piped through terminal commands.
 # for _test_ in range(int(input())): 
-n, k = get_ints()
-li = get_list()
-heap = []
-for i in li:
-	heap.append((-i, 1))
-import heapq
-heapq.heapify(heap)
-ans = INF
-while k > 0:
-	num, val = heapq.heappop(heap)
-	print(num, val)
-	if k < val:
-		ans = num
-		break
-	k -= val
-	num /= 2
-	heapq.heappush(heap, (num, val*2))
 
-if ans == INF:
-	ans, _ = heapq.heappop(heap)
-# print(round(abs(ans)))
-# print(ans)
-
+n = int(input())
+mod = int(1e9) + 7
+if (n % 2 == 0):
+	print(-1)
+else:
+	ans = -1
+	num = 7
+	for i in range(1, n+1):
+		if num % n == 0:
+			ans = i
+			break
+		num = (num % n * 10) % n + 7
+	print(ans)
 
 
 

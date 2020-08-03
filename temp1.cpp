@@ -24,23 +24,25 @@ typedef unsigned long long int llu;
 
 void solveEachTest(lld T35TC453N = 1) {
 
-	lld n, k;
-	cin >> n >> k;
+	string s; cin >> s;
+	lld k; cin >> k;
 
-	vector<lld> arr(n);
+	vector <lld> arr(26);
 	_input(arr);
-	sort(arr.begin(), arr.end());
 
-	lld total_wealth = accumulate(arr.begin(), arr.end(), 0LL);
-	lld wealthy_people = n;
-	for4(i, 0LL, n, 1LL) {
-		if ((total_wealth / wealthy_people) >= k ) {
-			break;
-		}
-		total_wealth -= arr[i];
-		wealthy_people--;
+	lld ans = 0ll;
+	lld n = (lld) s.length();
+
+	for4(i, 0ll, n, 1ll) {
+		ans += (i + 1) * arr[s[i] - 'a'];
 	}
-	cout << wealthy_people;
+
+	lld mx = *max_element(arr.begin(), arr.end());
+
+	for4(i, n + 1, n + k + 1, 1ll) {
+		ans += (mx) * (i);
+	}
+	cout << ans;
 	cout << "\n";
 
 	return;
@@ -52,8 +54,8 @@ signed main() {
 
 	lld T3X0 = 0, T353 = 1;
 
-	TESTCASES()
+	// TESTCASES()
 	solveEachTest(T353 - T3X0);
 	return 0;
 }
-// Random Thought :  null
+// Random Thought : speed to repro start time : 18:30

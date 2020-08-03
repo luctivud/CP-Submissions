@@ -1,4 +1,4 @@
-/*      ░░█ ▄▀█ █   █▀ █░█ █▀█ █▀▀ █▀▀   █▀█ ▄▀█ █▀▄▀█  
+/*      ░░█ ▄▀█ █   █▀ █░█ █▀█ █▀▀ █▀▀   █▀█ ▄▀█ █▀▄▀█
         █▄█ █▀█ █   ▄█ █▀█ █▀▄ ██▄ ██▄   █▀▄ █▀█ █░▀░█     */
 
 // Author : Udit "luctivud" Gupta @ (https://www.linkedin.com/in/udit-gupta-1b7863135/)
@@ -23,22 +23,37 @@ typedef unsigned long long int llu;
 
 
 void solveEachTest(lld T35TC453N = 1) {
-    
-    
 
-    cout << "\n"; 
+	lld n, k;
+	cin >> n >> k;
 
-    return;
+	vector<lld> arr(n);
+	_input(arr);
+	sort(arr.begin(), arr.end());
+
+	lld total_wealth = accumulate(arr.begin(), arr.end(), 0LL);
+	lld wealthy_people = n;
+	for4(i, 0LL, n, 1LL) {
+		if ((total_wealth / wealthy_people) >= k ) {
+			break;
+		}
+		total_wealth -= arr[i];
+		wealthy_people--;
+	}
+	cout << wealthy_people;
+	cout << "\n";
+
+	return;
 }
 
 
 signed main() {
-    ios_base::sync_with_stdio(false); cin.tie(0);
+	ios_base::sync_with_stdio(false); cin.tie(0);
 
-    lld T3X0 = 0, T353 = 1;
+	lld T3X0 = 0, T353 = 1;
 
-    TESTCASES() 
-        solveEachTest(T353 - T3X0);
-    return 0;
+	TESTCASES()
+	solveEachTest(T353 - T3X0);
+	return 0;
 }
-// Random Thought :  null  
+// Random Thought :  null

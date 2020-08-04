@@ -24,27 +24,14 @@ typedef unsigned long long int llu;
 
 void solveEachTest(lld T35TC453N = 1) {
 
-	string s; cin >> s;
-	lld k; cin >> k;
+	lld ans = 1ll;
+	lld n; cin >> n;
 
-	vector <lld> arr(26);
-	_input(arr);
-
-	lld ans = 0ll;
-	lld n = (lld) s.length();
-
-	for4(i, 0ll, n, 1ll) {
-		ans += (i + 1) * arr[s[i] - 'a'];
+	while (ans * 2 <= n) {
+		ans *= 2;
 	}
 
-	lld mx = *max_element(arr.begin(), arr.end());
-
-	for4(i, n + 1, n + k + 1, 1ll) {
-		ans += (mx) * (i);
-	}
-	cout << ans;
-	cout << "\n";
-
+	cout << ans;	
 	return;
 }
 
@@ -58,4 +45,4 @@ signed main() {
 	solveEachTest(T353 - T3X0);
 	return 0;
 }
-// Random Thought : speed to repro start time : 18:30
+// Random Thought :  null

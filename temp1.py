@@ -41,26 +41,20 @@ NEIGHBOURS = [(-1, -1), (-1, +0), (-1, +1), (+0, -1),\
 
 # MAIN >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-for _test_ in range(int(input())): 
-	n =  int(input())
-	li = get_list()
-	if n == 1:
-		print(0)
-	elif n == 2:
-		print(1)
-	else:
-		d = defaultdict(lambda : set())
-		ans = defaultdict(int)
-		for i in range(n):
-			for j in range(i+1, n):
-				su = li[i] + li[j]
-				if i not in d[su] and j not in d[su]:
-					d[su].add(i)
-					d[su].add(j)
-					ans[su] += 1
-		# print(ans)
-		ans = ans.values()
-		if len(ans) == 1:
-			print(ans[0])
-		else:
-			print(max(ans))
+# for _test_ in range(int(input())): 
+
+import random
+print(5)
+for _ in range(5):
+	n1 = random.randint(4, 20)
+	n2 = random.randint(1, min(n1, 4))
+	s = ''
+	for i in range(n1):
+		s += chr(random.randint(0, 10)+ord('a'))
+	s = "".join(sorted(s))
+	print(s)
+	s = list(s)
+	random.shuffle(s)
+	print("".join(s[:n2]))
+
+

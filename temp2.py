@@ -1,11 +1,27 @@
-'''     ░░█ ▄▀█ █   █▀ █░█ █▀█ █▀▀ █▀▀   █▀█ ▄▀█ █▀▄▀█  
-        █▄█ █▀█ █   ▄█ █▀█ █▀▄ ██▄ ██▄   █▀▄ █▀█ █░▀░█     '''
+"""MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWO:,'..'xXWWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMO. .:kOo.,kNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMO. .lNWWo..lXMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MNOxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxMMMMWKxoloxKWNc  .:xxd;  ,dxxxkXMXkxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxMM
+MKc''''''''''''''''.  ..'''''.   .''''.  .''MMMWx..,:. .xXo''.  .''.  ..'';kMk;'''''.  .'.''.  .''''''.  ..''.   .''MM
+MWNXNNNNNNNNNNNNNNNO' ;KNNNNNKo. cKNNNd. lXNMMMK; ,0Wx. :NWXXl .dNNO' ;KNNNWMWNNNNNXc .kNNNNx. cXNNNNNO' ;KNN0; 'ONNMM
+MMMMMMMMMMMMMMMMMWM0' :NMMMMWMX: .OMWWx. oWMMMMWx. ';. .dNMWWo .xMM0' :NWWMMMMMMMMWWl .OMMMWk. lWWMMWM0' ;XMMX: ,KMMMM
+MMMMMMWMWkccccccccc;. :NMWNNNKd. :XMMWx. oWMMMWKo. .',. .,ldx; .dMM0' :NMMMMMMMNNWMWl .OMMMWk. lWMMMMM0' ;XMMX: ,0MMMM
+MMWXKNWMWxcc,. .;cc;. :XMk,''..'lKWMMWx. oWMNx:. .lONNKxl.     .xMM0' :NMMMMMM0:,oKO' ,KMMMMk. lWWNkoc,. .;::;. ,KMMMM
+MMXc.lXMMWWWNd..xWM0' :NM0;  ;kXWMMMWNl  oWMK:.;xXWWMWXx:. ,c' .dMM0' :NMMMMMMKc. ...;kWMMMMk. lWWc .:;. .clc:. ,KMMMM
+MWWx. lXMWMMMK, lWM0' :NMMNx'.,ldxxoc'   oWMWNKNWWWN0o' .:kNWo .dMM0' :NMMMMMMMNO;  ,OWWWMMMk. lWM' lXx. lNMMX: ,KMMMM
+MMMWk'.,xKNX0c..kWM0' :NMMMMNkl;,'',:l:  oWMMMMMWMWO' 'l0WMWWo .xMM0' :NMMMMMMMMMNd. .oXWMMMk. lWMd.....;0WMMX: ,KMMMM
+MMMMWKo'...'..:kWMM0' :NMMMMMMMWWNNWWWx. oWMMMMMMMMWOxXWMWMWWo .xMM0' :NMMMMMMMMMMMKl. ,kNMMk. lWMWKkxx0NMWMMX: ,KMMMM
+MMMMMMMN0kxk0XNWMMWKl;xNMMMMMMMMMMMMWM0c;kWMMMMMMMMMMMWWMMMMWk;:OMMXl,dNMMMMMMMMMMMMWO; .dNM0c;kWWMMMMMMMMMMMNd,oXMMMM
+MMMMMMMMWWMWMMMMMMMMMWWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWWMMWWMMWMMMMMMMMMMMMMMNkxKWMMWWMMMMMMMMMMMMMMWMMWMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM"""
 
 
+#				 Author: Udit "luctivud" Gupta @ https://www.linkedin.com/in/udit-gupta-1b7863135/					 #
 
-import math;   from collections import *
-import sys;    from functools import reduce
-import time;   from itertools import groupby
+
+import math;   		from collections import *
+import sys;   		from functools import reduce
+import time;   		from itertools import groupby
 
 # sys.setrecursionlimit(10**6)
 
@@ -22,63 +38,50 @@ NEIGHBOURS = [(-1, -1), (-1, +0), (-1, +1), (+0, -1),\
               (+1, +1), (+1, +0), (+1, -1), (+0, +1)]
 
 
-CAPS_ALPHABETS = {chr(i+ord('A')) : i for i in range(26)}
-SMOL_ALPHABETS = {chr(i+ord('a')) : i for i in range(26)}
-INF = float('inf')
 
+# MAIN >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-# Custom input output is now piped through terminal commands.
-
-
-S34t = time.time()
-# for _testcases_ in range(int(input())): 
-# sys.stdin = open('output.txt', 'r')
-sys.stdin = open('output.txt', 'r')
-sys.stdout = open('resultTest.txt', 'w')
-
-from random import randint
-
-
-# match = []
-# f = open('input.txt', 'r')
-# for line in f.readlines():
-# 	try:
-# 		a, b = get_ints()
-# 		match.append(b)
-# 	except:
-# 		pass
-
-def solve():
-	tree = defaultdict(list)
+for _test_ in range(int(input())): 
 	n = int(input())
-	# print(n)
-	for i in range(n-1):
-		a, b = get_ints()
-		tree[a].append(b)
-		tree[b].append(a)
-	# print(tree)
-	visited = set()
-	visited.add(1)
-	queue = deque()
-	queue.append((1, 0))
-	ans = 0
-	while (len(queue)):
-		this = queue.popleft()
-		node, dep = this
-		# print(n, dep)
-		for n in tree[node]:
-			if n not in visited:
-				visited.add(n)
-				queue.append((n, dep+1))
-				ans += dep+1
-	print(ans)
+	s = input()
+	ans1 = [0] * n
+	ans2 = [0] * n
+	c1 = 0
+	for i in range(n):
+		if s[i] == '0':
+			c1 += 1
+			ans1[i] = c1
+		else:
+			c1 = 0
+	c2 = 0
+	for i in range(n-1, -1 , -1):
+		if s[i] == '1':
+			c2 += 1
+			ans1[i] = c2
+		else:
+			c2 = 0
 
-# IN = open('output.txt', 'r')
-for i in range(10):
-	# solve()
-	try:
-		solve()
-	except:
-		print(i, "ok2")
-		pass
-# # print("Time Elapsed: {}".format(float(S34p-S34t)))
+	c1 = 0
+	for i in range(n):
+		if s[i] == '1':
+			c1 += 1
+			ans2[i] = c1
+		else:
+			c1 =0 
+	c2 = 0
+	for i in range(n-1, -1, -1):
+		if s[i] == '0':
+			c2 += 1
+			ans2[i] = c2
+		else:
+			c2 = 0
+	if max(ans1) < max(ans2):
+		print(max(ans2))
+		print(*ans2)
+	else:
+		print(max(ans1))
+		print(*ans1)
+
+
+
+

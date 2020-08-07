@@ -41,13 +41,26 @@ NEIGHBOURS = [(-1, -1), (-1, +0), (-1, +1), (+0, -1),\
 
 # MAIN >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-# for _test_ in range(int(input())): 
-n, m = get_ints()
-a, b = get_ints()
-kimchii = get_list()
-lydia = get_list()
-print("YES" if (kimchii[a-1] < lydia[m-b]) else "NO" )
-
-
-
-
+for _test_ in range(int(input())): 
+	n =  int(input())
+	li = get_list()
+	if n == 1:
+		print(0)
+	elif n == 2:
+		print(1)
+	else:
+		d = defaultdict(lambda : set())
+		ans = defaultdict(int)
+		for i in range(n):
+			for j in range(i+1, n):
+				su = li[i] + li[j]
+				if i not in d[su] and j not in d[su]:
+					d[su].add(i)
+					d[su].add(j)
+					ans[su] += 1
+		# print(ans)
+		ans = ans.values()
+		if len(ans) == 1:
+			print(ans[0])
+		else:
+			print(max(ans))

@@ -35,21 +35,27 @@ typedef unsigned long long int llu;
 
 
 void solveEachTest(lld T35TC453N = 1) {
-    
+	lld a, b; cin >> a >> b;
+	lld ans = 0ll;
+	for4(i, a, b + 1ll, 1ll) {
+		if (i & 1) ans += i;
+	}
 
-    cout << "\n"; 
+	cout << "Case " << T35TC453N << ": " << ans;
 
-    return;
+	cout << "\n";
+
+	return;
 }
 
 
 signed main() {
-    ios_base::sync_with_stdio(false); cin.tie(0);
+	ios_base::sync_with_stdio(false); cin.tie(0);
 
-    lld T3X0 = 0, T353 = 1;
+	lld T3X0 = 0, T353 = 1;
 
-    TESTCASES() 
-        solveEachTest(T353 - T3X0);
-    return 0;
+	TESTCASES()
+	solveEachTest(T353 - T3X0);
+	return 0;
 }
-// Random Thought :  null  
+// Random Thought :  null

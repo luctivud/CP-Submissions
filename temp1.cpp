@@ -20,6 +20,16 @@ lld power(lld x, lld y, lld p) {
 }
 
 
+void nextInt(int &x) { 
+	x = 0; bool neg = 0; 
+	register int c = getchar();
+	if (c == '-') neg = 1, c = getchar();
+	while ((c < 48) || (c > 57)) c = getchar();
+	for ( ; c < 48||c > 57 ; c = getchar());
+	for ( ; c > 47 && c < 58; c = getchar() ) x= (x << 3) + ( x << 1 ) + ( c & 15 );
+	if (neg) x *= -1;
+}
+
 // lld modInverse(lld n, int p) {
 //     return power(n, p - 2, p);
 // }
@@ -95,7 +105,7 @@ lld permutsum[5000][5000] = {0};
 void precalculatePerm(lld n, lld U_MOD) {
 	if (permutsum[n][0] == 1) return;
 	permutsum[n][0] = 1ll;
-	for (lld i = 1; i <= n; i++) {
+	for (lld i = 1; i <= n / 2; i++) {
 		permutsum[n][i] = (permutsum[n][i - 1] + Binomial(n, i, U_MOD)) % U_MOD;
 	}
 	return;
@@ -103,25 +113,30 @@ void precalculatePerm(lld n, lld U_MOD) {
 
 
 lld get_perm_prefix_sum(lld n, lld k) {
+	if (k > n / 2) {
+		if (permutsum[n][n - k - 1] == 0) {
+			precalculatePerm(n, U_MOD);
+		}
+		return U_MOD + power_of_twos[n] - permutsum[n][n - k - 1];
+	}
 	if (permutsum[n][k] == 0) {
 		precalculatePerm(n, U_MOD);
 	}
-
 	return permutsum[n][k];
 }
 
 // x Precompute permutations used -----------------------------------------------------------------------
 
 signed main() {
-	ios_base::sync_with_stdio(false); cin.tie(0);
-	lld t; cin >> t;
+	// ios_base::sync_with_stdio(false); cin.tie(0);
+	int t; nextInt(t);
 	// ! Computing modulus section ------------------------
 	InverseofNumber(U_MOD);
 	InverseofFactorial(U_MOD);
 	factorial(U_MOD);
 	// x Computing modulus section ------------------------
 	// ! Precompute power of 2 ----------------------------
-	// precomputePowerOfTwo(500000ll, U_MOD);
+	precomputePowerOfTwo(5000ll, U_MOD);
 	//
 	// for (auto i: power_of_twos) {
 	// 	if (i > 99000) break;
@@ -131,12 +146,12 @@ signed main() {
 
 	while (t--) { // Queries handled here MAIN MAIN MAIN MAIN MAIN >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		// lld ans = 0ll;
-		lld n; cin >> n;
-		vector<lld> arr(n);
+		int n; nextInt(n);
+		vector<int> arr(n);
 		bool subtask2 = true;
 		map<lld, lld> count;
 		for (auto & i : arr) {
-			cin >> i;
+			nextInt(i);
 			count[i]++;
 			if (count[i] == 2) subtask2 = false;
 		}
@@ -168,21 +183,21 @@ signed main() {
 				lld ans = 0ll;
 				lld count_in_arr = count[i];
 				// ek number ko kitna lekr chal rhe
-				for(lld k = 1ll; k <= count_in_arr; k++) {
+				for (lld k = 1ll; k <= count_in_arr; k++) {
 					lld partial_ans = Binomial(count_in_arr, k, U_MOD);
 					// baki numbers ke contribution
-					for (lld j = 1ll; j <= n; j++) {
+					for (auto [j , j_count] : count) {
 						if (i == j) {
 							continue;
-						} else if (j < i and count[j]) {
+						} else if (j < i and j_count) {
 							// kam hona chahiye
-							lld touka = min(count[j], k-1);
-							partial_ans *= get_perm_prefix_sum(count[j], touka);
+							lld touka = min(j_count, k - 1);
+							partial_ans *= get_perm_prefix_sum(j_count, touka);
 							partial_ans %= U_MOD;
-						} else if (j > i and count[j]) {
+						} else if (j > i and j_count) {
 							// barabar ya kam chalega
-							lld touka = min(count[j], k);
-							partial_ans *=  get_perm_prefix_sum(count[j], touka);
+							lld touka = min(j_count, k);
+							partial_ans *=  get_perm_prefix_sum(j_count, touka);
 							partial_ans %= U_MOD;
 						}
 					}
@@ -192,10 +207,11 @@ signed main() {
 				cout << ans << " ";
 			}
 
-		}
+		} // main i loop
 
 		cout << "\n";
-	}
+	}// while loop -----------------------------------------------
+
 	return 0;
 }
 

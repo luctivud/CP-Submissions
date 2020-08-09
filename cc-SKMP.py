@@ -1,37 +1,75 @@
-def get_ints() : return map(int, input().split())
-def get_list() : return list(get_ints())
+''' 			tmluctivud 			'''
+
 import sys 
-sys.setrecursionlimit(int(1e5))
-
-
-def solve(i, table, number_of_tables, number_of_extras):
-	print(i, table, number_of_tables, number_of_extras)
-	if (i >= n):
-		return number_of_extras + number_of_tables * k
-	currCost = number_of_extras + number_of_tables * k
-	if li[i] in table:
-		if currCost not in dp[i]:
-			if table[li[i]] == 1:
-				table[li[i]] += 1
-				dp[i][currCost][1] = solve(i+1, {li[i] : 1}, number_of_tables+1, number_of_extras)
-				dp[i][currCost][0] = solve(i+1, table, number_of_tables, number_of_extras+2)
-			else:
-				table[li[i]] += 1
-				dp[i][currCost][1] = solve(i+1, {li[i] : 1}, number_of_tables+1, number_of_extras)
-				dp[i][currCost][0] = solve(i+1, table, number_of_tables, number_of_extras+1)
-	else:
-		table[li[i]] = 1
-		if currCost not in dp[i]:
-			dp[i][currCost][0] = solve(i+1, table, number_of_tables, number_of_extras)
-			dp[i][currCost][1] = solve(i+1, {li[i] : 1}, number_of_tables+1, number_of_extras)
-			# return dp[i][currCost][0]
-	return min(dp[i][currCost][0], dp[i][currCost][1])	
-
-
 from collections import defaultdict
-for _ in range(int(input())):
-	n, k = get_ints()
-	li = get_list()
-	dp = [dict() for x in range(1005)]
-	print(solve(0, {}, 1, 0))		
-	# print(dp)
+from math import factorial
+import heapq
+
+
+def input()         : return sys.stdin.readline()
+def get_ints()      : return map(int, input().strip().split())
+def get_list()      : return list(get_ints())
+
+INF = float('inf')
+
+
+# precompute nc3 for n's using the recurrence relation : C3(n) = (n / (n-3)) * C3(n-1)
+NC3_list = [0, 0, 0, 1]
+def precomputeNC3(n):
+	for i in range(4, n+1):
+		NC3_list.append(int((i/(i-3)) * NC3_list[i-1]))
+	# print(NC3_list[-1])
+
+
+# recursively solve using dynamic programming => memoization
+def solve(color_index, eraser_length, color_count):
+	if eraser_length < 0: 
+		return INF
+	if color_index == c:
+		return 0
+	if dp[color_index][eraser_length] == INF:
+		for i in range(c):
+			if eraser_length - v[i] >= 0:
+				dp[color_index][eraser_length] = min(dp[color_index][eraser_length], \
+					solve(i, eraser_length-v[i]))
+	return dp[color_index][eraser_length]
+
+
+
+
+# MAIN >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+precomputeNC3(3005)	# precomputeNC3's for O(1) access
+
+
+for _test_ in range(int(input())): # Test Cases
+	n, c, k = get_ints()
+	color_count = [0] * (c+1)
+	for i in range(n):
+		ai, bi, ci = get_ints()
+		color_count[ci] += 1
+	v = get_list() + [INF]
+	dp = [[INF]*(k+1) for x in range(n)]
+
+	print(solve(0, k, color_count))
+
+
+
+# Wasted part of code kept as reference: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+	# heap = [-i for i in color_count.values()]
+	# heapq.heapify(heap)
+	# while k - v[0] >= 0:
+	# 	k -= v[0]
+	# 	num = heapq.heappop(heap)
+	# 	heapq.heappush(heap, num + 1)
+	# ans = 0
+	# for i in heap:
+	# 	i = -i
+	# 	if i >= 3:
+	# 		ans += nC3(i)
+	# print(ans)
+
+
+
+
+

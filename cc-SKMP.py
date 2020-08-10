@@ -4,7 +4,7 @@ import sys
 from collections import defaultdict
 from math import factorial
 import heapq
-
+import typing
 
 def input()         : return sys.stdin.readline()
 def get_ints()      : return map(int, input().strip().split())
@@ -20,18 +20,21 @@ def precomputeNC3(n):
 		NC3_list.append(int((i/(i-3)) * NC3_list[i-1]))
 	# print(NC3_list[-1])
 
+# Util to calculate Triangles:
+def calculateTriangles(color_count: List[int]):
+	return 1
+
+
 
 # recursively solve using dynamic programming => memoization
-def solve(color_index, eraser_length, color_count):
-	if eraser_length < 0: 
-		return INF
+def solve(color_index: int, eraser_length: int, color_count: List[int], minimum_element: int):
+	if eraser_length < minimum_element: 
+		calculateTriangles(color_count)
+		pass
 	if color_index == c:
-		return 0
+		return INF
 	if dp[color_index][eraser_length] == INF:
-		for i in range(c):
-			if eraser_length - v[i] >= 0:
-				dp[color_index][eraser_length] = min(dp[color_index][eraser_length], \
-					solve(i, eraser_length-v[i]))
+		
 	return dp[color_index][eraser_length]
 
 
@@ -50,7 +53,7 @@ for _test_ in range(int(input())): # Test Cases
 	v = get_list() + [INF]
 	dp = [[INF]*(k+1) for x in range(n)]
 
-	print(solve(0, k, color_count))
+	print(solve(0, k, color_count, min(v)))
 
 
 

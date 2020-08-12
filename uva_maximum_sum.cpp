@@ -31,28 +31,73 @@ typedef unsigned long long int llu;
 #define   mems(A77AY, V4LU)    memset((A77AY), (V4LU), sizeof((A77AY)))
 #define    CH3K(I7, E4, S7)    (((S7)<0) ? (I7)>(E4) : (I7)<(E4))
 #define   for4(I7,S4,E4,S7)    for(auto I7=(S4); CH3K(I7,E4,S7); (I7)+=(S7))
-#define              all(x)    (x).begin(), (x).end()
-#define              deb(x)    cout << #x << "=" << (x) << "\n";
 
 
 
-void solveEachTest(lld T35TC453N = 1) {
-    lld n; cin >> n;
-    deb(n);
+void solveEachTest(int n) {
+	int arr[n][n];
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			cin >> arr[i][j];
+			// cout << arr[i][j] << " ";
+		}
+		// cout << "\n";
+	}
 
-    cout << "\n"; 
+	int dp[n][n];
+	dp[0][0] = arr[0][0];
+	for (int i = 1; i < n; i++) {
+		dp[i][0] = dp[i - 1][0] + arr[i][0];
+		dp[0][i] = dp[0][i - 1] + arr[0][i];
+	}
 
-    return;
+	// cout << "\n";
+
+	for (int i = 1; i < n; i++) {
+		for (int j = 1; j < n; j++) {
+			dp[i][j] = dp[i - 1][j] + dp[i][j - 1] - dp[i - 1][j - 1] + arr[i][j];
+		}
+	}
+
+	// for4(i, 0, n, 1) {
+	// 	for4(j, 0, n, 1) {
+	// 		cout << dp[i][j] << " ";
+	// 	}
+	// 	cout << "\n";
+	// }
+
+	int ans = dp[0][0];
+
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			for (int k = i; k < n; k++) {
+				for (int l = j; l < n; l++) {
+					int sum = dp[k][l];
+					if (i > 0) sum -= dp[i - 1][l];
+					if (j > 0) sum -= dp[k][j - 1];
+					if (i > 0 and j > 0) sum += dp[i - 1][j - 1];
+					// cout << i << " " << j << " " << k << " " << l << " " << sum << "\n" ;
+					ans = max(ans, sum);
+				}
+			}
+		}
+	}
+
+	cout << ans << "\n";
+
+	return;
 }
 
 
 signed main() {
-    ios_base::sync_with_stdio(false); cin.tie(0);cout.precision(10);
+	ios_base::sync_with_stdio(false); cin.tie(0);
 
-    lld T3X0 = 0, T353 = 1;
+	// lld T3X0 = 0, T353 = 1;
 
-    // TESTCASES() 
-        solveEachTest(T353 - T3X0);
-    return 0;
+	// TESTCASES()
+	int n;
+	while (cin >> n)
+		solveEachTest(n);
+	return 0;
 }
-// Random Thought :  null  
+// Random Thought :  null

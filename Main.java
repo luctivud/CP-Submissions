@@ -38,3 +38,13 @@ public class Main {
 
 // longernet is slow and weird so why be idle and wait for the webpage to load when I can just reproduce the same in Java.
 // 22:45 2Aug2020 . Also waiting for my mango shake. @ home.
+
+
+
+
+map <int, string> table; // {0 : 'zero'}
+string vowels = "aeiou";
+int n ; cin >> n;
+vector<
+
+

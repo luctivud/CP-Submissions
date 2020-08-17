@@ -42,7 +42,8 @@ void solveEachTest(lld T35TC453N = 1) {
     lld j = 299;
     while (k > 0) {
         while (k > 0 and i < j) {
-            if (i == 0) {
+            // cout << "k" << k << "\n";
+            if (j == 299) {
                 k--;
             } else {
                 k -= (299 - j);
@@ -62,7 +63,7 @@ void solveEachTest(lld T35TC453N = 1) {
     }
     for4 (i, 0, 300, 1) {
         for4(j, 0, 300, 1) {
-            if (graph[i][j]) {
+            if (graph[i][j] and i+1 == j) {
                 cout << i+1 << " " << j+1 << "\n";
             }
         }

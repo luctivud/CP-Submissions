@@ -3,11 +3,11 @@
 
 #include <bits/stdc++.h>
 #pragma GCC optimize "trapv"
-
+#include <chrono>
 using namespace std;
 
 // typedef long long int lld;
-typedef unsigned long long int lld;
+typedef long long int lld;
 
 #define         TESTCASES()    cin >> (T3X0); T353 = T3X0; while(T3X0--)
 #define         _input(V3C)    for(auto &V3C_I7 : (V3C)) cin >> (V3C_I7)
@@ -24,7 +24,7 @@ typedef unsigned long long int lld;
 lld n, k;
 lld closestProduct = 0ll;
 
-void allPermsBrute(vector<lld> &arr, vector<lld> &brr, lld closestProduct, lld power) {
+void allPermsBrute(vector<lld> &arr, vector<lld> &brr) {
 	vector<lld> temp{brr};
 	while(next_permutation(temp.begin(), temp.end())) {
 		// cout << "ooj";
@@ -73,8 +73,8 @@ void bruteAttack(vector<lld> &arr, vector<lld> &brr, lld power) {
 			// lld leftIdx = i;
 			for (lld j = 0; j < n; j++) {
 				lld hairu = closestProduct;
-				hairu += -(arr[i]*brr[i]) -(arr[j]*brr[j])
-						+(arr[i]*brr[j]) + (arr[j]*brr[i]);
+				hairu += +(arr[i]*brr[j]) + (arr[j]*brr[i])
+						-(arr[i]*brr[i]) -(arr[j]*brr[j]);
 				if (llabs(hairu - k) < llabs(closestProduct - k)) {
 					closestProduct = hairu;
 					swap(brr[i], brr[j]);
@@ -92,7 +92,7 @@ void bruteAttack(vector<lld> &arr, vector<lld> &brr, lld power) {
 
 
 
-void kawaiiBruteAttack(vector<lld> &arr, vector<lld> &brr, lld closestProduct, lld power) {
+void kawaiiBruteAttack(vector<lld> &arr, vector<lld> &brr, lld power) {
 	while (power-- > 0) {
 		for (lld i = n - 1; i > 0; ) {
 			lld thisClosestProduct = closestProduct;
@@ -186,11 +186,54 @@ void optimizedKaneki(vector<lld> &arr, vector<lld> &brr, lld power) {
 	}// power
 }
 
+lld fac;
+// lld fac = 10;
+bool nearest(const lld a, const lld b) {
+	return (llabs(fac-a) < llabs(fac-b));
+}
 
-void hustleShuffle(vector<lld> &arr, vector<lld> &brr) {
+const int mod = 9987896913;
 
-	lld fac = k / n;
-	
+
+void hustleShuffle(vector<lld> &arr, vector<lld> &brr, lld power1, lld power2) {
+	vector<lld> temp{brr};
+	while (power1-->0) {
+		unsigned seed = chrono::system_clock::now().time_since_epoch().count() % mod;
+		unsigned fuck = chrono::system_clock::now().time_since_epoch().count() % mod;
+		seed *= fuck;
+		seed %= mod;
+		shuffle (temp.begin(), temp.end(), default_random_engine(seed));
+		lld thisClosestProduct = 0ll;
+		for4(i, 0, n, 1) {
+			thisClosestProduct += (arr[i] * temp[i]);
+		}
+
+		if (llabs(thisClosestProduct - k) < llabs(closestProduct - k)) {
+			// cout << "ok";
+			closestProduct = thisClosestProduct;
+			for4(i, 0, n, 1) {
+				brr[i] = temp[i];
+			}
+			for4(dgd, 0, power2, 1) {
+				if (prev_permutation(all(temp))) {
+					lld thisClosestProduct = 0ll;
+					for4(i, 0, n, 1) {
+						thisClosestProduct += (arr[i] * temp[i]);
+					}
+					if (llabs(thisClosestProduct - k) < llabs(closestProduct - k)) {
+						// cout << "hee";
+						closestProduct = thisClosestProduct;
+						for4(i, 0, n, 1) {
+							brr[i] = temp[i];
+						}	
+					}
+				} else {
+					break;
+				}
+			}
+		}
+
+	}
 
 }
 
@@ -200,6 +243,7 @@ void hustleShuffle(vector<lld> &arr, vector<lld> &brr) {
 void solveEachTest(lld T35TC453N = 1) {
 	// lld n, k;
 	cin >> n >> k;
+	fac = k / n;
 
 	vector<lld> arr(n), brr(n);
 
@@ -223,21 +267,26 @@ void solveEachTest(lld T35TC453N = 1) {
 
 
 	if (n < 11) {
-		allPermsBrute(arr, brr, closestProduct, 1000);
+		allPermsBrute(arr, brr);
 	} else if (n < 501) {
 		bruteAttack(arr, brr, 33);
+		hustleShuffle(arr, brr, 1150, 10000);
 	} else if (n < 5001) {
-		kawaiiBruteAttack(arr, brr, closestProduct, 33);
+		kawaiiBruteAttack(arr, brr, 33);
 	} else {
-		optimizedKaneki(arr, brr, 3);
+		hustleShuffle(arr, brr, 150, 100);
+		optimizedKaneki(arr, brr, 1);
 	}
 
 
-	optimizedKaneki(arr, brr, 1);
-
-
-
 	// deb1(llabs(closestProduct-k));
+		
+
+
+	// // optimizedKaneki(arr, brr, 1);
+
+
+
 	// //  comment here >>>>>>>>>>>>>>>>>>>>>>>>
 	// closestProduct = 0ll;
 	// for4(i, 0, n, 1) {

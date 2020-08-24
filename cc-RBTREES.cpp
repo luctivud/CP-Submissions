@@ -38,35 +38,164 @@ typedef unsigned long long int llu;
 #define    CH3K(I7, E4, S7)    (((S7)>0) ? (I7)<(E4) : (I7)>(E4))
 #define   for4(I7,S4,E4,S7)    for(auto I7=(S4); CH3K(I7,E4,S7); (I7)+=(S7))
 #define        EACH(I7, A7)    for (auto& I7: A7)
-#define              len(v)    ((int)((v).size()))
+#define              len(v)    ((lld)((v).size()))
 #define              all(x)    (x).begin(), (x).end()
 #define             rall(x)    (x).rbegin(), (x).rend()
-#define                 pb    push_back
+#define                  pb    push_back
 #define             deb1(x)    cout << #x << "=" << (x) << "\n";
 #define             deb2(x)    cout << #x << "=" << (x) << " ";
 
 
 
-const int d4i[4]={-1, 0, 1, 0}, d4j[4]={0, 1, 0, -1};
-const int d8i[8]={-1, -1, 0, 1, 1, 1, 0, -1}, d8j[8]={0, 1, 1, 1, 0, -1, -1, -1};
+const int d4i[4] = { -1, 0, 1, 0}, d4j[4] = {0, 1, 0, -1};
+const int d8i[8] = { -1, -1, 0, 1, 1, 1, 0, -1}, d8j[8] = {0, 1, 1, 1, 0, -1, -1, -1};
+
+
+bool cmp(const pair<lld, lld> &i, const pair<lld, lld> j) {
+	return i.second < j.second;
+}
+ 
+
+void dfs(lld parent, lld dep, vector<lld> &depths, vector<lld> adj[], vector<bool> &visited) {
+	if (visited[parent]) {
+		return;
+	}
+
+	visited[parent] = true;
+	depths[parent] = dep;
+
+	for (auto i : adj[parent]) {
+		if (!visited[i]) {
+			dfs(i, dep + 1, depths, adj, visited);
+		}
+	}
+	return;
+}
+
 
 
 void solveEachTest(lld T35TC453N = 1) {
-    
+	lld n; cin >> n;
+	vector<lld> adj[n];
+	for4(i, 0, n - 1, 1) {
+		lld a, b; cin >> a >> b;
+		a--; b--;
+		adj[a].pb(b);
+		adj[b].pb(a);
+	}
 
-    cout << "\n"; 
+	lld parent = -1;
 
-    return;
+	for4(i, 0, n, 1) {
+		if (len(adj[i]) == 1ll) {
+			parent = i;
+			break;
+		}
+	}
+
+	vector<lld> depths(n, 0);
+	vector<bool> visited(n, false);
+	dfs(parent, 0, depths, adj, visited);
+
+	/////////////////////////////////////////////////////////////
+	// deb1(parent);
+
+	// for (auto i : depths) {
+	// 	cout << i << " ";
+	// }
+
+	string s; cin >> s;
+
+	string col1, col2;
+
+	for (auto i : depths) {
+		if (i & 1) {
+			col1.pb('1');
+			col2.pb('0');
+		} else {
+			col2.pb('1');
+			col1.pb('0');
+		}
+	}
+
+	// cout << col1 << "\n" << col2;
+
+	bool ok = false;
+
+	lld ans1 = INT_MAX;
+	lld ans2 = INT_MAX;
+
+	lld match = count(all(s), '0');
+	if (count(all(col1), '0') == match) {
+		ok = true;
+		ans1 = 0ll;
+		vector<pair<lld, lld>> mismatchZero;
+		vector<pair<lld, lld>> mismatchOne;
+		for4(i, 0, n, 1) {
+			if (s[i] != col1[i]) {
+				if (s[i] == '1') {
+					mismatchOne.pb(make_pair(i, depths[i]));
+				} else {
+					mismatchZero.pb({i, depths[i]});
+				}
+			}
+		}
+
+		lld sz1 = len(mismatchZero);
+		// lld sz2 = len(mismatchOne);
+
+		sort(all(mismatchOne), cmp);
+		sort(all(mismatchZero), cmp);
+
+		for4(i, 0, sz1, 1) {
+			ans1 += abs(mismatchZero[i].second - mismatchOne[i].second);
+		}
+	}
+
+
+
+	if (count(all(col2), '0') == match) {
+		ok = true;
+		ans2 = 0ll;
+		vector<pair<lld, lld>> mismatchZero;
+		vector<pair<lld, lld>> mismatchOne;
+		for4(i, 0, n, 1) {
+			if (s[i] != col2[i]) {
+				if (s[i] == '1') {
+					mismatchOne.pb(make_pair(i, depths[i]));
+				} else {
+					mismatchZero.pb({i, depths[i]});
+				}
+			}
+		}
+
+		lld sz1 = len(mismatchZero);
+		// lld sz2 = len(mismatchOne);
+
+		sort(all(mismatchOne), cmp);
+		sort(all(mismatchZero), cmp);
+
+		for4(i, 0, sz1, 1) {
+			ans2 += abs(mismatchZero[i].second - mismatchOne[i].second);
+		}
+	}
+
+
+	cout << (ok ? min(ans1, ans2) : -1);
+
+	cout << "\n";
+
+	return;
 }
 
 
 signed main() {
-    ios_base::sync_with_stdio(false); cin.tie(0);cout.precision(10);
+	ios_base::sync_with_stdio(false); cin.tie(0); cout.precision(10);
 
-    lld T3X0 = 0, T353 = 1;
+	lld T3X0 = 0, T353 = 1;
 
-    TESTCASES() 
-        solveEachTest(T353 - T3X0);
-    return 0;
+	TESTCASES()
+	solveEachTest(T353 - T3X0);
+	return 0;
 }
-// Random Thought :  null  
+// Random Thought :  null

@@ -41,32 +41,71 @@ typedef unsigned long long int llu;
 #define              len(v)    ((int)((v).size()))
 #define              all(x)    (x).begin(), (x).end()
 #define             rall(x)    (x).rbegin(), (x).rend()
-#define                 pb    push_back
+#define                  pb    push_back
 #define             deb1(x)    cout << #x << "=" << (x) << "\n";
 #define             deb2(x)    cout << #x << "=" << (x) << " ";
 
 
 
-const int d4i[4]={-1, 0, 1, 0}, d4j[4]={0, 1, 0, -1};
-const int d8i[8]={-1, -1, 0, 1, 1, 1, 0, -1}, d8j[8]={0, 1, 1, 1, 0, -1, -1, -1};
+const int d4i[4] = { -1, 0, 1, 0}, d4j[4] = {0, 1, 0, -1};
+const int d8i[8] = { -1, -1, 0, 1, 1, 1, 0, -1}, d8j[8] = {0, 1, 1, 1, 0, -1, -1, -1};
 
 
 void solveEachTest(lld T35TC453N = 1) {
-    
+	lld n, k; cin >> n >> k;
 
-    cout << "\n"; 
+	string s; cin >> s;
 
-    return;
+	lld fac = n / k;
+
+	lld c0 = 0ll, c1 = 0ll;
+
+	EACH(i, s) {
+		if (i == '0') c0++;
+		else if (i == '1') c1++;
+	}
+
+	bool ok = (!(c0 % fac) && !(c1 % fac));
+
+	if (ok) {
+		string ANS = "";
+		for4(i, 0, (c0 / fac), 1) {
+			ANS.pb('0');
+		}
+
+		for4(i, 0, (c1 / fac), 1) {
+			ANS.pb('1');
+		}
+
+		string revANS {ANS};
+
+		reverse(all(revANS));
+
+		for4(i, 0, fac, 1) {
+			if (i & 1) {
+				cout << revANS;
+			} else {
+				cout << ANS;
+			}
+		}
+
+	} else {
+		cout << "IMPOSSIBLE";
+	}
+
+	cout << "\n";
+
+	return;
 }
 
 
 signed main() {
-    ios_base::sync_with_stdio(false); cin.tie(0);cout.precision(10);
+	ios_base::sync_with_stdio(false); cin.tie(0); cout.precision(10);
 
-    lld T3X0 = 0, T353 = 1;
+	lld T3X0 = 0, T353 = 1;
 
-    TESTCASES() 
-        solveEachTest(T353 - T3X0);
-    return 0;
+	TESTCASES()
+	solveEachTest(T353 - T3X0);
+	return 0;
 }
-// Random Thought :  null  
+// Random Thought :  null

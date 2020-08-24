@@ -41,32 +41,54 @@ typedef unsigned long long int llu;
 #define              len(v)    ((int)((v).size()))
 #define              all(x)    (x).begin(), (x).end()
 #define             rall(x)    (x).rbegin(), (x).rend()
-#define                 pb    push_back
+#define                  pb    push_back
 #define             deb1(x)    cout << #x << "=" << (x) << "\n";
 #define             deb2(x)    cout << #x << "=" << (x) << " ";
 
 
 
-const int d4i[4]={-1, 0, 1, 0}, d4j[4]={0, 1, 0, -1};
-const int d8i[8]={-1, -1, 0, 1, 1, 1, 0, -1}, d8j[8]={0, 1, 1, 1, 0, -1, -1, -1};
+const int d4i[4] = { -1, 0, 1, 0}, d4j[4] = {0, 1, 0, -1};
+const int d8i[8] = { -1, -1, 0, 1, 1, 1, 0, -1}, d8j[8] = {0, 1, 1, 1, 0, -1, -1, -1};
 
 
 void solveEachTest(lld T35TC453N = 1) {
-    
+    lld n, k; cin >> n >> k;
 
-    cout << "\n"; 
+    lld temp = 0ll, ans = 1ll;
+
+    vector<lld> arr(n);
+    _input(arr);
+
+    bool ok = true;
+
+    for (auto i : arr) {
+        if (i > k) {
+            ok = false;
+            break;
+        } else if (temp  + i > k)  {
+            ans += 1;
+            temp = i;
+        } else {
+            temp += i;
+        }
+    }
+
+    cout << (ok ? ans : -1);
+
+
+    cout << "\n";
 
     return;
 }
 
 
 signed main() {
-    ios_base::sync_with_stdio(false); cin.tie(0);cout.precision(10);
+    ios_base::sync_with_stdio(false); cin.tie(0); cout.precision(10);
 
     lld T3X0 = 0, T353 = 1;
 
-    TESTCASES() 
-        solveEachTest(T353 - T3X0);
+    TESTCASES()
+    solveEachTest(T353 - T3X0);
     return 0;
 }
-// Random Thought :  null  
+// Random Thought :  null

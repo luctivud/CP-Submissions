@@ -52,8 +52,8 @@ typedef unsigned long long int llu;
 void err(istream_iterator<string> it) {}
 template<typename T, typename... Args>
 void err(istream_iterator<string> it, T a, Args... args) {
-  cout << *it << " = " << a << endl;
-  err(++it, args...);
+	cout << *it << " = " << a << endl;
+	err(++it, args...);
 }
 
 void read() { return; }
@@ -70,49 +70,58 @@ template<class T> void println(vector<T> arr) { EACH(i, arr) {cout << i << " ";}
 template<class T> void read(vector<vector<T>> &arr)   { EACH(i, arr) read(i); }
 template<class T> void print(vector<vector<T>> arr)   { EACH(i, arr) println(i); }
 template<class T> void println(vector<vector<T>> arr) { EACH(i, arr) println(i); }
-
+template<typename T, typename... Args> void read(vector<T> &arr, Args &... args)   { read(arr); read(args...);}
 template<typename T, typename... Args> void read(T &a, Args &... args) { cin >> (a); read(args...); }
 template<typename T, typename... Args> void print(T a, Args... args) { cout << a << " "; print(args...); };
 template<typename T, typename... Args> void println(T a, Args... args) { cout << a << " "; println(args...); };
 
 
-const int d4i[4]={-1, 0, 1, 0}, d4j[4]={0, 1, 0, -1};
-const int d8i[8]={-1, -1, 0, 1, 1, 1, 0, -1}, d8j[8]={0, 1, 1, 1, 0, -1, -1, -1};
+const int d4i[4] = { -1, 0, 1, 0}, d4j[4] = {0, 1, 0, -1};
+const int d8i[8] = { -1, -1, 0, 1, 1, 1, 0, -1}, d8j[8] = {0, 1, 1, 1, 0, -1, -1, -1};
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
 
 void solveEachTest(lld _TestCase = 1) {
-    // cout << "Case#" << _TestCase << ": ";
-    string s; read(s);
-    string ans = "";
-    reverse(all(s));
-    string :: iterator it = s.begin();
-    while (*it == '0') {
-    	it++;
-    }
-    if (it == s.end()) {
-    	ans = "0";
-    } else {
-	    while (it != s.end()) {
-	    	ans.pb(*it++);
-	    }
-    }
+	// cout << "Case#" << _TestCase << ": ";
+	lld n, k; read(n, k);
+	vector<lld> arr(n); read(arr);
 
-    println(ans);
-    // cout << "\n"; 
-    return;
+	vector<lld> partition[k];
+	// k--;
+
+	for4(i, 0, n, 1) {
+		partition[i % k].pb(arr[i]);
+	}
+
+	for4(i, 0, k, 1) {
+		sort(all(partition[i]));
+	}
+	bool ok = true;
+	sort(all(arr));
+	for4(i, 0, n, 1) {
+		if (arr[i] != partition[i % k][i / k]) {
+			ok = false;
+			break;
+		}
+	}
+
+
+	println((ok ? "yes" : "no"));
+
+	// cout << "\n";
+	return;
 }
 
 
 signed main() {
-    ios_base::sync_with_stdio(false); cin.tie(0);cout.precision(10);
+	ios_base::sync_with_stdio(false); cin.tie(0); cout.precision(10);
 
-    lld T3X0 = 0, T353 = 1;
+	lld T3X0 = 0, T353 = 1;
 
-    TESTCASES() 
-        solveEachTest(T353 - T3X0);
-    return 0;
+	TESTCASES()
+	solveEachTest(T353 - T3X0);
+	return 0;
 }
-// Random Thought :  null  
+// Random Thought :  null

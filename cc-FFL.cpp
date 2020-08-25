@@ -70,7 +70,7 @@ template<class T> void println(vector<T> arr) { EACH(i, arr) {cout << i << " ";}
 template<class T> void read(vector<vector<T>> &arr)   { EACH(i, arr) read(i); }
 template<class T> void print(vector<vector<T>> arr)   { EACH(i, arr) println(i); }
 template<class T> void println(vector<vector<T>> arr) { EACH(i, arr) println(i); }
-
+template<typename T, typename... Args> void read(vector<T> &arr, Args &... args)   { read(arr); read(args...);}
 template<typename T, typename... Args> void read(T &a, Args &... args) { cin >> (a); read(args...); }
 template<typename T, typename... Args> void print(T a, Args... args) { cout << a << " "; print(args...); };
 template<typename T, typename... Args> void println(T a, Args... args) { cout << a << " "; println(args...); };
@@ -85,22 +85,40 @@ const int d8i[8]={-1, -1, 0, 1, 1, 1, 0, -1}, d8j[8]={0, 1, 1, 1, 0, -1, -1, -1}
 
 void solveEachTest(lld _TestCase = 1) {
     // cout << "Case#" << _TestCase << ": ";
-    string s; read(s);
-    string ans = "";
-    reverse(all(s));
-    string :: iterator it = s.begin();
-    while (*it == '0') {
-    	it++;
-    }
-    if (it == s.end()) {
-    	ans = "0";
-    } else {
-	    while (it != s.end()) {
-	    	ans.pb(*it++);
-	    }
+    
+	// cout << "Case#" << _TestCase << ": ";
+    lld n, S; read(n);
+    vector<lld> arr(n), brr(n);
+    read(S, arr, brr);
+    // read(arr);
+    // read(brr);
+    vector<pair<lld, lld> > players;
+    for4(i, 0, n, 1) {
+    	players.pb({arr[i], brr[i]});
     }
 
-    println(ans);
+    sort(all(players));
+
+    lld found1 = false, found2 = false;
+
+    lld ans = 0ll;
+    lld i = 0ll;
+    while(!(found2 && found1) and i < n) {
+    	if (!found1 && players[i].second == 0) {
+    		ans += players[i].first;
+    		found1 = true;
+    	}
+
+    	else if (!found2 and players[i].second == 1 ) {
+    		ans += players[i].first;
+    		found2 = true;
+    	}
+    	i++;
+    }
+    // error(ans);
+
+    println(((100 - S >= ans) and (found2 and found1)) ? "yes" : "no");
+
     // cout << "\n"; 
     return;
 }

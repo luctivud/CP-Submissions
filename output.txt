@@ -1,3 +1,4 @@
-142050 degree
-21522.5 degree
-94522.5 degree
+YES
+YES
+YES
+NO

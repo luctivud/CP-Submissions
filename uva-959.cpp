@@ -52,8 +52,8 @@ typedef unsigned long long int llu;
 void err(istream_iterator<string> it) {}
 template<typename T, typename... Args>
 void err(istream_iterator<string> it, T a, Args... args) {
-  cout << *it << " = " << a << endl;
-  err(++it, args...);
+	cout << *it << " = " << a << endl;
+	err(++it, args...);
 }
 
 void read() { return; }
@@ -74,40 +74,57 @@ template<class T> void println(vector<vector<T>> arr) { EACH(i, arr) println(i);
 template<typename T, typename... Args> void read(vector<T> &arr, Args &... args)   { read(arr); read(args...);}
 template<typename T, typename... Args> void read(vector<vector<T>> &arr, Args &... args)   { read(arr); read(args...);}
 template<typename T, typename... Args> void read(T &a, Args &... args) { cin >> (a); read(args...); }
-template<typename T, typename... Args> void print(T a, Args... args) { cout << a << " "; print(args...); };
 template<typename T, typename... Args> void print(vector<T> &arr, Args &... args)   { print(arr); print(args...);}
+template<typename T, typename... Args> void print(T a, Args... args) { cout << a << " "; print(args...); };
 template<typename T, typename... Args> void println(vector<T> &arr, Args &... args)   { print(arr); println(args...);}
 template<typename T, typename... Args> void println(T a, Args... args) { cout << a << " "; println(args...); };
 
 
-const int d4i[4]={-1, 0, 1, 0}, d4j[4]={0, 1, 0, -1};
-const int d8i[8]={-1, -1, 0, 1, 1, 1, 0, -1}, d8j[8]={0, 1, 1, 1, 0, -1, -1, -1};
+const int d4i[4] = { -1, 0, 1, 0}, d4j[4] = {0, 1, 0, -1};
+const int d8i[8] = { -1, -1, 0, 1, 1, 1, 0, -1}, d8j[8] = {0, 1, 1, 1, 0, -1, -1, -1};
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+bool isPalindrome(lld n) {
+	string num = to_string(n);
+	string mun = num;
+	reverse(all(mun));
+	return num == mun;
+}
 
+
+void converto(lld &n) {
+	string num = to_string(n);
+	string mun = num;
+	reverse(all(mun));
+	lld n1 = stoi(num);
+	lld n2 = stoi(mun);
+	n = n1 + n2;
+}
 
 
 void solveEachTest(lld _TestCase = 1) {
-    // cout << "Case#" << _TestCase << ": ";
-    lld n, k; vector<lld> arr(4);
-    read(n, arr, k);
-    string ok = "ok";
-    print();
+	// cout << "Case#" << _TestCase << ": ";
+	lld n; read(n);
+	lld ans = 0ll;
+	do {
+		converto(n);
+		ans++;
+	} while (!isPalindrome(n));
+	println(ans, n);
 
-
-    // cout << "\n"; 
-    return;
+	// cout << "\n";
+	return;
 }
 
 
 signed main() {
-    ios_base::sync_with_stdio(false); cin.tie(0);cout.precision(10);
+	ios_base::sync_with_stdio(false); cin.tie(0); cout.precision(10);
 
-    lld T3X0 = 0, T353 = 1;
+	lld T3X0 = 0, T353 = 1;
 
-    // TESTCASES() 
-        solveEachTest(T353 - T3X0);
-    return 0;
+	TESTCASES()
+	solveEachTest(T353 - T3X0);
+	return 0;
 }
-// Random Thought :  null  
+// Random Thought :  null

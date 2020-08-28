@@ -28,7 +28,7 @@ using namespace std;
 // using namespace __gnu_pbds;
 
 // template <typename T> using PBSET = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
-/*
+/*  
     .insert(el) - set hai!
     .find_by_order(3) - returns an iterator to the k-th largest element (counting from zero)
     .order_of_key(6) - the number of items in a set that are strictly smaller than our item
@@ -59,8 +59,8 @@ typedef unsigned long long int llu;
 void huehue(istream_iterator<string> it) {}
 template<typename T, typename... Args>
 void huehue(istream_iterator<string> it, T a, Args... args) {
-	cout << *it << " = " << a << ", ";
-	huehue(++it, args...);
+  cout << *it << " = " << a << ", ";
+  huehue(++it, args...);
 }
 
 void read() { return; }
@@ -87,52 +87,39 @@ template<typename T, typename... Args> void println(vector<T> &arr, Args &... ar
 template<typename T, typename... Args> void println(T a, Args... args) { cout << a << " "; println(args...); };
 
 
-const int d4i[4] = { -1, 0, 1, 0}, d4j[4] = {0, 1, 0, -1};
-const int d8i[8] = { -1, -1, 0, 1, 1, 1, 0, -1}, d8j[8] = {0, 1, 1, 1, 0, -1, -1, -1};
+const int d4i[4]={-1, 0, 1, 0}, d4j[4]={0, 1, 0, -1};
+const int d8i[8]={-1, -1, 0, 1, 1, 1, 0, -1}, d8j[8]={0, 1, 1, 1, 0, -1, -1, -1};
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-lld solve(lld n, lld m, string a, string b, vector<vector<lld>> &dp) {
-	for4(i, 0, n + 1, 1) {
-		for4(j, 0, m + 1, 1) {
-			if (i == 0) dp[i][j] = j;
-			else if (j == 0) dp[i][j] = i;
-			else if (a[i - 1] == b[j - 1]) dp[i][j] = dp[i - 1][j - 1];
-			else {
-				dp[i][j] = 1 + min({
-					dp[i - 1][j],
-					dp[i][j - 1],
-					dp[i - 1][j - 1]
-				});
-			}
-		}
-	}
-
-	return dp[n][m];
-}
 
 
 
 void solveEachTest(lld _TestCase = 1) {
-	// cout << "Case#" << _TestCase << ": ";
-	string a, b; read(a, b);
-	lld m = len(b), n = len(a);
-	vector<vector<lld>> dp(n + 1, vector<lld>(m + 1, 0));
-	println(solve(n, m, a, b, dp));
+    // cout << "Case#" << _TestCase << ": ";
+    lld n; read(n);
+    lld one = 1; lld two = 0;
+    for4(i, 1, n, 1) {
+    	lld x; read(x);
+    	one ^= x;
+    	two ^= (i+1);
+    }
+
+    println(one ^ two);
 
 
-	// cout << "\n";
-	return;
+    // cout << "\n"; 
+    return;
 }
 
 
 signed main() {
-	ios_base::sync_with_stdio(false); cin.tie(0); cout.precision(10);
+    ios_base::sync_with_stdio(false); cin.tie(0);cout.precision(10); cout<<fixed;
 
-	lld T3X0 = 0, T353 = 1;
+    lld T3X0 = 0, T353 = 1;
 
-	TESTCASES()
-	solveEachTest(T353 - T3X0);
-	return 0;
+    TESTCASES() 
+        solveEachTest(T353 - T3X0);
+    return 0;
 }
-// Random Thought :  null
+// Random Thought :  null  

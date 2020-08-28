@@ -92,34 +92,20 @@ const int d8i[8] = { -1, -1, 0, 1, 1, 1, 0, -1}, d8j[8] = {0, 1, 1, 1, 0, -1, -1
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-lld solve(lld n, lld m, string a, string b, vector<vector<lld>> &dp) {
-	for4(i, 0, n + 1, 1) {
-		for4(j, 0, m + 1, 1) {
-			if (i == 0) dp[i][j] = j;
-			else if (j == 0) dp[i][j] = i;
-			else if (a[i - 1] == b[j - 1]) dp[i][j] = dp[i - 1][j - 1];
-			else {
-				dp[i][j] = 1 + min({
-					dp[i - 1][j],
-					dp[i][j - 1],
-					dp[i - 1][j - 1]
-				});
-			}
-		}
-	}
-
-	return dp[n][m];
-}
 
 
 
 void solveEachTest(lld _TestCase = 1) {
 	// cout << "Case#" << _TestCase << ": ";
-	string a, b; read(a, b);
-	lld m = len(b), n = len(a);
-	vector<vector<lld>> dp(n + 1, vector<lld>(m + 1, 0));
-	println(solve(n, m, a, b, dp));
+	llu n, q; read(n, q);
 
+	llu ans = 0llu;
+	for4(i, 0llu, q, 1llu) {
+		llu a, b, v; read(a, b, v);
+		ans += (llabs(b - a) + 1llu) * v;
+	}
+
+	println(ans);
 
 	// cout << "\n";
 	return;
@@ -127,7 +113,7 @@ void solveEachTest(lld _TestCase = 1) {
 
 
 signed main() {
-	ios_base::sync_with_stdio(false); cin.tie(0); cout.precision(10);
+	ios_base::sync_with_stdio(false); cin.tie(0); cout.precision(10); cout << fixed;
 
 	lld T3X0 = 0, T353 = 1;
 

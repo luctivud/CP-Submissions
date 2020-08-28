@@ -59,8 +59,8 @@ typedef unsigned long long int llu;
 void huehue(istream_iterator<string> it) {}
 template<typename T, typename... Args>
 void huehue(istream_iterator<string> it, T a, Args... args) {
-	cout << *it << " = " << a << ", ";
-	huehue(++it, args...);
+    cout << *it << " = " << a << ", ";
+    huehue(++it, args...);
 }
 
 void read() { return; }
@@ -92,47 +92,57 @@ const int d8i[8] = { -1, -1, 0, 1, 1, 1, 0, -1}, d8j[8] = {0, 1, 1, 1, 0, -1, -1
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-lld solve(lld n, lld m, string a, string b, vector<vector<lld>> &dp) {
-	for4(i, 0, n + 1, 1) {
-		for4(j, 0, m + 1, 1) {
-			if (i == 0) dp[i][j] = j;
-			else if (j == 0) dp[i][j] = i;
-			else if (a[i - 1] == b[j - 1]) dp[i][j] = dp[i - 1][j - 1];
-			else {
-				dp[i][j] = 1 + min({
-					dp[i - 1][j],
-					dp[i][j - 1],
-					dp[i - 1][j - 1]
-				});
-			}
-		}
-	}
 
-	return dp[n][m];
-}
-
-
+const lld modulo = 1000000007ll;
 
 void solveEachTest(lld _TestCase = 1) {
-	// cout << "Case#" << _TestCase << ": ";
-	string a, b; read(a, b);
-	lld m = len(b), n = len(a);
-	vector<vector<lld>> dp(n + 1, vector<lld>(m + 1, 0));
-	println(solve(n, m, a, b, dp));
+    // cout << "Case#" << _TestCase << ": ";
+
+    string s; read(s);
+    lld n = len(s);
+
+    if (n == 0) {
+        println("0");
+        return;
+    }
+
+    if (n == 1) {
+        println("1");
+        return;
+    }
+
+    vector<lld>dp(n + 1, 0ll);
+
+    dp[0] = 1;
+    dp[1] = (s[0] == '0') ? 0 : 1;
+
+    for4(i, 2ll, n + 1ll, 1ll) {
+        int frr = s[i - 1] - '0';
+        int scc = stoi(s.substr(i - 2, 2));
+        if (frr >= 1 and frr <= 9)
+            dp[i] += (dp[i - 1]) % modulo;
+        dp[i] %= modulo;
+        if (scc >= 10 and scc <= 26)
+            dp[i] += dp[i - 2] % modulo;
+        dp[i] %= modulo;
+    }
 
 
-	// cout << "\n";
-	return;
+    println(dp[n] % modulo);
+
+
+    // cout << "\n";
+    return;
 }
 
 
 signed main() {
-	ios_base::sync_with_stdio(false); cin.tie(0); cout.precision(10);
+    ios_base::sync_with_stdio(false); cin.tie(0); cout.precision(10); cout << fixed;
 
-	lld T3X0 = 0, T353 = 1;
+    lld T3X0 = 0, T353 = 1;
 
-	TESTCASES()
-	solveEachTest(T353 - T3X0);
-	return 0;
+    TESTCASES()
+    solveEachTest(T353 - T3X0);
+    return 0;
 }
 // Random Thought :  null

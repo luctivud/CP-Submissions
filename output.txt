@@ -1,7 +1,2 @@
-ind = 1
-currH = -2147483648
-ind = 1
-currH = 0
-ind = 1
-currH = 2
-2
+6
+4

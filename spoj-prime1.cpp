@@ -54,8 +54,8 @@ typedef unsigned long long int llu;
 void huehue(istream_iterator<string> it) {}
 template<typename T, typename... Args>
 void huehue(istream_iterator<string> it, T a, Args... args) {
-  cout << *it << " = " << a << ", ";
-  huehue(++it, args...);
+	cout << *it << " = " << a << ", ";
+	huehue(++it, args...);
 }
 
 void read() { return; }
@@ -82,42 +82,96 @@ template<typename T, typename... Args> void println(vector<T> &arr, Args &... ar
 template<typename T, typename... Args> void println(T a, Args... args) { cout << a << " "; println(args...); };
 
 
-const int d4i[4]={-1, 0, 1, 0}, d4j[4]={0, 1, 0, -1};
-const int d8i[8]={-1, -1, 0, 1, 1, 1, 0, -1}, d8j[8]={0, 1, 1, 1, 0, -1, -1, -1};
+const int d4i[4] = { -1, 0, 1, 0}, d4j[4] = {0, 1, 0, -1};
+const int d8i[8] = { -1, -1, 0, 1, 1, 1, 0, -1}, d8j[8] = {0, 1, 1, 1, 0, -1, -1, -1};
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
+/* This part should be outside the main in global paradigm. */
+
+const long long MAXN = (lld)(1e5) + 1ll; // MAXN Size
+
+vector<long long >isPrime(MAXN , true); // checkIfPrime
+vector<long long >prime_numbers; // List of prime numbers
+vector<long long >smallest_prime_factor(MAXN); // smallest_prime_factor of a number
+
+
+void manipulated_seive() {
+	isPrime[0] = isPrime[1] = false ;
+
+	prime_numbers.push_back(2);
+	smallest_prime_factor[2] = 2ll;
+
+	for (long long int i = 4; i < MAXN ; i += 2) {
+		isPrime[i] = false;
+		smallest_prime_factor[i] = 2ll;
+	}
+
+	for (long long int i = 3; i < MAXN ; i += 2) {
+		if (isPrime[i]) {
+			prime_numbers.push_back(i);
+			smallest_prime_factor[i] = i;
+		}
+
+		for (long long int j = 0; j < (int)prime_numbers.size() && i * prime_numbers[j] < MAXN && prime_numbers[j] <= smallest_prime_factor[i]; j++) {
+			isPrime[i * prime_numbers[j]] = false;
+			smallest_prime_factor[i * prime_numbers[j]] = prime_numbers[j] ;
+		}
+	}
+}
+
+
+
+bool isvalid(lld i, lld n) {
+	return i >= 0 and i < n;
+}
+
 
 void solveEachTest(lld _TestCase = 1) {
-    // cout << "Case#" << _TestCase << ": ";
-    lld n; read(n);
-    lld odd = 0ll, even = 0ll, ans = 0ll;
-    for4(i, 0, n, 1) {
-        lld x; read(x);
-        if (x & 1) {
-            ans += even;
-            odd++;
-        } else {
-            ans += odd;
-            even++;
-        }
-    }
-    println(ans);
+	// cout << "Case#" << _TestCase << ": ";
+	lld l, r; read(l, r);
 
-    // cout << "\n"; 
-    return;
+	vector<bool> arr(r - l + 1, true);
+
+	EACH(i, prime_numbers) {
+		if (i > r) break;
+		lld start = ((l + i - 1) / i) * i;
+		lld end = (r / i) * i;
+		// error(start, end, i);
+		if (start == i) start += i;
+		while (start <= end) {
+			if (isvalid(start - l, r - l + 1)) {
+				arr[start - l] = false;
+			}
+			start += i;
+		}
+	}
+
+	for4(i, 0, r - l + 1, 1) {
+		if (arr[i] and i + l != 1) {
+			println(i + l);
+		}
+	}
+
+	println("", "");
+
+
+	// cout << "\n";
+	return;
 }
 
 
 signed main() {
-    ios_base::sync_with_stdio(false); cin.tie(0);cout.precision(10);
+	ios_base::sync_with_stdio(false); cin.tie(0); cout.precision(10);
 
-    lld T3X0 = 0, T353 = 1;
+	/* This should be called inside main. */
+	manipulated_seive();
+	lld T3X0 = 0, T353 = 1;
 
-    // TESTCASES() 
-        solveEachTest(T353 - T3X0);
-    return 0;
+	TESTCASES()
+	solveEachTest(T353 - T3X0);
+	return 0;
 }
-// Random Thought :  null  
+// Random Thought :  null

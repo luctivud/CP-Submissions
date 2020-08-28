@@ -42,20 +42,18 @@ typedef unsigned long long int llu;
 #define              all(x)    (x).begin(), (x).end()
 #define             rall(x)    (x).rbegin(), (x).rend()
 #define                  pb    push_back
-#define             deb1(x)    cout << #x << " = "; println(x);
-#define             deb2(x)    cout << #x << " = "; print(x); cout << " ";
-#define                  f1    first
-#define                  s2    second
+#define             deb1(x)    cout << #x << "=" << (x) << "\n";
+#define             deb2(x)    cout << #x << "=" << (x) << " ";
 
 
 
-#define error(args...) { string _s = #args; replace(_s.begin(), _s.end(), ',', ' '); stringstream _ss(_s); istream_iterator<string> _it(_ss); huehue(_it, args); cout << "\n";}
+#define error(args...) { string _s = #args; replace(_s.begin(), _s.end(), ',', ' '); stringstream _ss(_s); istream_iterator<string> _it(_ss); err(_it, args); }
 
-void huehue(istream_iterator<string> it) {}
+void err(istream_iterator<string> it) {}
 template<typename T, typename... Args>
-void huehue(istream_iterator<string> it, T a, Args... args) {
-  cout << *it << " = " << a << ", ";
-  huehue(++it, args...);
+void err(istream_iterator<string> it, T a, Args... args) {
+	cout << *it << " = " << a << endl;
+	err(++it, args...);
 }
 
 void read() { return; }
@@ -82,8 +80,8 @@ template<typename T, typename... Args> void println(vector<T> &arr, Args &... ar
 template<typename T, typename... Args> void println(T a, Args... args) { cout << a << " "; println(args...); };
 
 
-const int d4i[4]={-1, 0, 1, 0}, d4j[4]={0, 1, 0, -1};
-const int d8i[8]={-1, -1, 0, 1, 1, 1, 0, -1}, d8j[8]={0, 1, 1, 1, 0, -1, -1, -1};
+const int d4i[4] = { -1, 0, 1, 0}, d4j[4] = {0, 1, 0, -1};
+const int d8i[8] = { -1, -1, 0, 1, 1, 1, 0, -1}, d8j[8] = {0, 1, 1, 1, 0, -1, -1, -1};
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -91,33 +89,29 @@ const int d8i[8]={-1, -1, 0, 1, 1, 1, 0, -1}, d8j[8]={0, 1, 1, 1, 0, -1, -1, -1}
 
 
 void solveEachTest(lld _TestCase = 1) {
-    // cout << "Case#" << _TestCase << ": ";
-    lld n; read(n);
-    lld odd = 0ll, even = 0ll, ans = 0ll;
-    for4(i, 0, n, 1) {
-        lld x; read(x);
-        if (x & 1) {
-            ans += even;
-            odd++;
-        } else {
-            ans += odd;
-            even++;
-        }
-    }
-    println(ans);
+	cout << "Case " << _TestCase << ": ";
+	lld n; read(n);
+	lld ans = 0ll;
+	for4(i, 0, n, 1) {
+		lld x;
+		ans = max(ans, read(x));
+	}
 
-    // cout << "\n"; 
-    return;
+	println(ans);
+
+
+	// cout << "\n";
+	return;
 }
 
 
 signed main() {
-    ios_base::sync_with_stdio(false); cin.tie(0);cout.precision(10);
+	ios_base::sync_with_stdio(false); cin.tie(0); cout.precision(10);
 
-    lld T3X0 = 0, T353 = 1;
+	lld T3X0 = 0, T353 = 1;
 
-    // TESTCASES() 
-        solveEachTest(T353 - T3X0);
-    return 0;
+	TESTCASES()
+	solveEachTest(T353 - T3X0);
+	return 0;
 }
-// Random Thought :  null  
+// Random Thought :  null  ;

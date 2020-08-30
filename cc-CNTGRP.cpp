@@ -19,7 +19,7 @@
 
 
 #include <bits/stdc++.h>
-#pragma GCC optimize "trapv"
+// #pragma GCC optimize "trapv"
 
 using namespace std;
 
@@ -29,7 +29,7 @@ using namespace std;
 
 // template <typename T> using PBSET = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
-/*  
+/*
     .insert(el) - set hai!
     .find_by_order(3) - returns an iterator to the k-th largest element (counting from zero)
     .order_of_key(6) - the number of items in a set that are strictly smaller than our item
@@ -37,12 +37,14 @@ using namespace std;
 
 typedef long long int lld;
 typedef unsigned long long int llu;
+// #define lld llu
+// #define ll lld
 
 #define         TESTCASES()    cin >> (T3X0); T353 = T3X0; while(T3X0--)
 #define          input(V3C)    for(auto &V3C_I7 : (V3C)) cin >> (V3C_I7)
 #define   mems(A77AY, V4LU)    memset((A77AY), (V4LU), sizeof((A77AY)))
 #define    CH3K(I7, E4, S7)    (((S7)>0) ? (I7)<(E4) : (I7)>(E4))
-#define   for4(I7,S4,E4,S7)    for(auto I7=(S4); CH3K(I7,E4,S7); (I7)+=(S7))
+#define   for4(I7,S4,E4,S7)    for(lld I7=(S4); CH3K(I7,E4,S7); (I7)+=(S7))
 #define        EACH(I7, A7)    for (auto& I7: A7)
 #define              len(v)    ((int)((v).size()))
 #define              all(x)    (x).begin(), (x).end()
@@ -60,13 +62,13 @@ typedef unsigned long long int llu;
 void huehue(istream_iterator<string> it) {}
 template<typename T, typename... Args>
 void huehue(istream_iterator<string> it, T a, Args... args) {
-  cout << *it << " = " << a << ", ";
-  huehue(++it, args...);
+	cout << *it << " = " << a << ", ";
+	huehue(++it, args...);
 }
 
 
 template <class T> T inf() {
-  return numeric_limits<T>::max();
+	return numeric_limits<T>::max();
 }
 
 
@@ -94,8 +96,8 @@ template<typename T, typename... Args> void println(vector<T> &arr, Args &... ar
 template<typename T, typename... Args> void println(T a, Args... args) { cout << a << " "; println(args...); };
 
 
-const lld d4i[4]={-1, 0, 1, 0}, d4j[4]={0, 1, 0, -1};
-const lld d8i[8]={-1, -1, 0, 1, 1, 1, 0, -1}, d8j[8]={0, 1, 1, 1, 0, -1, -1, -1};
+const lld d4i[4] = { -1, 0, 1, 0}, d4j[4] = {0, 1, 0, -1};
+const lld d8i[8] = { -1, -1, 0, 1, 1, 1, 0, -1}, d8j[8] = {0, 1, 1, 1, 0, -1, -1, -1};
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -103,25 +105,132 @@ const lld d8i[8]={-1, -1, 0, 1, 1, 1, 0, -1}, d8j[8]={0, 1, 1, 1, 0, -1, -1, -1}
 
 
 
+
+const lld MOD = lld(1e9) + 7ll;
+const lld mod = lld(1e9) + 7ll;
+
+
+
+lld EE(lld a, lld b, lld *x, lld *y) {
+	if (a == 0) {
+		*x = 0, *y = 1;
+		return b;
+	}
+
+	lld x1, y1;
+	lld gcd = EE(b % a, a, &x1, &y1);
+
+	*x = y1 - (b / a) * x1;
+	*y = x1;
+
+	return gcd;
+}
+
+
+lld inverse(lld a, lld m) {
+	lld x, y;
+	EE(a, m, &x, &y);
+	if (x < 0) x += m;
+	return x;
+}
+
+lld choose(lld n, lld k) {
+	lld i;
+
+	lld num = 1, den = 1;
+
+	for (i = 2; i <= k; i++) {
+		den *= i;
+		den %= mod;
+	}
+
+	for (i = n - k + 1; i <= n; i++) {
+		num *= i;
+		num %= mod;
+	}
+
+	i = num * inverse(den, mod);
+	i %= mod;
+	return i;
+}
+
+
+
+
+lld power(lld x, lld y) {
+	lld res = 1;
+
+	x = x % MOD;
+
+	if (x == 0) return 0;
+
+	while (y > 0)  {
+		if (y & 1)
+			res = (res * x) % MOD;
+
+		y = y >> 1; 
+		x = (x * x) % MOD;
+	}
+	return res;
+}
+
+
+
+
 void solveEachTest(lld _TestCase = 1) {
-    // cout << "Case#" << _TestCase << ": ";
-    lld n; read(n);
-    vector<lld> arr(n);
-    read(arr);
-    vector<bool> visited(n);
-    println(arr);
-    // cout << "\n"; 
-    return;
+	// cout << "Case#" << _TestCase << ": ";
+	lld n, m; read(n, m);
+	vector<lld> arr(n - 1);
+	read(arr);
+	map<lld, lld> depthCount;
+
+	EACH(it, arr) {
+		depthCount[it] += 1;
+	}
+
+	lld ans = 1ll;
+	depthCount[0] = 1;
+	lld empty_positions = 0ll;
+	lld sz = *max_element(all(arr));
+	for4(i, 1, sz + 1, 1) {
+		// error(i, depthCount[i]);
+
+		lld FFFF = depthCount[i];
+		lld SSSS = depthCount[i] - 1;
+		if (FFFF & 1) {
+			SSSS /= 2;
+		} else {
+			FFFF /= 2;
+		}
+		empty_positions += FFFF * SSSS;
+		lld thisOption = power(depthCount[i - 1], depthCount[i]);
+		ans *= thisOption % MOD;
+		ans %= MOD;
+	}
+
+	lld remaining = m - n + 1;
+
+	if (remaining > 0) {
+		ans *= choose(empty_positions, remaining) % MOD;
+	}
+
+	println(ans % MOD);
+
+	// cout << "\n";
+	return;
 }
 
 
 signed main() {
-    ios_base::sync_with_stdio(false); cin.tie(0);cout.precision(10); cout<<fixed;
+	ios_base::sync_with_stdio(false); cin.tie(0); cout.precision(10); cout << fixed;
+	// lld p = MOD;
+	// InverseofNumber(p);
+//    InverseofFactorial(p);
+//    factorial(p);
+	lld T3X0 = 0, T353 = 1;
 
-    lld T3X0 = 0, T353 = 1;
-
-    TESTCASES() 
-        solveEachTest(T353 - T3X0);
-    return 0;
+	TESTCASES()
+	solveEachTest(T353 - T3X0);
+	return 0;
 }
-// Random Thought :  null  
+// Random Thought :  null

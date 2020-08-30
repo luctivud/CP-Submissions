@@ -29,7 +29,7 @@ using namespace std;
 
 // template <typename T> using PBSET = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
-/*  
+/*
     .insert(el) - set hai!
     .find_by_order(3) - returns an iterator to the k-th largest element (counting from zero)
     .order_of_key(6) - the number of items in a set that are strictly smaller than our item
@@ -60,13 +60,13 @@ typedef unsigned long long int llu;
 void huehue(istream_iterator<string> it) {}
 template<typename T, typename... Args>
 void huehue(istream_iterator<string> it, T a, Args... args) {
-  cout << *it << " = " << a << ", ";
-  huehue(++it, args...);
+	cout << *it << " = " << a << ", ";
+	huehue(++it, args...);
 }
 
 
 template <class T> T inf() {
-  return numeric_limits<T>::max();
+	return numeric_limits<T>::max();
 }
 
 
@@ -94,34 +94,119 @@ template<typename T, typename... Args> void println(vector<T> &arr, Args &... ar
 template<typename T, typename... Args> void println(T a, Args... args) { cout << a << " "; println(args...); };
 
 
-const lld d4i[4]={-1, 0, 1, 0}, d4j[4]={0, 1, 0, -1};
-const lld d8i[8]={-1, -1, 0, 1, 1, 1, 0, -1}, d8j[8]={0, 1, 1, 1, 0, -1, -1, -1};
+const lld d4i[4] = { -1, 0, 1, 0}, d4j[4] = {0, 1, 0, -1};
+const lld d8i[8] = { -1, -1, 0, 1, 1, 1, 0, -1}, d8j[8] = {0, 1, 1, 1, 0, -1, -1, -1};
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+lld a, b;
+
+
+struct Piece {
+	char typeofPiece = 'K';
+	lld posx = a, posy = b;
+};
 
 
 
 void solveEachTest(lld _TestCase = 1) {
-    // cout << "Case#" << _TestCase << ": ";
-    lld n; read(n);
-    vector<lld> arr(n);
-    read(arr);
-    vector<bool> visited(n);
-    println(arr);
-    // cout << "\n"; 
-    return;
+	// cout << "Case#" << _TestCase << ": ";
+	lld n; read(n, a, b);
+
+	vector<Piece> pieces(8);
+
+	for4(i, 0, n, 1) {
+		char c; lld x, y; read(c, x, y);
+		lld diffx = x - a;
+		lld diffy = y - b;
+
+		if (diffx == 0) {
+			if (diffy > 0) {
+				if (pieces[0].posy > y or pieces[0].posy == b) {
+					pieces[0].posy = y;
+					pieces[0].typeofPiece = c;
+				}
+			} else if (diffy < 0) {
+				if (pieces[4].posy < y or pieces[4].posy == b) {
+					pieces[4].posy = y;
+					pieces[4].typeofPiece = c;
+				}
+			}
+		} else if (diffy == 0) {
+			if (diffx > 0) {
+				if (pieces[2].posx > x or pieces[4].posx == a) {
+					pieces[2].posx = x;
+					pieces[2].typeofPiece = c;
+				}
+			} else if (diffx < 0) {
+				if (pieces[6].posx < x or pieces[4].posx == a) {
+					pieces[6].posx = x;
+					pieces[6].typeofPiece = c;
+				}
+			}
+		} else if (llabs(diffx) == llabs(diffy)) {
+			if (diffx > 0 and diffy > 0) {
+				if (pieces[1].posx == a or pieces[1].posx - a > diffx) {
+					pieces[1].posx = x;
+					pieces[1].posy = y;
+					pieces[1].typeofPiece = c;
+				}
+			} else if (diffx < 0 and diffy < 0) {
+				if (pieces[5].posx == a or pieces[5].posx - a < diffx) {
+					pieces[5].posx = x;
+					pieces[5].posy = y;
+					pieces[5].typeofPiece = c;
+				}
+			} else if (diffx < 0) {
+				if (pieces[7].posx == a or pieces[7].posx - a < diffx) {
+					pieces[7].posx = x;
+					pieces[7].posy = y;
+					pieces[7].typeofPiece = c;
+				}
+			} else if (diffy < 0) {
+				if (pieces[3].posx == a or pieces[3].posx - a > diffx) {
+					pieces[3].posx = x;
+					pieces[3].posy = y;
+					pieces[3].typeofPiece = c;
+				}
+			}
+		}
+	}
+
+
+	bool ok = true;
+	for (auto i : pieces) {
+		// error(i.typeofPiece, i.posx, i.posy);
+		if (i.typeofPiece == 'R') {
+			if (i.posx == a or i.posy == b) {
+				ok = false;
+			}
+		} else if (i.typeofPiece == 'B') {
+			if (llabs(i.posx + i.posy) == llabs(a + b)) {
+				ok = false;
+			}
+		} else if (i.typeofPiece == 'Q') {
+			if (llabs(i.posx + i.posy) == llabs(a + b) or i.posx == a or i.posy == b ) {
+				ok = false;
+			}
+		}
+	}
+
+	println(ok ? "NO" : "YES");
+
+	// cout << "\n";
+	return;
 }
 
 
 signed main() {
-    ios_base::sync_with_stdio(false); cin.tie(0);cout.precision(10); cout<<fixed;
+	ios_base::sync_with_stdio(false); cin.tie(0); cout.precision(10); cout << fixed;
 
-    lld T3X0 = 0, T353 = 1;
+	lld T3X0 = 0, T353 = 1;
 
-    TESTCASES() 
-        solveEachTest(T353 - T3X0);
-    return 0;
+	// TESTCASES()
+	solveEachTest(T353 - T3X0);
+	return 0;
 }
-// Random Thought :  null  
+// Random Thought :  null

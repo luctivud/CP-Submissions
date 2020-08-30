@@ -29,7 +29,7 @@ using namespace std;
 
 // template <typename T> using PBSET = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
-/*  
+/*
     .insert(el) - set hai!
     .find_by_order(3) - returns an iterator to the k-th largest element (counting from zero)
     .order_of_key(6) - the number of items in a set that are strictly smaller than our item
@@ -60,13 +60,13 @@ typedef unsigned long long int llu;
 void huehue(istream_iterator<string> it) {}
 template<typename T, typename... Args>
 void huehue(istream_iterator<string> it, T a, Args... args) {
-  cout << *it << " = " << a << ", ";
-  huehue(++it, args...);
+	cout << *it << " = " << a << ", ";
+	huehue(++it, args...);
 }
 
 
 template <class T> T inf() {
-  return numeric_limits<T>::max();
+	return numeric_limits<T>::max();
 }
 
 
@@ -94,8 +94,8 @@ template<typename T, typename... Args> void println(vector<T> &arr, Args &... ar
 template<typename T, typename... Args> void println(T a, Args... args) { cout << a << " "; println(args...); };
 
 
-const lld d4i[4]={-1, 0, 1, 0}, d4j[4]={0, 1, 0, -1};
-const lld d8i[8]={-1, -1, 0, 1, 1, 1, 0, -1}, d8j[8]={0, 1, 1, 1, 0, -1, -1, -1};
+const lld d4i[4] = { -1, 0, 1, 0}, d4j[4] = {0, 1, 0, -1};
+const lld d8i[8] = { -1, -1, 0, 1, 1, 1, 0, -1}, d8j[8] = {0, 1, 1, 1, 0, -1, -1, -1};
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -104,24 +104,50 @@ const lld d8i[8]={-1, -1, 0, 1, 1, 1, 0, -1}, d8j[8]={0, 1, 1, 1, 0, -1, -1, -1}
 
 
 void solveEachTest(lld _TestCase = 1) {
-    // cout << "Case#" << _TestCase << ": ";
-    lld n; read(n);
-    vector<lld> arr(n);
-    read(arr);
-    vector<bool> visited(n);
-    println(arr);
-    // cout << "\n"; 
-    return;
+	// cout << "Case#" << _TestCase << ": ";
+	lld n, k; read(n, k);
+	vector<lld> arr(n), brr(n);
+	read(arr, brr);
+
+	map<lld, lld> pos;
+	EACH(it, arr) {
+		pos[it] += 1;
+	}
+
+	for4( i, 0ll, n, 1ll) {
+		if (pos.find(brr[i]) != pos.end()) {
+			if (pos[brr[i]] != 0) {
+				pos[brr[i]] -= 1;
+			} else {
+				pos[(brr[i] ^ k)] -= 1;
+			}
+		} else {
+			pos[(brr[i] ^ k)] -= 1;
+		}
+	}
+
+	bool ok = true;
+	EACH(it, pos) {
+		// println(it.first, it.second);
+		if (it.second != 0) {
+			ok = false;
+		}
+	}
+
+	println(ok ? "Yes" : "No");
+
+	// cout << "\n";
+	return;
 }
 
 
 signed main() {
-    ios_base::sync_with_stdio(false); cin.tie(0);cout.precision(10); cout<<fixed;
+	ios_base::sync_with_stdio(false); cin.tie(0); cout.precision(10); cout << fixed;
 
-    lld T3X0 = 0, T353 = 1;
+	lld T3X0 = 0, T353 = 1;
 
-    TESTCASES() 
-        solveEachTest(T353 - T3X0);
-    return 0;
+	TESTCASES()
+	solveEachTest(T353 - T3X0);
+	return 0;
 }
-// Random Thought :  null  
+// Random Thought :  null

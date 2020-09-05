@@ -13,9 +13,13 @@
 %%%%%&o*...*..:&%%%0* :%%%%%%%%%%%%%%%*. o%%%%%%%%%%O**%%%%%%o .*%%0* :%%%%%%%%%%%%&l. ,&%%%&. l%%%&&**0%%%%%*: ,&%%%%
 %%%%%%%%0&*&0*%%%%%&l;*%%%%%%%%%%%%%%%0<;&%%%%%%%%%%%%%%%%%%%&;:O%%*l,*%%%%%%%%%%%%%%O; .*%%0<;&%%%%%%%%%%%%%%*,o*%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%&*&%%%%%%%%%%%%%%%%%%%%%%%%%%*/
+/* A l l ******** i s ******** O n e ******************&*************************************************************/
+/******************************************************&************************* O n e ******** i s ******** A l l */
+
+// l u c t i v u d   l i g h t 3 0 1   o m e g a 0 1 b o t   x a y n   c a r b o n \\\\  U   I
+// n u m b   a b i l i t y   y u d i   g r e e d   m m m c d x c i i   x a r c o n ////    D   T
 
 //             Author: Udit "luctivud" Gupta @ (https://www.linkedin.com/in/udit-gupta-1b7863135/)                  //
-
 
 
 #include <bits/stdc++.h>
@@ -23,17 +27,7 @@
 
 using namespace std;
 
-// #include <ext/pb_ds/assoc_container.hpp>
-// #include <ext/pb_ds/tree_policy.hpp>
-// using namespace __gnu_pbds;
 
-// template <typename T> using PBSET = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
-
-/*
-    .insert(el) - set hai!
-    .find_by_order(3) - returns an iterator to the k-th largest element (counting from zero)
-    .order_of_key(6) - the number of items in a set that are strictly smaller than our item
-*/
 
 typedef long long int lld;
 typedef unsigned long long int llu;
@@ -106,25 +100,32 @@ const lld d8i[8] = { -1, -1, 0, 1, 1, 1, 0, -1}, d8j[8] = {0, 1, 1, 1, 0, -1, -1
 
 void solveEachTest(lld _TestCase = 1) {
 	// cout << "Case#" << _TestCase << ": ";
-	lld n; read(n);
-	vector<lld> arr(n);
-	read(arr);
+	lld n; cin >> n;
+	lld thisPower = 1;
 
-	vector<lld> dp(n, 0);
-	dp[0] = 1;
+	vector<bool> bits(20, false);
 
-	
+	forn(i, 20) {
+		cout << "1 " << thisPower << "\n";
+		lld hairu; read(hairu);
+		// error(hairu);
+		bits[i] = ((hairu) & 1) ^ (n & 1);
+		thisPower <<= 1;
+	}
 
-	for4(i, 1, n, 1) {
-		if (arr[i] >= arr[i - 1]) {
-			dp[i] = 1 + dp[i - 1];
-		} else {
-			dp[i] = 1;
+	lld ans = 0ll;
+
+	// forn(i, 20) {cout << bits[i];}; cout << "\n";
+
+	forn(i, 20) {
+		if (bits[i]) {
+			ans += (1 << i);
 		}
 	}
 
-
-	println((*max_element(all(dp))));
+	cout << "2 " << ans << "\n";
+	lld wow; cin >> wow;
+	if (wow == -1) bits[202];
 
 	// cout << "\n";
 	return;
@@ -136,8 +137,9 @@ signed main() {
 
 	lld T3X0 = 0, T353 = 1;
 
-	// TESTCASES()
+	TESTCASES()
 	solveEachTest(T353 - T3X0);
 	return 0;
 }
 // Random Thought :  null
+// Message : If you get the anime reference in this code, we're friends and we can talk about LIFE.

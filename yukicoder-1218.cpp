@@ -13,9 +13,13 @@
 %%%%%&o*...*..:&%%%0* :%%%%%%%%%%%%%%%*. o%%%%%%%%%%O**%%%%%%o .*%%0* :%%%%%%%%%%%%&l. ,&%%%&. l%%%&&**0%%%%%*: ,&%%%%
 %%%%%%%%0&*&0*%%%%%&l;*%%%%%%%%%%%%%%%0<;&%%%%%%%%%%%%%%%%%%%&;:O%%*l,*%%%%%%%%%%%%%%O; .*%%0<;&%%%%%%%%%%%%%%*,o*%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%&*&%%%%%%%%%%%%%%%%%%%%%%%%%%*/
+/* A l l ******** i s ******** O n e ******************&*************************************************************/
+/******************************************************&************************* O n e ******** i s ******** A l l */
+
+// l u c t i v u d   l i g h t 3 0 1   o m e g a 0 1 b o t   x a y n   c a r b o n \\\\  U   I
+// n u m b   a b i l i t y   y u d i   g r e e d   m m m c d x c i i   x a r c o n ////    D   T
 
 //             Author: Udit "luctivud" Gupta @ (https://www.linkedin.com/in/udit-gupta-1b7863135/)                  //
-
 
 
 #include <bits/stdc++.h>
@@ -23,17 +27,7 @@
 
 using namespace std;
 
-// #include <ext/pb_ds/assoc_container.hpp>
-// #include <ext/pb_ds/tree_policy.hpp>
-// using namespace __gnu_pbds;
 
-// template <typename T> using PBSET = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
-
-/*
-    .insert(el) - set hai!
-    .find_by_order(3) - returns an iterator to the k-th largest element (counting from zero)
-    .order_of_key(6) - the number of items in a set that are strictly smaller than our item
-*/
 
 typedef long long int lld;
 typedef unsigned long long int llu;
@@ -101,30 +95,66 @@ const lld d8i[8] = { -1, -1, 0, 1, 1, 1, 0, -1}, d8j[8] = {0, 1, 1, 1, 0, -1, -1
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+const lld MOD = 1e12;
+
+
+lld power(lld x, lld y) {
+	lld res = 1;
+
+	x = x % MOD;
+
+	if (x == 0) return 0;
+
+	while (y > 0)  {
+		if (y & 1)
+			res = (res * x) % MOD;
+
+		y = y >> 1;
+		x = (x * x) % MOD;
+	}
+	return res;
+}
+
 
 
 
 void solveEachTest(lld _TestCase = 1) {
 	// cout << "Case#" << _TestCase << ": ";
-	lld n; read(n);
-	vector<lld> arr(n);
-	read(arr);
+	lld n, z; read(n, z);
+	lld total = power(z, n);
+	vector<lld> powers;
+	forn(i, lld(1e6) + 1ll) {
+		if (i == 0) continue;
+		lld temp = power(i, n);
+		if (temp > total) break;
+		powers.pb(temp);
+	}
 
-	vector<lld> dp(n, 0);
-	dp[0] = 1;
+	// debspace(powers);
 
-	
-
-	for4(i, 1, n, 1) {
-		if (arr[i] >= arr[i - 1]) {
-			dp[i] = 1 + dp[i - 1];
-		} else {
-			dp[i] = 1;
-		}
+	bool ok = false;
+	EACH(i, powers) {
+		if (i >= total) break;
+		ok |= binary_search(all(powers), total - i);
+		// if (ok) error(i);
 	}
 
 
-	println((*max_element(all(dp))));
+
+
+	// lld maxn = lld(1e6);
+	// bool ok = false;
+	// forn(i, maxn) {
+	// 	lld temp1 = power(i, n);
+	// 	if (temp1 >= total) break;
+	// 	forn(j, maxn) {
+	// 		lld temp2 = power(j, n);
+	// 		if (temp2 >= total) break;
+	// 		if (temp2 + temp1 == total) ok = true;
+	// 	}
+	// }
+
+	println((ok) ? "Yes" : "No");
 
 	// cout << "\n";
 	return;
@@ -141,3 +171,4 @@ signed main() {
 	return 0;
 }
 // Random Thought :  null
+// Message : If you get the anime reference in this code, we're friends and we can talk about LIFE. ;

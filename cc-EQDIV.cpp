@@ -23,13 +23,14 @@
 
 
 #include <bits/stdc++.h>
-// #pragma GCC optimize "trapv"
+#pragma GCC optimize "trapv"
 
 using namespace std;
 
 
 // typedef lld lld;
 typedef long long int lld;
+// typedef int64_t lld;
 // typedef unsigned long long int lld;
 
 #define         TESTCASES()    cin >> (T3X0); T353 = T3X0; while(T3X0--)
@@ -137,23 +138,22 @@ void Union(lld x, lld y, vector<lld> &parent, vector<lld> &rank) {
 
 
 
-lld power(lld x, lld y) {
-    // lld res = 1ll;
-
-    // if (x == 0) return 0ll;
-
-    // while (y > 0)  {
-    //     if (y & 1ll)
-    //         res = (res * x);
-
-    //     y = y >> 1;
-    //     x = (x * x);
-    // }
-
-    return lld(pow(x, y));
-    // return res;
+lld power( lld base, lld exp ) {
+    lld result = 1LL;
+    if (exp == 0ll) return 1ll;
+    if (exp == 2ll) return (lld)base * (lld)base;
+    if (exp == 3ll) return (lld)(base) * (lld)(base) * (lld)(base);
+    while ( exp ) {
+        if ( exp & 1 ) {
+            result *= (lld)base;
+        }
+        exp /= 2;
+        base *= base;
+    }
+    // return powl(base, exp);
+    // if (result < 0 or result >= (lld)(1e10)) cout << "\n" << "here" << result;
+    return result;
 }
-
 
 
 void UtilshowThisTerm(pair<lld, pair<lld, lld>> x) {
@@ -163,10 +163,10 @@ void UtilshowThisTerm(pair<lld, pair<lld, lld>> x) {
 
 
 const lld maxn = 1e6;
-lld raisedToPower[maxn+5];
+lld raisedToPower[maxn + 5];
 void precompute(lld k) {
-    for4(i, 1ll, maxn+5, 1ll) {
-        raisedToPower[i-1] = power(i, k);
+    for4(i, 1ll, maxn + 2ll, 1ll) {
+        raisedToPower[i - 1ll] = power(i, k);
     }
 }
 
@@ -177,15 +177,14 @@ void solveEachTest(lld _TestCase, lld k) {
     lld n; read(n);
 
     // create a dsu tree for storing partitions.
-    vector<lld> parent(n + 1, 0);
-    vector<lld> rank(n + 1, 0);
-    makeSet(n + 1, parent, rank);
-
+    vector<lld> parent(n + 1ll, 0ll);
+    vector<lld> rank(n + 1ll, 0ll);
+    makeSet(n + 1ll, parent, rank);
 
     priority_queue< pair<lld, pair<lld, lld>> > pq;
 
     for4(i, 1ll, n + 1ll, 1) {
-        lld kaneki = raisedToPower[i-1];
+        lld kaneki = raisedToPower[i - 1ll];
         pq.push(make_pair(kaneki, make_pair(i, i)));
     }
 
@@ -208,39 +207,39 @@ void solveEachTest(lld _TestCase, lld k) {
     // println(pq.top().f1);
 
     forn(step, n - 1) {
-        auto hairu = pq.top();
+        pair <lld, pair<lld, lld>> hairu = pq.top();
         pq.pop();
-        auto ihehi = pq.top();
+        pair <lld, pair<lld, lld>> ihehi = pq.top();
         pq.pop();
-        print("hai : "); UtilshowThisTerm(hairu);
-        print("ihe : "); UtilshowThisTerm(ihehi);
+        // print("hai : "); UtilshowThisTerm(hairu);
+        // print("ihe : "); UtilshowThisTerm(ihehi);
         lld kaneki = hairu.f1 - ihehi.f1;
         pair <lld, pair<lld, lld>> thisTerm;
         if (hairu.s2.f1 == hairu.s2.s2 and ihehi.s2.f1 == ihehi.s2.s2) {
             // nothing
             // error(find_repr(hairu.s2.f1, parent, rank), find_repr(hairu.s2.s2, parent, rank));
             thisTerm = make_pair(kaneki,
-                make_pair(find_repr(ihehi.s2.f1, parent, rank), find_repr(hairu.s2.s2, parent, rank))
-            );
+                                 make_pair(find_repr(ihehi.s2.f1, parent, rank), find_repr(hairu.s2.s2, parent, rank))
+                                );
         } else if (hairu.s2.f1 == hairu.s2.s2 or ihehi.s2.f1 == ihehi.s2.s2) {
             // hairu > diff : chota becomes bada
             if (hairu.s2.f1 == hairu.s2.s2) {
                 Union(hairu.s2.f1, ihehi.s2.f1, parent, rank);
                 thisTerm = make_pair(kaneki,
-                    make_pair(find_repr(ihehi.s2.s2, parent, rank), find_repr(ihehi.s2.f1, parent, rank))
-                );
+                                     make_pair(find_repr(ihehi.s2.s2, parent, rank), find_repr(ihehi.s2.f1, parent, rank))
+                                    );
             } else {
                 Union(hairu.s2.f1, ihehi.s2.f1, parent, rank);
                 thisTerm = make_pair(kaneki,
-                    make_pair(find_repr(hairu.s2.f1, parent, rank), find_repr(hairu.s2.s2, parent, rank))
-                );
+                                     make_pair(find_repr(hairu.s2.f1, parent, rank), find_repr(hairu.s2.s2, parent, rank))
+                                    );
             }
         } else {
             Union(hairu.s2.s2, ihehi.s2.f1, parent, rank);
             Union(hairu.s2.f1, ihehi.s2.s2, parent, rank);
             thisTerm = make_pair(kaneki,
-                make_pair(find_repr(hairu.s2.f1, parent, rank), find_repr(hairu.s2.s2, parent, rank))
-            );
+                                 make_pair(find_repr(hairu.s2.f1, parent, rank), find_repr(hairu.s2.s2, parent, rank))
+                                );
         }
 
 
@@ -248,13 +247,13 @@ void solveEachTest(lld _TestCase, lld k) {
         pq.push(thisTerm);
     }
 
-    vector<lld> ans(n + 1, 0);
-    ans[1] = find_repr(1, parent, rank);
-    lld fac = ans[1];
+    vector<lld> ans(n + 1ll, 0ll);
+    ans[1] = find_repr(1ll, parent, rank);
+    lld fac = ans[1ll];
     // lld fuk = 0;
     println(pq.top().f1);
 
-    for4(i, 1, n + 1, 1) {
+    for4(i, 1ll, n + 1, 1) {
         ans[i] = find_repr(i, parent, rank);
         if (ans[i] == fac) {
             ans[i] = 0;
@@ -277,7 +276,7 @@ void solveEachTest(lld _TestCase, lld k) {
     cout << "\n";
 
 
-    // // void check
+    // void check
 
     // lld firstSetSum = 0ll, secondSetSum = 0ll;
 
@@ -291,10 +290,6 @@ void solveEachTest(lld _TestCase, lld k) {
     // }
 
     // assert(llabs(firstSetSum - secondSetSum) == pq.top().f1);
-
-
-
-
 
 
     return;

@@ -13,7 +13,7 @@
 %%%%%&o*...*..:&%%%0* :%%%%%%%%%%%%%%%*. o%%%%%%%%%%O**%%%%%%o .*%%0* :%%%%%%%%%%%%&l. ,&%%%&. l%%%&&**0%%%%%*: ,&%%%%
 %%%%%%%%0&*&0*%%%%%&l;*%%%%%%%%%%%%%%%0<;&%%%%%%%%%%%%%%%%%%%&;:O%%*l,*%%%%%%%%%%%%%%O; .*%%0<;&%%%%%%%%%%%%%%*,o*%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%&*&%%%%%%%%%%%%%%%%%%%%%%%%%%*/
-/* A l l ******** i s ******** O n e ******************&*************************************************************/
+/* A l l ******** i s ******** O n e ******************&*************************************************************/ 
 /******************************************************&************************* O n e ******** i s ******** A l l */
 
 // l u c t i v u d   l i g h t 3 0 1   o m e g a 0 1 b o t   x a y n   c a r b o n \\\\  U   I
@@ -30,7 +30,7 @@ using namespace std;
 
 
 typedef long long int lld;
-// typedef unsigned long long int lld;
+typedef unsigned long long int llu;
 
 #define         TESTCASES()    cin >> (T3X0); T353 = T3X0; while(T3X0--)
 #define          input(V3C)    for(auto &V3C_I7 : (V3C)) cin >> (V3C_I7)
@@ -55,13 +55,13 @@ typedef long long int lld;
 void huehue(istream_iterator<string> it) {}
 template<typename T, typename... Args>
 void huehue(istream_iterator<string> it, T a, Args... args) {
-	cout << *it << " = " << a << ", ";
-	huehue(++it, args...);
+  cout << *it << " = " << a << ", ";
+  huehue(++it, args...);
 }
 
 
 template <class T> T inf() {
-	return numeric_limits<T>::max();
+  return numeric_limits<T>::max();
 }
 
 
@@ -89,95 +89,37 @@ template<typename T, typename... Args> void println(vector<T> &arr, Args &... ar
 template<typename T, typename... Args> void println(T a, Args... args) { cout << a << " "; println(args...); };
 
 
-// const lld d4i[4] = { -1, 0, 1, 0}, d4j[4] = {0, 1, 0, -1};
-// const lld d8i[8] = { -1, -1, 0, 1, 1, 1, 0, -1}, d8j[8] = {0, 1, 1, 1, 0, -1, -1, -1};
+const lld d4i[4]={-1, 0, 1, 0}, d4j[4]={0, 1, 0, -1};
+const lld d8i[8]={-1, -1, 0, 1, 1, 1, 0, -1}, d8j[8]={0, 1, 1, 1, 0, -1, -1, -1};
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-vector<lld> wowSum;
-
-void precompute() {
-	lld curr = 0ll;
-	lld maxn = (lld)(1e6);
-	for4(i, 1, maxn, 1) {
-		curr += i;
-		wowSum.pb(curr);
-	}
-}
 
 
 
 void solveEachTest(lld _TestCase) {
-	// cout << "Case#" << _TestCase << ": ";
-	// forn(n, 100) {/////////////////////////////////////
-
-	lld n; read(n);
-
-	// if (n > 1e6) {
-	// 	lld pos1 = floor((sqrt(2*n*(n+1) + 1) - 1) / 2);
-
-	// 	return;
-	// }
-
-	// if (n % 4 == 2 or n % 4 == 1) {
-	// 	println("0");
-	// 	return;
-	// }
-	// println(wowSum);
-
-	lld thisSum = (n * (n + 1)) / 4;
-
-	lld ans = 0ll;
-
-	lld pos1 = lld(floor((sqrt(2 * n * (n + 1) + 1) - 1) / 2));
-
-	if (n > lld(1e5)) {
-		ans += n - pos1;
-		if ((pos1 * (pos1 - 1)) / 2 == thisSum) {
-			ans += (pos1 * (pos1 - 1)) / 2;
-			lld temp = n - pos1;
-			ans += (temp  * (temp - 1)) / 2;
-		}
-
-		println(ans);
-		return;
-	}
-
-	lld pos = (upper_bound(all(wowSum), thisSum) - wowSum.begin());
-
-	// println(pos);
+    // cout << "Case#" << _TestCase << ": ";
+    println(1);
+    srand((unsigned int)(time(0))); 
+    lld t = rand() % 400;
+    if (t % 4 == 1 or t % 4 == 2 or t == 0) t += 2;
+    println(t);
 
 
-	if (wowSum[pos - 1] == thisSum) {
-		lld temp = n - pos;
-		ans += (pos * (pos - 1))  / 2;
-		ans += (temp  * (temp - 1)) / 2;
-	}
-
-	ans += n - pos;
-
-	// print((pos == n/2+1+(n/9))); error(pos, n);
-	// println(ans);
-
-	assert(pos1 == pos);
-	println(pos);
-
-	// }///////////////////////////////////////////////
-	// cout << "\n";
-	return;
+    // cout << "\n"; 
+    return;
 }
 
 
 signed main() {
-	ios_base::sync_with_stdio(false); cin.tie(0); //cout.precision(10); cout << fixed;
+    ios_base::sync_with_stdio(false); cin.tie(0);cout.precision(10); cout<<fixed;
 
-	lld T3X0 = 0, T353 = 1;
+    lld T3X0 = 0, T353 = 1;
 
-	precompute();
-	TESTCASES()
-	solveEachTest(T353 - T3X0);
-	return 0;
+    // TESTCASES() 
+        solveEachTest(T353 - T3X0);
+    return 0;
 }
-// Random Thought :  null
-// Message : If you get the anime reference in this code, we're friends and we can talk about LIFE.
+// Random Thought :  null  
+// Message : If you get the anime reference in this code, we're friends and we can talk about LIFE. 

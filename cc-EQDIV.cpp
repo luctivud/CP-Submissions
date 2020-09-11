@@ -179,9 +179,9 @@ void precompute(lld k) {
 void solveEachTest(lld _TestCase, lld k) {
     // cout << "Case#" << _TestCase << ": ";
     lld n;
-    read(n);
+    // read(n);
 
-    // n = _TestCase;
+    n = _TestCase;
 
     if (n == 11 and k == 2) {
         println(0);
@@ -332,16 +332,16 @@ void solveEachTest(lld _TestCase, lld k) {
     // lld fuk = 0;
     println(pq.top().f1);
 
-    for4(i, 1ll, n + 1, 1) {
-        ans[i] = find_repr(i, parent, rank);
-        if (ans[i] == fac) {
-            ans[i] = 0;
-        } else {
-            ans[i] = 1;
-        }
-        print(ans[i]);
-    }
-    cout << "\n";
+    // for4(i, 1ll, n + 1, 1) {
+    //     ans[i] = find_repr(i, parent, rank);
+    //     if (ans[i] == fac) {
+    //         ans[i] = 0;
+    //     } else {
+    //         ans[i] = 1;
+    //     }
+    //     print(ans[i]);
+    // }
+    // cout << "\n";
 
 
 

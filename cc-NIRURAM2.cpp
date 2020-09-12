@@ -98,21 +98,87 @@ const lld d8i[8] = { -1, -1, 0, 1, 1, 1, 0, -1}, d8j[8] = {0, 1, 1, 1, 0, -1, -1
 
 
 
+
+
+lld findLCM(lld a, lld b) {
+	return a / __gcd(a, b) * b;
+}
+
+
+
 void solveEachTest(lld _TestCase) {
 	// cout << "Case#" << _TestCase << ": ";
-
 	lld n; read(n);
-
 	vector<lld> arr(n); read(arr);
 
-	lld mx = *max_element(all(arr));
-	lld total = accumulate(all(arr), 0ll);
+	lld lcm = arr[0];
 
-	if ((2 * mx > total) or (total & 1)) {
-		println("T");
-	} else {
-		println("HL");
+	forn(i, n) {
+		lcm = findLCM(lcm, arr[i]);
 	}
+
+
+	lld oneDay = 24LL * 60ll * 60ll;
+
+	lcm %= oneDay;
+
+	lld thisTime = (21 * 60 * 60ll) + (30 * 60ll);
+	// println(lcm, thisTime, thisTime - lcm);
+	// lld okokok = (3 * 60 * 60) + (3 * 60 + 18);
+
+	// println(thisTime - okokok);
+
+	// println(lcm % oneDay);
+	string ampm = "am";
+
+	thisTime -= lcm;
+	if (thisTime < 0) {
+		thisTime += (24 * 60 * 60);
+	}
+
+	// error(thisTime);
+
+
+	string PPM = "pm";
+	if (thisTime >= (12 * 60ll * 60)) {
+		ampm = "pm";
+	}
+	lld hh = thisTime / (60 * 60);
+	hh %= 12;
+	// println(hh);
+	if (ampm == PPM and hh == 0) {
+		hh = 12;
+	}
+	thisTime %= (60 * 60);
+	lld mm = thisTime / (60);
+
+	thisTime %= 60;
+	string ans = "";
+
+	forn(i, 2) {
+		ans.pb((thisTime % 10) + '0');
+		thisTime /= 10;
+	}
+	ans.pb(':');
+	forn(i, 2) {
+		ans.pb((mm % 10) + '0');
+		mm /= 10;
+	}
+
+	ans.pb(':');
+
+	forn(i, 2) {
+		ans.pb((hh % 10) + '0');
+		hh /= 10;
+	}
+
+	// println(ans);
+
+	reverse(all(ans));
+
+	println(ans, ampm);
+
+	// println(hh, mm, thisTime, ampm);
 
 	// cout << "\n";
 	return;
@@ -134,4 +200,4 @@ signed main() {
         I want to stop time
         I'll sit here 'til I find the problem
 */
-// Message : If you get the anime reference in this code, we're friends and we can talk about LIFE.
+// Message : If you get the anime reference in this code, we're friends and we can talk about LIFE. ;

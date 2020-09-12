@@ -100,19 +100,54 @@ const lld d8i[8] = { -1, -1, 0, 1, 1, 1, 0, -1}, d8j[8] = {0, 1, 1, 1, 0, -1, -1
 
 void solveEachTest(lld _TestCase) {
 	// cout << "Case#" << _TestCase << ": ";
-
 	lld n; read(n);
 
-	vector<lld> arr(n); read(arr);
+	lld k1, temp;
 
-	lld mx = *max_element(all(arr));
-	lld total = accumulate(all(arr), 0ll);
-
-	if ((2 * mx > total) or (total & 1)) {
-		println("T");
-	} else {
-		println("HL");
+	read(k1);
+	deque<lld> A, B;
+	forn(zz, k1) {
+		read(temp);
+		A.pb(temp);
 	}
+
+	read(k1);
+	forn(zz, k1) {
+		read(temp);
+		B.pb(temp);
+	}
+
+	lld step = -1ll;
+	lld ans = 0ll;
+	forn(zz, lld(1e6)) {
+		if (A.empty()) {
+			ans = 2;
+			step = zz;
+			break;
+		} else if (B.empty()) {
+			ans = 1;
+			step = zz;
+			break;
+		}
+		lld A_el = A.front();
+		lld B_el = B.front();
+		A.pop_front();
+		B.pop_front();
+		if (A_el > B_el) {
+			A.push_back(B_el);
+			A.push_back(A_el);
+		} else {
+			B.push_back(A_el);
+			B.push_back(B_el);
+		}
+	}
+
+	if (step != -1) {
+		println(step, ans);
+	} else {
+		println(-1);
+	}
+
 
 	// cout << "\n";
 	return;
@@ -124,7 +159,7 @@ signed main() {
 
 	lld T3X0 = 0, T353 = 1;
 
-	TESTCASES()
+	// TESTCASES()
 	solveEachTest(T353 - T3X0);
 	return 0;
 }

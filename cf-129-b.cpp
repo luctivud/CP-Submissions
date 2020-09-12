@@ -100,19 +100,46 @@ const lld d8i[8] = { -1, -1, 0, 1, 1, 1, 0, -1}, d8j[8] = {0, 1, 1, 1, 0, -1, -1
 
 void solveEachTest(lld _TestCase) {
 	// cout << "Case#" << _TestCase << ": ";
-
-	lld n; read(n);
-
-	vector<lld> arr(n); read(arr);
-
-	lld mx = *max_element(all(arr));
-	lld total = accumulate(all(arr), 0ll);
-
-	if ((2 * mx > total) or (total & 1)) {
-		println("T");
-	} else {
-		println("HL");
+	lld n, m; read(n, m);
+	vector<lld> adj[n + 1];
+	forn(xx, m) {
+		lld a, b; read(a, b);
+		adj[a].pb(b);
+		adj[b].pb(a);
 	}
+
+	// set<lld> removed;
+	lld cnt = 0ll;
+	vector<lld> edges_in_node(n + 1, 0);
+	forn(i, n) {
+		edges_in_node[i + 1] = len(adj[i + 1]);
+	}
+	while (true) {
+		queue <lld> qq;
+		forn(i, n) {
+			if (edges_in_node[i + 1] == 1) {
+				qq.push(i + 1);
+			}
+		}
+
+		if (qq.empty()) break;
+
+		while (!qq.empty()) {
+			lld node = qq.front();
+			qq.pop();
+			EACH(i, adj[node]) {
+				edges_in_node[i]--;
+			}
+			adj[node].clear();
+			edges_in_node[node] = 0ll;
+			// removed.insert(node);
+		}
+		++cnt;
+	}
+
+
+	// println(len(removed));
+	println(cnt);
 
 	// cout << "\n";
 	return;
@@ -124,7 +151,7 @@ signed main() {
 
 	lld T3X0 = 0, T353 = 1;
 
-	TESTCASES()
+	// TESTCASES()
 	solveEachTest(T353 - T3X0);
 	return 0;
 }

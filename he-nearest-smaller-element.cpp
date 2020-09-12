@@ -13,13 +13,13 @@
 %%%%%&o*...*..:&%%%0* :%%%%%%%%%%%%%%%*. o%%%%%%%%%%O**%%%%%%o .*%%0* :%%%%%%%%%%%%&l. ,&%%%&. l%%%&&**0%%%%%*: ,&%%%%
 %%%%%%%%0&*&0*%%%%%&l;*%%%%%%%%%%%%%%%0<;&%%%%%%%%%%%%%%%%%%%&;:O%%*l,*%%%%%%%%%%%%%%O; .*%%0<;&%%%%%%%%%%%%%%*,o*%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%&*&%%%%%%%%%%%%%%%%%%%%%%%%%%*/
-/* A l l ******** i s ******** O n e ******************&*************************************************************/
+/* A l l ******** i s ******** O n e ******************&*************************************************************/ 
 /******************************************************&************************* O n e ******** i s ******** A l l */
 
 // l u c t i v u d   l i g h t 3 0 1   o m e g a 0 1 b o t   x a y n   c a r b o n \\\\  U   I
 // n u m b   a b i l i t y   y u d i   g r e e d   m m m c d x c i i   x a r c o n ////    D   T
 
-//             Author: Udit "luctivud" Gupta @ (https://www.linkedin.com/in/udit-gupta-1b7863135/)                  //
+//             Author: Udit "luctivud" Gupta @ (https://www.linkedin.com/in/udit-gupta-1b7863135/)           	       //
 
 
 #include <bits/stdc++.h>
@@ -31,7 +31,7 @@ using namespace std;
 
 typedef long long int lld;
 typedef unsigned long long int llu;
-
+	
 #define         TESTCASES()    cin >> (T3X0); T353 = T3X0; while(T3X0--)
 #define          input(V3C)    for(auto &V3C_I7 : (V3C)) cin >> (V3C_I7)
 #define   mems(A77AY, V4LU)    memset((A77AY), (V4LU), sizeof((A77AY)))
@@ -55,13 +55,13 @@ typedef unsigned long long int llu;
 void huehue(istream_iterator<string> it) {}
 template<typename T, typename... Args>
 void huehue(istream_iterator<string> it, T a, Args... args) {
-	cout << *it << " = " << a << ", ";
-	huehue(++it, args...);
+  cout << *it << " = " << a << ", ";
+  huehue(++it, args...);
 }
 
 
 template <class T> T inf() {
-	return numeric_limits<T>::max();
+  return numeric_limits<T>::max();
 }
 
 
@@ -89,8 +89,8 @@ template<typename T, typename... Args> void println(vector<T> &arr, Args &... ar
 template<typename T, typename... Args> void println(T a, Args... args) { cout << a << " "; println(args...); };
 
 
-const lld d4i[4] = { -1, 0, 1, 0}, d4j[4] = {0, 1, 0, -1};
-const lld d8i[8] = { -1, -1, 0, 1, 1, 1, 0, -1}, d8j[8] = {0, 1, 1, 1, 0, -1, -1, -1};
+const lld d4i[4]={-1, 0, 1, 0}, d4j[4]={0, 1, 0, -1};
+const lld d8i[8]={-1, -1, 0, 1, 1, 1, 0, -1}, d8j[8]={0, 1, 1, 1, 0, -1, -1, -1};
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -99,39 +99,47 @@ const lld d8i[8] = { -1, -1, 0, 1, 1, 1, 0, -1}, d8j[8] = {0, 1, 1, 1, 0, -1, -1
 
 
 void solveEachTest(lld _TestCase) {
-	// cout << "Case#" << _TestCase << ": ";
-
+    // cout << "Case#" << _TestCase << ": ";
+    
 	lld n; read(n);
-
 	vector<lld> arr(n); read(arr);
 
-	lld mx = *max_element(all(arr));
-	lld total = accumulate(all(arr), 0ll);
+	stack<lld> st;
 
-	if ((2 * mx > total) or (total & 1)) {
-		println("T");
-	} else {
-		println("HL");
-	}
+	vector<lld> ans(n);
 
-	// cout << "\n";
-	return;
+	forn(i, n) {
+		while (!st.empty() and st.top() >= arr[i]) {
+			st.pop();
+		}
+
+		if (st.empty()) {
+			ans[i] = -1;
+		} else {
+			ans[i] = st.top();
+		}
+		st.push(arr[i]);
+	}	
+
+	println(ans);
+    // cout << "\n"; 
+    return;
 }
 
 
 signed main() {
-	ios_base::sync_with_stdio(false); cin.tie(0); cout.precision(10); cout << fixed;
+    ios_base::sync_with_stdio(false); cin.tie(0);cout.precision(10); cout<<fixed;
 
-	lld T3X0 = 0, T353 = 1;
+    lld T3X0 = 0, T353 = 1;
 
-	TESTCASES()
-	solveEachTest(T353 - T3X0);
-	return 0;
+    // TESTCASES() 		
+        solveEachTest(T353 - T3X0);
+    return 0;
 }
-// Random Thought :  null
+// Random Thought :  null  
 /*
         No, I move slow
         I want to stop time
         I'll sit here 'til I find the problem
 */
-// Message : If you get the anime reference in this code, we're friends and we can talk about LIFE.
+// Message : If you get the anime reference in this code, we're friends and we can talk about LIFE. 

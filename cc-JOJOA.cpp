@@ -1,25 +1,3 @@
-/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%O:,*..***%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%O. .:&Oo.,&%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%O. .l%%%o..l*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%O*****************************************%%%%%&*olo*&%%<  .:***;  ,****&*%*&*************************************%%
-%&<****************.  ..*****.   .****.  .**%%%%*..,:. .**o**.  .**.  ..**;&%&;*****.  .*.**.  .******.  ..**.   .**%%
-%%%*%%%%%%%%%%%%%%%O* ;&%%%%%&o. <&%%%*. l*%%%%&; ,0%*. :%%**l .*%%O* ;&%%%%%%%%%%%*< .&%%%%*. <*%%%%%O* ;&%%0; *O%%%%
-%%%%%%%%%%%%%%%%%%%0* :%%%%%%%*: .O%%%*. o%%%%%%*. *;. .*%%%%o .*%%0* :%%%%%%%%%%%%%l .O%%%%&. l%%%%%%0* ;*%%*: ,&%%%%
-%%%%%%%%%&<<<<<<<<<;. :%%%%%%&*. :*%%%*. o%%%%%&o. .*,. .,l**; .*%%0* :%%%%%%%%%%%%%l .O%%%%&. l%%%%%%0* ;*%%*: ,0%%%%
-%%%*&%%%%*<<,. .;<<;. :*%&,**..*l&%%%%*. o%%%*:. .lO%%&*l.     .*%%0* :%%%%%%%0:,o&O* ,&%%%%&. l%%%&o<,. .;::;. ,&%%%%
-%%*<.l*%%%%%%*..*%%0* :%%0;  ;&*%%%%%%l  o%%&:.;**%%%%**:. ,<* .*%%0* :%%%%%%%&<. ...;&%%%%%&. l%%< .:;. .<l<:. ,&%%%%
-%%%*. l*%%%%%&, l%%0* :%%%%**.,l***o<*   o%%%%&%%%%%0o* .:&%%o .*%%0* :%%%%%%%%%O;  ,O%%%%%%&. l%%* l**. l%%%*: ,&%%%%
-%%%%&*.,*&%*0<..&%%0* :%%%%%%&l;,**,:l:  o%%%%%%%%%O* *l0%%%%o .*%%0* :%%%%%%%%%%%*. .o*%%%%&. l%%*.....;0%%%*: ,&%%%%
-%%%%%&o*...*..:&%%%0* :%%%%%%%%%%%%%%%*. o%%%%%%%%%%O**%%%%%%o .*%%0* :%%%%%%%%%%%%&l. ,&%%%&. l%%%&&**0%%%%%*: ,&%%%%
-%%%%%%%%0&*&0*%%%%%&l;*%%%%%%%%%%%%%%%0<;&%%%%%%%%%%%%%%%%%%%&;:O%%*l,*%%%%%%%%%%%%%%O; .*%%0<;&%%%%%%%%%%%%%%*,o*%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%&*&%%%%%%%%%%%%%%%%%%%%%%%%%%*/
-/* A l l ******** i s ******** O n e ******************&*************************************************************/
-/******************************************************&************************* O n e ******** i s ******** A l l */
-
-// l u c t i v u d   l i g h t 3 0 1   o m e g a 0 1 b o t   x a y n   c a r b o n \\\\  U   I
-// n u m b   a b i l i t y   y u d i   g r e e d   m m m c d x c i i   x a r c o n ////    D   T
-
-//             Author: Udit "luctivud" Gupta @ (https://www.linkedin.com/in/udit-gupta-1b7863135/)                  //
 
 
 #include <bits/stdc++.h>
@@ -98,23 +76,82 @@ const lld d8i[8] = { -1, -1, 0, 1, 1, 1, 0, -1}, d8j[8] = {0, 1, 1, 1, 0, -1, -1
 
 
 
-void solveEachTest(lld _TestCase) {
-	// cout << "Case#" << _TestCase << ": ";
+const int MAX_CHARS = 256;
 
-	lld n; read(n);
+// Function to find smallest window containing
+// all distinct characters
+string findSubString(string str)
+{
+	int n = int(str.length());
 
-	vector<lld> arr(n); read(arr);
-
-	lld mx = *max_element(all(arr));
-	lld total = accumulate(all(arr), 0ll);
-
-	if ((2 * mx > total) or (total & 1)) {
-		println("T");
-	} else {
-		println("HL");
+	// Count all distinct characters.
+	int dist_count = 0;
+	bool visited[MAX_CHARS] = { false };
+	for (int i = 0; i < n; i++) {
+		if (visited[str[i]] == false) {
+			visited[str[i]] = true;
+			dist_count++;
+		}
 	}
 
-	// cout << "\n";
+	// Now follow the algorithm discussed in below
+	// post. We basically maintain a window of characters
+	// that contains all characters of given string.
+	int start = 0, start_index = -1, min_len = INT_MAX;
+
+	int count = 0;
+	int curr_count[MAX_CHARS] = { 0 };
+	for (int j = 0; j < n; j++) {
+		// Count occurrence of characters of string
+		curr_count[str[j]]++;
+
+		// If any distinct character matched,
+		// then increment count
+		if (curr_count[str[j]] == 1)
+			count++;
+
+		// if all the characters are matched
+		if (count == dist_count) {
+			// Try to minimize the window i.e., check if
+			// any character is occurring more no. of times
+			// than its occurrence in pattern, if yes
+			// then remove it from starting and also remove
+			// the useless characters.
+			while (curr_count[str[start]] > 1) {
+				if (curr_count[str[start]] > 1)
+					curr_count[str[start]]--;
+				start++;
+			}
+
+			// Update window size
+			int len_window = j - start + 1;
+			if (min_len > len_window) {
+				min_len = len_window;
+				start_index = start;
+			}
+		}
+	}
+
+	// Return substring starting from start_index
+	// and length min_len
+	return str.substr(start_index, min_len);
+}
+
+
+
+
+void solveEachTest(lld _TestCase) {
+	// cout << "Case#" << _TestCase << ": ";
+	string s; cin >> s;
+	string ans = (findSubString(s));
+
+	for (auto i : ans) {
+		print(i - 'a' + 1);
+	}
+
+
+
+	cout << "\n";
 	return;
 }
 
@@ -128,10 +165,3 @@ signed main() {
 	solveEachTest(T353 - T3X0);
 	return 0;
 }
-// Random Thought :  null
-/*
-        No, I move slow
-        I want to stop time
-        I'll sit here 'til I find the problem
-*/
-// Message : If you get the anime reference in this code, we're friends and we can talk about LIFE.

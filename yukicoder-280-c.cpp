@@ -97,23 +97,89 @@ const lld d8i[8] = { -1, -1, 0, 1, 1, 1, 0, -1}, d8j[8] = {0, 1, 1, 1, 0, -1, -1
 
 
 
+bool isvalid(lld i, lld n) {
+	return i >= 0 and i < n;
+}
+
+
+
 
 void solveEachTest(lld _TestCase) {
 	// cout << "Case#" << _TestCase << ": ";
-
 	lld n; read(n);
+	vector< vector<lld> > matr (n, vector<lld> (n, 0ll));
 
-	vector<lld> arr(n); read(arr);
+	vector<lld> S(n), T(n);
+	read(S, T);
 
-	lld mx = *max_element(all(arr));
-	lld total = accumulate(all(arr), 0ll);
-
-	if ((2 * mx > total) or (total & 1)) {
-		println("T");
-	} else {
-		println("HL");
+	forn(i, n) {
+		matr[i][i] = 1;
 	}
 
+	forn(i, n) {
+		if (S[i] == 0) {
+			forn(j, n) {
+				matr[i][j] = 0;
+			}
+		} else if (S[i] == 2) {
+			forn(j, n) {
+				matr[i][j] = 1;
+			}
+		}
+
+		if (T[i] == 0) {
+			forn(j, n) {
+				matr[j][i] = 0;
+			}
+		} else if (T[i] == 2) {
+			forn(j, n) {
+				matr[j][i] = 1;
+			}
+		}
+	}
+
+
+	lld ans = 0ll;
+
+	set<lld> doneRow, doneCol;
+
+	forn(i, n) {
+		forn(j, n) {
+			if (matr[i][j] == 1) {
+				doneRow.insert(i);
+				doneCol.insert(j);
+				ans++;
+			}
+		}
+	}
+
+	forn(i, n) {
+		if (doneRow.find(i) == doneRow.end()) {
+			forn(j, n) {
+				if (doneCol.find(j) == doneCol.end()) {
+					doneCol.insert(j);
+					break;
+				}
+			}
+			doneRow.insert(i);
+			ans++;
+		}
+	}
+
+	// forn(j, n) {
+	// 	if (doneCol.find(j) == doneCol.end()) {
+	// 		doneCol.insert(j);
+	// 		forn(i, n) {
+	// 			if (doneRow.find(i) == doneRow.end()) {
+	// 				doneRow.insert(i);
+	// 				break;
+	// 			}
+	// 		}
+	// 		ans++;
+	// 	}
+	// }
+
+	println(ans);
 	// cout << "\n";
 	return;
 }
@@ -124,7 +190,7 @@ signed main() {
 
 	lld T3X0 = 0, T353 = 1;
 
-	TESTCASES()
+	// TESTCASES()
 	solveEachTest(T353 - T3X0);
 	return 0;
 }

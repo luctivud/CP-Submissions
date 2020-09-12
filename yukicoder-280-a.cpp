@@ -100,19 +100,10 @@ const lld d8i[8] = { -1, -1, 0, 1, 1, 1, 0, -1}, d8j[8] = {0, 1, 1, 1, 0, -1, -1
 
 void solveEachTest(lld _TestCase) {
 	// cout << "Case#" << _TestCase << ": ";
+	lld n, k, t; read(n, k, t);
 
-	lld n; read(n);
+	println((llabs(n) <= (k * t)) ? "Yes" : "No");
 
-	vector<lld> arr(n); read(arr);
-
-	lld mx = *max_element(all(arr));
-	lld total = accumulate(all(arr), 0ll);
-
-	if ((2 * mx > total) or (total & 1)) {
-		println("T");
-	} else {
-		println("HL");
-	}
 
 	// cout << "\n";
 	return;
@@ -124,7 +115,7 @@ signed main() {
 
 	lld T3X0 = 0, T353 = 1;
 
-	TESTCASES()
+	// TESTCASES()
 	solveEachTest(T353 - T3X0);
 	return 0;
 }

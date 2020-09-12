@@ -95,24 +95,50 @@ const lld d8i[8] = { -1, -1, 0, 1, 1, 1, 0, -1}, d8j[8] = {0, 1, 1, 1, 0, -1, -1
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+lld ans;
+
+// void dfs(string city, map<string, vector<string>> graph, map<string, lld> &visited) {
+// 	if (visited[city] > len(graph[city])) {
+// 		return ;
+// 	}
+// 	visited[city] += 1;
+// 	if (visited[city] == 1)
+// 		ans += len(graph[city]);
+// 	EACH(i, graph[city]) {
+// 		return dfs(i, graph, visited);
+// 	}
+// 	return;
+// }
 
 
 
 void solveEachTest(lld _TestCase) {
 	// cout << "Case#" << _TestCase << ": ";
-
 	lld n; read(n);
 
-	vector<lld> arr(n); read(arr);
+	string start; read(start);
 
-	lld mx = *max_element(all(arr));
-	lld total = accumulate(all(arr), 0ll);
+	// map<string, vector<string>> graph;
+	// map<string, lld> visited;
 
-	if ((2 * mx > total) or (total & 1)) {
-		println("T");
-	} else {
-		println("HL");
+	vector<pair<string, string> > paths;
+
+	ans = 0ll;
+
+	forn(i, n) {
+		string a, b; read(a, b);
+		graph[a].pb(b);
 	}
+
+	// while (true) {
+	// dfs(start, graph, visited);
+	// 	println(temp);
+	// 	if (temp == "-1") break;
+	// }
+
+	println(ans);
+
+
 
 	// cout << "\n";
 	return;

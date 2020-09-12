@@ -96,23 +96,69 @@ const lld d8i[8] = { -1, -1, 0, 1, 1, 1, 0, -1}, d8j[8] = {0, 1, 1, 1, 0, -1, -1
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+/*          D S U         */
+
+void makeSet(lld n, vector<lld> &parent, vector<lld> &rank) {
+	iota(all(parent), 0ll);
+}
+
+lld find_repr(lld x, vector<lld> &parent, vector<lld> &rank) {
+	if (x != parent[x])
+		parent[x] = find_repr(parent[x], parent, rank);
+	return parent[x];
+}
+
+void Union(lld x, lld y, vector<lld> &parent, vector<lld> &rank) {
+	x = find_repr(x, parent, rank);
+	y = find_repr(y, parent, rank);
+
+	if (x == y) return;
+
+	if (rank[x] < rank[y]) {
+		parent[x] = y;
+	} else if (rank[x] > rank[y]) {
+		parent[y] = x;
+	} else {
+		parent[y] = x;
+		rank[x] = rank[x] + 1;
+	}
+	return;
+}
+
+
+
+
 
 
 void solveEachTest(lld _TestCase) {
 	// cout << "Case#" << _TestCase << ": ";
-
 	lld n; read(n);
 
 	vector<lld> arr(n); read(arr);
 
-	lld mx = *max_element(all(arr));
-	lld total = accumulate(all(arr), 0ll);
+	// create parent and rank at the place.
+	vector<lld> parent(n, 0);
+	vector<lld> rank(n, 0);
+	makeSet(n, parent, rank);
 
-	if ((2 * mx > total) or (total & 1)) {
-		println("T");
-	} else {
-		println("HL");
+	// println(parent);
+
+	forn(i, n) {
+		Union(i, arr[i] - 1, parent, rank);
 	}
+
+	map<lld, lld> Set_size;
+
+	forn(i, n) {
+		arr[i] = find_repr(i, parent, rank);
+		Set_size[arr[i]] += 1;
+	}
+
+	forn(i, n) {
+		arr[i] = Set_size[arr[i]];
+	}
+
+	println(arr);
 
 	// cout << "\n";
 	return;

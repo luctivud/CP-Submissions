@@ -97,22 +97,63 @@ const lld d8i[8] = { -1, -1, 0, 1, 1, 1, 0, -1}, d8j[8] = {0, 1, 1, 1, 0, -1, -1
 
 
 
+bool isvalid(lld i, lld n) {
+	return i >= 0 and i < n;
+}
+
+
+bool dfs(lld node, lld parent, vector<bool> &visited, vector<lld> adj[]) {
+	// error(node);
+	if (visited[node]) return true;
+	visited[node] = true;
+	bool ok = false;
+	EACH(i, adj[node]) {
+		if (i != parent) {
+			ok |= dfs(i, node, visited, adj);
+		}
+	}
+
+	return ok;
+}
+
+
 
 void solveEachTest(lld _TestCase) {
 	// cout << "Case#" << _TestCase << ": ";
+	lld n, m; read(n, m);
+	vector<vector<char>> matr(n, vector<char> (m));
+	read(matr);
 
-	lld n; read(n);
+	// println(matr);
 
-	vector<lld> arr(n); read(arr);
+	vector<lld> adj[n * m];
 
-	lld mx = *max_element(all(arr));
-	lld total = accumulate(all(arr), 0ll);
+	vector<bool> visited(n * m, false);
 
-	if ((2 * mx > total) or (total & 1)) {
-		println("T");
-	} else {
-		println("HL");
+	forn(i, n) {
+		forn(j, m) {
+			forn(k, 4) {
+				if (isvalid(i + d4i[k], n) and isvalid(j + d4j[k], m)) {
+					if (matr[i + d4i[k]][j + d4j[k]] == matr[i][j]) {
+						adj[i * m + j].pb((m * (i + d4i[k])) + (j + d4j[k]));
+					}
+				}
+			}
+		}
 	}
+
+	bool ok = false;
+
+	forn(i, n) {
+		forn(j, m) {
+			if (!visited[i * m + j]) {
+				ok |= dfs(i * m + j, -1, visited, adj);
+			}
+		}
+	}
+
+
+	println(ok ? "Yes" : "No");
 
 	// cout << "\n";
 	return;
@@ -124,7 +165,7 @@ signed main() {
 
 	lld T3X0 = 0, T353 = 1;
 
-	TESTCASES()
+	// TESTCASES()
 	solveEachTest(T353 - T3X0);
 	return 0;
 }

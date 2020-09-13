@@ -40,6 +40,7 @@ typedef unsigned long long int llu;
 #define    CH3K(I7, E4, S7)    (((S7)>0) ? (I7)<(E4) : (I7)>(E4))
 #define   for4(I7,S4,E4,S7)    for(auto I7=(S4); CH3K(I7,E4,S7); (I7)+=(S7))
 #define        forn(I7, E4)    for(lld I7=0ll; I7 < E4; (I7)+=1ll)
+#define       forn1(I7, E4)    for(lld I7=1ll; I7 < E4+1; (I7)+=1ll)
 #define        EACH(I7, A7)    for (auto& I7: A7)
 #define              len(v)    ((int)((v).size()))
 #define              all(x)    (x).begin(), (x).end()
@@ -110,53 +111,69 @@ signed luctivud() {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-lld n;
 
 
-
-void dfs(lld node, lld par, vector<lld> adj[], vector<lld> &decompose, vector<lld> &children) {
-	children[node] = 1;
-	// decompose[node] = 0ll;
-	EACH(i, adj[node]) {
-		if (i != par) {
-			dfs(i, node, adj, decompose, children);
-			children[node] += children[i];
-			decompose[node] = max(decompose[node], children[i]);
-		}
-	}
-	decompose[node] = max(decompose[node], n - children[node]);
-}
 
 
 void solveEachTest(lld _TestCase) {
 	// cout << "Case#" << _TestCase << ": ";
-	read(n);
-	vector<lld> adj[n + 1];
-	forn(i, n - 1) {
-		lld a, b; read(a, b);
-		adj[a].pb(b);
-		adj[b].pb(a);
-	}
+	lld n; read(n);
 
-	vector<lld> decompose(n + 1, 0ll);
-	vector<lld> children(n + 1, 0ll);
+	vector<lld> arr(n);// brr(n);
+	read(arr); //read(brr);
+	bool ok = true;
 
-	dfs(1, 0, adj, decompose, children);
+	vector<lld> ans(n);
 
-	lld ans = 0, sz = n + 1;
+	// lld start = lower_bound(all(brr), arr[0]);
+
+	multiset<lld> My_Set;
 
 	forn(i, n) {
-		// i + 1
-		if (decompose[i + 1] < sz) {
-			sz = decompose[i + 1];
-			ans = i + 1;
-		}
+		lld temp; read(temp);
+		My_Set.insert(temp);
 	}
 
-	// debhairu(children);
-	// println(decompose);
 
-	println(ans, sz);
+	// vector<lld> ans(n);
+
+	forn(i, n) {
+		bool flag1 = true, flag2 = true;
+		auto it = My_Set.upper_bound(arr[i]);
+		if (it == My_Set.end()) {
+			flag1 = false;
+		} else {
+			My_Set.erase(it);
+			ans[i] = *it;
+			continue;
+		}
+
+		it = My_Set.begin();
+		if (*it == arr[i]) {
+			flag2 = false;
+		} else {
+			My_Set.erase(it);
+			ans[i] = *it;
+			continue;
+		}
+		auto it2 = My_Set.rbegin();
+		if (*it2 == arr[i]) {
+			My_Set.erase(My_Set.find(*it2));
+			ans[i] = *it2;
+		}
+
+	}
+
+	// set<lld> wrong;
+
+	
+
+	if (ok) {
+		println("Yes");
+		println(ans);
+	} else {
+		println("No");
+	}
 
 
 	// cout << "\n";
@@ -170,7 +187,7 @@ signed main() {
 
 	lld T3X0 = 0, T353 = 1;
 
-	TESTCASES()
+	// TESTCASES()
 	solveEachTest(T353 - T3X0);
 
 	return luctivud();

@@ -1,17 +1,17 @@
 // ************************* J A I  S H R E E  R A M  *************************
 
 
-/*
-
+/* 
+  
       :: All is One ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-      Author: Udit "luctivud" Gupta
+      Author: Udit "luctivud" Gupta 
       linkedin : (https://www.linkedin.com/in/udit-gupta-1b7863135/)
 
-      My original ids go by the username @luctivud
+      My original ids go by the username @luctivud 
       However, if summoned, my alts can surround your surroundings in a flash.
 
-      Do you know Hairu Ihei ?
+      Do you know Hairu Ihei ? 
 
       :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: One is All ::
 
@@ -57,13 +57,13 @@ typedef unsigned long long int llu;
 void huehue(istream_iterator<string> it) {}
 template<typename T, typename... Args>
 void huehue(istream_iterator<string> it, T a, Args... args) {
-	cout << *it << " = " << a << ", ";
-	huehue(++it, args...);
+  cout << *it << " = " << a << ", ";
+  huehue(++it, args...);
 }
 
 
 template <class T> T inf() {
-	return numeric_limits<T>::max();
+  return numeric_limits<T>::max();
 }
 
 
@@ -91,92 +91,110 @@ template<typename T, typename... Args> void println(vector<T> &arr, Args &... ar
 template<typename T, typename... Args> void println(T a, Args... args) { cout << a << " "; println(args...); };
 
 
-const lld d4i[4] = { -1, 0, 1, 0}, d4j[4] = {0, 1, 0, -1};
-const lld d8i[8] = { -1, -1, 0, 1, 1, 1, 0, -1}, d8j[8] = {0, 1, 1, 1, 0, -1, -1, -1};
+const lld d4i[4]={-1, 0, 1, 0}, d4j[4]={0, 1, 0, -1};
+const lld d8i[8]={-1, -1, 0, 1, 1, 1, 0, -1}, d8j[8]={0, 1, 1, 1, 0, -1, -1, -1};
 
 const auto start_time = std::chrono::high_resolution_clock::now();
 signed luctivud() {
 
-#ifdef LUCTIVUD
-	//your code for local things
-	auto end_time = std::chrono::high_resolution_clock::now();
-	std::chrono::duration<double> diff = end_time - start_time;
-	cerr << "Finished in : " << diff.count() << "\n";
-#endif
+  #ifdef LUCTIVUD
+   //your code for local things
+    auto end_time = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> diff = end_time-start_time;
+      cerr<<"Finished in : "<<diff.count() <<"\n";
+  #endif
 
-	return 0;
+  return 0;
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-lld n;
 
 
+/* This part should be outside the main in global paradigm. */
 
-void dfs(lld node, lld par, vector<lld> adj[], vector<lld> &decompose, vector<lld> &children) {
-	children[node] = 1;
-	// decompose[node] = 0ll;
-	EACH(i, adj[node]) {
-		if (i != par) {
-			dfs(i, node, adj, decompose, children);
-			children[node] += children[i];
-			decompose[node] = max(decompose[node], children[i]);
+const long long MAXN = (lld)(1e6) + 1ll; // MAXN Size
+
+vector<long long >isPrime(MAXN , true); // checkIfPrime
+vector<long long >prime_numbers; // List of prime numbers
+vector<long long >smallest_prime_factor(MAXN); // smallest_prime_factor of a number
+
+
+void manipulated_seive() {
+	isPrime[0] = isPrime[1] = false ;
+	
+	prime_numbers.push_back(2);
+	smallest_prime_factor[2] = 2ll;
+
+	for (long long int i=4; i < MAXN ; i+=2) {
+		isPrime[i] = false;
+		smallest_prime_factor[i] = 2ll;
+	}
+
+	for (long long int i = 3; i < MAXN ; i+=2) {
+		if (isPrime[i]) {
+			prime_numbers.push_back(i);
+			smallest_prime_factor[i] = i;
+		}
+
+		for (long long int j = 0; j < (int)prime_numbers.size() && i * prime_numbers[j] < MAXN && prime_numbers[j] <= smallest_prime_factor[i]; j++) {
+			isPrime[i * prime_numbers[j]] = false;
+			smallest_prime_factor[i * prime_numbers[j]] = prime_numbers[j] ;
 		}
 	}
-	decompose[node] = max(decompose[node], n - children[node]);
 }
 
 
+/* This should be called inside main. */
+
+
+
 void solveEachTest(lld _TestCase) {
-	// cout << "Case#" << _TestCase << ": ";
-	read(n);
-	vector<lld> adj[n + 1];
-	forn(i, n - 1) {
-		lld a, b; read(a, b);
-		adj[a].pb(b);
-		adj[b].pb(a);
-	}
+    // cout << "Case#" << _TestCase << ": ";
+    lld n; read(n);
 
-	vector<lld> decompose(n + 1, 0ll);
-	vector<lld> children(n + 1, 0ll);
-
-	dfs(1, 0, adj, decompose, children);
-
-	lld ans = 0, sz = n + 1;
-
-	forn(i, n) {
-		// i + 1
-		if (decompose[i + 1] < sz) {
-			sz = decompose[i + 1];
-			ans = i + 1;
-		}
-	}
-
-	// debhairu(children);
-	// println(decompose);
-
-	println(ans, sz);
+    lld ans = 1ll;
 
 
-	// cout << "\n";
-	return;
+    EACH(i, prime_numbers) {
+    	lld cnt = 0ll;
+    	if (i * i > n) {
+    		println("B", i);
+    		read(cnt);
+    		println("A", i);
+    		read(cnt);
+    		if (cnt > 0) {
+    			ans *= i;
+    		}
+    	} else {
+    		lld j = i;
+    		println("B", i);
+    		read(cnt);
+    		println("A", i);
+    	}
+    }
+
+
+    // cout << "\n"; 
+    return;
 }
 
 
 signed main() {
-	ios_base::sync_with_stdio(false); cin.tie(0);
-	cout.precision(10); cout << fixed;
+    ios_base::sync_with_stdio(false); cin.tie(0);
+    cout.precision(10); cout<<fixed;
 
-	lld T3X0 = 0, T353 = 1;
+	manipulated_seive();
+    lld T3X0 = 0, T353 = 1;
 
-	TESTCASES()
-	solveEachTest(T353 - T3X0);
-
-	return luctivud();
+    // TESTCASES() 	
+        solveEachTest(T353 - T3X0);
+        
+    return luctivud();
 }
 
-// Random Thought :  null
+// Random Thought :  null  
 /*
         Grab my throat and lift me in the air!
 */

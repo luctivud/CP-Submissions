@@ -40,6 +40,7 @@ typedef unsigned long long int llu;
 #define    CH3K(I7, E4, S7)    (((S7)>0) ? (I7)<(E4) : (I7)>(E4))
 #define   for4(I7,S4,E4,S7)    for(auto I7=(S4); CH3K(I7,E4,S7); (I7)+=(S7))
 #define        forn(I7, E4)    for(lld I7=0ll; I7 < E4; (I7)+=1ll)
+#define       forn1(I7, E4)    for(lld I7=1ll; I7 < E4+1; (I7)+=1ll)
 #define        EACH(I7, A7)    for (auto& I7: A7)
 #define              len(v)    ((int)((v).size()))
 #define              all(x)    (x).begin(), (x).end()
@@ -110,54 +111,63 @@ signed luctivud() {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-lld n;
 
 
-
-void dfs(lld node, lld par, vector<lld> adj[], vector<lld> &decompose, vector<lld> &children) {
-	children[node] = 1;
-	// decompose[node] = 0ll;
-	EACH(i, adj[node]) {
-		if (i != par) {
-			dfs(i, node, adj, decompose, children);
-			children[node] += children[i];
-			decompose[node] = max(decompose[node], children[i]);
-		}
-	}
-	decompose[node] = max(decompose[node], n - children[node]);
-}
-
+const lld MxN = inf<lld>();
 
 void solveEachTest(lld _TestCase) {
 	// cout << "Case#" << _TestCase << ": ";
-	read(n);
-	vector<lld> adj[n + 1];
-	forn(i, n - 1) {
-		lld a, b; read(a, b);
-		adj[a].pb(b);
-		adj[b].pb(a);
-	}
 
-	vector<lld> decompose(n + 1, 0ll);
-	vector<lld> children(n + 1, 0ll);
+	lld n; read(n);
 
-	dfs(1, 0, adj, decompose, children);
+	vector<vector<lld>> graph(n + 1, vector<lld>(n + 1, -1));
 
-	lld ans = 0, sz = n + 1;
-
-	forn(i, n) {
-		// i + 1
-		if (decompose[i + 1] < sz) {
-			sz = decompose[i + 1];
-			ans = i + 1;
+	forn(xx, n) {
+		string name; read(name);
+		lld neigh; read(neigh);
+		forn(xxx, neigh) {
+			lld a, b; read(a, b);
+			graph[xx + 1][a] = b;
+			graph[a][xx + 1] = b;
 		}
 	}
 
-	// debhairu(children);
-	// println(decompose);
+	vector<lld> key(n + 1, MxN);
+	key[1] = 0;
+	vector<bool> visited(n + 1, false);
+	vector<lld> parent(n + 1, -1);
 
-	println(ans, sz);
+	// println(graph);
 
+	lld total_weight = 0ll;
+	forn(xx, n) {
+		lld chosenKey = MxN, chosenInd = 0ll;
+		forn(i, n) {
+			if (!visited[i + 1] and (key[i + 1] < chosenKey)) {
+				chosenKey = key[i + 1];
+				chosenInd = i + 1;
+			}
+		}
+
+		// error(chosenKey, chosenInd);
+		visited[chosenInd] = true;
+
+		forn1(i, n) {
+			if (graph[i][chosenInd] != -1 and (chosenKey + graph[chosenInd][i] < key[i])) {
+				key[i] = chosenKey + graph[chosenInd][i];
+				parent[i] = chosenInd;
+			}
+		}
+		// debhairu(key);
+	}
+
+	// println(key);
+
+	for4(i, 2ll, n + 1ll, 1) {
+		total_weight += graph[i][parent[i]];
+	}
+
+	println(total_weight);
 
 	// cout << "\n";
 	return;

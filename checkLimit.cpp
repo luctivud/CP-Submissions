@@ -40,6 +40,7 @@ typedef unsigned long long int llu;
 #define    CH3K(I7, E4, S7)    (((S7)>0) ? (I7)<(E4) : (I7)>(E4))
 #define   for4(I7,S4,E4,S7)    for(auto I7=(S4); CH3K(I7,E4,S7); (I7)+=(S7))
 #define        forn(I7, E4)    for(lld I7=0ll; I7 < E4; (I7)+=1ll)
+#define       forn1(I7, E4)    for(lld I7=1ll; I7 < E4+1; (I7)+=1ll)
 #define        EACH(I7, A7)    for (auto& I7: A7)
 #define              len(v)    ((int)((v).size()))
 #define              all(x)    (x).begin(), (x).end()
@@ -110,54 +111,14 @@ signed luctivud() {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-lld n;
 
 
-
-void dfs(lld node, lld par, vector<lld> adj[], vector<lld> &decompose, vector<lld> &children) {
-	children[node] = 1;
-	// decompose[node] = 0ll;
-	EACH(i, adj[node]) {
-		if (i != par) {
-			dfs(i, node, adj, decompose, children);
-			children[node] += children[i];
-			decompose[node] = max(decompose[node], children[i]);
-		}
-	}
-	decompose[node] = max(decompose[node], n - children[node]);
-}
 
 
 void solveEachTest(lld _TestCase) {
 	// cout << "Case#" << _TestCase << ": ";
-	read(n);
-	vector<lld> adj[n + 1];
-	forn(i, n - 1) {
-		lld a, b; read(a, b);
-		adj[a].pb(b);
-		adj[b].pb(a);
-	}
-
-	vector<lld> decompose(n + 1, 0ll);
-	vector<lld> children(n + 1, 0ll);
-
-	dfs(1, 0, adj, decompose, children);
-
-	lld ans = 0, sz = n + 1;
-
-	forn(i, n) {
-		// i + 1
-		if (decompose[i + 1] < sz) {
-			sz = decompose[i + 1];
-			ans = i + 1;
-		}
-	}
-
-	// debhairu(children);
-	// println(decompose);
-
-	println(ans, sz);
-
+	lld a, b, c, d; read(a, b, c, d);
+	println(max({a * d, b * c, a * c, b * d}));
 
 	// cout << "\n";
 	return;
@@ -170,7 +131,7 @@ signed main() {
 
 	lld T3X0 = 0, T353 = 1;
 
-	TESTCASES()
+	// TESTCASES()
 	solveEachTest(T353 - T3X0);
 
 	return luctivud();

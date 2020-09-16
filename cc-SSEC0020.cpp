@@ -138,75 +138,20 @@ void add_undirected_edge(lld a, lld b, vector<lld> adj[]) {
 
 void solveEachTest(lld _TestCase) {
 	// cout << "Case#" << _TestCase << ": ";
-	lld n, m; read(n, m);
+	string s; read(s);
+	bool ok = true;
 
-	vector<lld> arr(n); read(arr);
+	lld n = len(s);
 
-	sort(all(arr));
-
-	set<lld> se;
-	multiset<lld> gaps;
-
-	forn(i, n) {
-		if (i) {
-			gaps.insert(arr[i] - arr[i - 1]);
-		}
-		se.insert(arr[i]);
+	lld i = 0ll;
+	lld num = 0ll;
+	while (i < n) {
+		num *= 10;
+		num += s[i] - '0';
+		ok &= !(num % (n - i++));
 	}
 
-	lld ans = 0ll;
-	if (len(se) and len(gaps)) {
-		ans = (*se.rbegin() - *se.begin() - *gaps.rbegin());
-	}
-	println(ans);
-
-	forn(qq, m) {
-		lld type, pos; read(type, pos);
-		ans = 0;
-		if (type == 0) {
-			auto hairu = se.lower_bound(pos);
-			lld posl = -1, posr = -1;
-			if (hairu != se.begin()) {
-				auto ihei = hairu;
-				ihei--;
-				posl = *ihei;
-				gaps.erase(gaps.find(pos - posl));
-			}
-
-			if (++hairu != se.end()) {
-				posr = *hairu;
-				gaps.erase(gaps.find(posr - pos));
-			}
-
-			if (posl != -1 and posr != -1) {
-				gaps.insert(posr - posl);
-			}
-			se.erase(pos);
-		} else {
-			auto hairu = se.lower_bound(pos);
-			lld posl = -1, posr = -1;
-			if (hairu != se.begin()) {
-				auto ihei = hairu;
-				ihei--;
-				posl = *ihei;
-				gaps.insert((pos - posl));
-			}
-
-			if (hairu != se.end()) {
-				posr = *hairu;
-				gaps.insert((posr - pos));
-			}
-
-			if (posl != -1 and posr != -1) {
-				gaps.erase(gaps.find(posr - posl));
-			}
-			se.insert(pos);
-		}
-		if (len(se) and len(gaps)) {
-			ans = (*se.rbegin() - *se.begin() - *gaps.rbegin());
-		}
-		println(ans);
-	}
+	println(ok ? "Yes" : "No");
 
 
 	// cout << "\n";

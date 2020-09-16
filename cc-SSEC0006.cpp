@@ -135,78 +135,80 @@ void add_undirected_edge(lld a, lld b, vector<lld> adj[]) {
 
 
 
+/* This part should be outside the main in global paradigm. */
+
+const long long MAXN = (lld)(1e6) + 1ll; // MAXN Size
+
+vector<long long >isPrime(MAXN , true); // checkIfPrime
+vector<long long >prime_numbers; // List of prime numbers
+vector<long long >smallest_prime_factor(MAXN); // smallest_prime_factor of a number
+
+
+void manipulated_seive() {
+	isPrime[0] = isPrime[1] = false ;
+
+	prime_numbers.push_back(2);
+	smallest_prime_factor[2] = 2ll;
+
+	for (long long int i = 4; i < MAXN ; i += 2) {
+		isPrime[i] = false;
+		smallest_prime_factor[i] = 2ll;
+	}
+
+	for (long long int i = 3; i < MAXN ; i += 2) {
+		if (isPrime[i]) {
+			prime_numbers.push_back(i);
+			smallest_prime_factor[i] = i;
+		}
+
+		for (long long int j = 0; j < (int)prime_numbers.size() && i * prime_numbers[j] < MAXN && prime_numbers[j] <= smallest_prime_factor[i]; j++) {
+			isPrime[i * prime_numbers[j]] = false;
+			smallest_prime_factor[i * prime_numbers[j]] = prime_numbers[j] ;
+		}
+	}
+}
+
+
+
+
+
+
+
 
 void solveEachTest(lld _TestCase) {
 	// cout << "Case#" << _TestCase << ": ";
-	lld n, m; read(n, m);
+	lld a, b; read(a, b);
 
-	vector<lld> arr(n); read(arr);
+	lld lo = (a * b + 3) / 4;
+	lld hi = (a * b);
 
-	sort(all(arr));
+	auto p = lower_bound(all(prime_numbers), a);
 
-	set<lld> se;
-	multiset<lld> gaps;
+	lld apos = p - prime_numbers.begin();
+	lld bpos = lower_bound(all(prime_numbers), b) - prime_numbers.begin();
 
-	forn(i, n) {
-		if (i) {
-			gaps.insert(arr[i] - arr[i - 1]);
+	for4(i, apos, bpos, 1ll) {
+		for4(j, i + 1ll, bpos, 1ll) {
+			if (prime_numbers[i] * prime_numbers[j] >= lo and prime_numbers[i] * prime_numbers[j] <= hi) {
+				cout << (prime_numbers[i]) << "," << (prime_numbers[j]) << "\n";
+			}
 		}
-		se.insert(arr[i]);
 	}
 
-	lld ans = 0ll;
-	if (len(se) and len(gaps)) {
-		ans = (*se.rbegin() - *se.begin() - *gaps.rbegin());
-	}
-	println(ans);
+	// EACH(p, prime_numbers) {
+	// while (*p < b) {
+	// 	// if (p > hi) break;
+	// 	lld start = (lo + *p - 1) / *p;
+	// 	lld end = (hi)  / *p;
+	// 	lld lb = max(apos, (lld)(lower_bound(all(prime_numbers), start) - prime_numbers.begin()));
+	// 	lld ub = min(bpos, (lld)(upper_bound(all(prime_numbers), end) - prime_numbers.begin()));
+	// 	while (lb < ub) {
+	// 		println(*p, prime_numbers[lb++]);
+	// 	}
+	// 	p++;
+	// }
 
-	forn(qq, m) {
-		lld type, pos; read(type, pos);
-		ans = 0;
-		if (type == 0) {
-			auto hairu = se.lower_bound(pos);
-			lld posl = -1, posr = -1;
-			if (hairu != se.begin()) {
-				auto ihei = hairu;
-				ihei--;
-				posl = *ihei;
-				gaps.erase(gaps.find(pos - posl));
-			}
 
-			if (++hairu != se.end()) {
-				posr = *hairu;
-				gaps.erase(gaps.find(posr - pos));
-			}
-
-			if (posl != -1 and posr != -1) {
-				gaps.insert(posr - posl);
-			}
-			se.erase(pos);
-		} else {
-			auto hairu = se.lower_bound(pos);
-			lld posl = -1, posr = -1;
-			if (hairu != se.begin()) {
-				auto ihei = hairu;
-				ihei--;
-				posl = *ihei;
-				gaps.insert((pos - posl));
-			}
-
-			if (hairu != se.end()) {
-				posr = *hairu;
-				gaps.insert((posr - pos));
-			}
-
-			if (posl != -1 and posr != -1) {
-				gaps.erase(gaps.find(posr - posl));
-			}
-			se.insert(pos);
-		}
-		if (len(se) and len(gaps)) {
-			ans = (*se.rbegin() - *se.begin() - *gaps.rbegin());
-		}
-		println(ans);
-	}
 
 
 	// cout << "\n";
@@ -219,6 +221,8 @@ signed main() {
 	cout.precision(10); cout << fixed;
 
 	lld T3X0 = 0, T353 = 1;
+	/* This should be called inside main. */
+	manipulated_seive();
 
 	// TESTCASES()
 	solveEachTest(T353 - T3X0);

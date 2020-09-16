@@ -30,6 +30,18 @@
 
 using namespace std;
 
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+using namespace __gnu_pbds;
+
+template <typename T> using PBSET = tree<pair<T, int>, null_type, less<pair<T, int>>, rb_tree_tag, tree_order_statistics_node_update>;
+
+/*
+    .insert(el) - set hai!
+    .find_by_order(3) - returns an iterator to the k-th largest element (counting from zero)
+    .order_of_key(6) - the number of items in a set that are strictly smaller than our item
+*/
+
 
 
 typedef long long int lld;
@@ -138,75 +150,16 @@ void add_undirected_edge(lld a, lld b, vector<lld> adj[]) {
 
 void solveEachTest(lld _TestCase) {
 	// cout << "Case#" << _TestCase << ": ";
-	lld n, m; read(n, m);
+	lld n; read(n);
 
-	vector<lld> arr(n); read(arr);
-
-	sort(all(arr));
-
-	set<lld> se;
-	multiset<lld> gaps;
+	PBSET<string> se;
 
 	forn(i, n) {
-		if (i) {
-			gaps.insert(arr[i] - arr[i - 1]);
-		}
-		se.insert(arr[i]);
+		string temp; read(temp);
+		println(se.order_of_key({temp, i-n}));
+		se.insert({temp, i});
 	}
 
-	lld ans = 0ll;
-	if (len(se) and len(gaps)) {
-		ans = (*se.rbegin() - *se.begin() - *gaps.rbegin());
-	}
-	println(ans);
-
-	forn(qq, m) {
-		lld type, pos; read(type, pos);
-		ans = 0;
-		if (type == 0) {
-			auto hairu = se.lower_bound(pos);
-			lld posl = -1, posr = -1;
-			if (hairu != se.begin()) {
-				auto ihei = hairu;
-				ihei--;
-				posl = *ihei;
-				gaps.erase(gaps.find(pos - posl));
-			}
-
-			if (++hairu != se.end()) {
-				posr = *hairu;
-				gaps.erase(gaps.find(posr - pos));
-			}
-
-			if (posl != -1 and posr != -1) {
-				gaps.insert(posr - posl);
-			}
-			se.erase(pos);
-		} else {
-			auto hairu = se.lower_bound(pos);
-			lld posl = -1, posr = -1;
-			if (hairu != se.begin()) {
-				auto ihei = hairu;
-				ihei--;
-				posl = *ihei;
-				gaps.insert((pos - posl));
-			}
-
-			if (hairu != se.end()) {
-				posr = *hairu;
-				gaps.insert((posr - pos));
-			}
-
-			if (posl != -1 and posr != -1) {
-				gaps.erase(gaps.find(posr - posl));
-			}
-			se.insert(pos);
-		}
-		if (len(se) and len(gaps)) {
-			ans = (*se.rbegin() - *se.begin() - *gaps.rbegin());
-		}
-		println(ans);
-	}
 
 
 	// cout << "\n";

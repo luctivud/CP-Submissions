@@ -1,17 +1,17 @@
 // ************************* J A I  S H R E E  R A M  *************************
 
 
-/*
-
+/* 
+  
       :: All is One ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-      Author: Udit "luctivud" Gupta
+      Author: Udit "luctivud" Gupta 
       linkedin : (https://www.linkedin.com/in/udit-gupta-1b7863135/)
 
-      My original ids go by the username @luctivud
+      My original ids go by the username @luctivud 
       However, if summoned, my alts can surround your surroundings in a flash.
 
-      Do you know Hairu Ihei ?
+      Do you know Hairu Ihei ? 
 
       :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: One is All ::
 
@@ -59,13 +59,13 @@ typedef unsigned long long int llu;
 void huehue(istream_iterator<string> it) {}
 template<typename T, typename... Args>
 void huehue(istream_iterator<string> it, T a, Args... args) {
-	cout << *it << " = " << a << ", ";
-	huehue(++it, args...);
+  cout << *it << " = " << a << ", ";
+  huehue(++it, args...);
 }
 
 
 template <class T> T inf() {
-	return numeric_limits<T>::max();
+  return numeric_limits<T>::max();
 }
 
 
@@ -93,19 +93,19 @@ template<typename T, typename... Args> void println(vector<T> &arr, Args &... ar
 template<typename T, typename... Args> void println(T a, Args... args) { cout << a << " "; println(args...); };
 
 
-const lld d4i[4] = { -1, 0, 1, 0}, d4j[4] = {0, 1, 0, -1};
-const lld d8i[8] = { -1, -1, 0, 1, 1, 1, 0, -1}, d8j[8] = {0, 1, 1, 1, 0, -1, -1, -1};
+const lld d4i[4]={-1, 0, 1, 0}, d4j[4]={0, 1, 0, -1};
+const lld d8i[8]={-1, -1, 0, 1, 1, 1, 0, -1}, d8j[8]={0, 1, 1, 1, 0, -1, -1, -1};
 
 const auto start_time = std::chrono::high_resolution_clock::now();
 signed luctivud() {
 
-#ifdef LUCTIVUD
-	auto end_time = std::chrono::high_resolution_clock::now();
-	std::chrono::duration<double> diff = end_time - start_time;
-	cerr << "Finished in : " << diff.count() << "\n";
-#endif
+    #ifdef LUCTIVUD
+      auto end_time = std::chrono::high_resolution_clock::now();
+      std::chrono::duration<double> diff = end_time-start_time;
+        cerr<<"Finished in : "<<diff.count() <<"\n";
+    #endif
 
-	return 0;
+    return 0;
 }
 
 
@@ -120,9 +120,9 @@ const int INFi = inf<int>();
 
 
 void add_undirected_edge(lld a, lld b, vector<lld> adj[]) {
-	adj[a].pb(b);
-	adj[b].pb(a);
-	return;
+  adj[a].pb(b);
+  adj[b].pb(a);
+  return;
 }
 
 
@@ -131,102 +131,61 @@ void add_undirected_edge(lld a, lld b, vector<lld> adj[]) {
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 */
 
+lld ans = 0ll;
+
+
+lld n, m; 
+
+lld solve(lld i, lld j, string path, vector<vector<lld>> matr, vector<vector<pair<string, lld>>> &dp, lld collected = 0ll) {
+	if (i<0 or j >= m) {
+		return 0;
+	}
+
+	if (i == 0 and j == m-1) {
+		return collected;
+	}
+
+	if (dp[i][j].s2 != -1) return dp[i][j].s2;
+
+	lld &ans = dp[i][j].s2;
+	string &path1 = dp[i][j].f1;
+
+	ans
+
+}
 
 
 
-
+	
 
 void solveEachTest(lld _TestCase) {
-	// cout << "Case#" << _TestCase << ": ";
-	lld n, m; read(n, m);
+    // cout << "Case#" << _TestCase << ": ";
+    read(n, m);
+    vector<vector<lld>> matr(n, vector<lld>(m)) ; read(matr);
 
-	vector<lld> arr(n); read(arr);
+    vector<vector<pair<string, lld>>> dp(n, vector<pair<string, lld>>(m, -1));
+    solve(n-1, 0, "", matr, dp);
 
-	sort(all(arr));
+    println(path);
 
-	set<lld> se;
-	multiset<lld> gaps;
-
-	forn(i, n) {
-		if (i) {
-			gaps.insert(arr[i] - arr[i - 1]);
-		}
-		se.insert(arr[i]);
-	}
-
-	lld ans = 0ll;
-	if (len(se) and len(gaps)) {
-		ans = (*se.rbegin() - *se.begin() - *gaps.rbegin());
-	}
-	println(ans);
-
-	forn(qq, m) {
-		lld type, pos; read(type, pos);
-		ans = 0;
-		if (type == 0) {
-			auto hairu = se.lower_bound(pos);
-			lld posl = -1, posr = -1;
-			if (hairu != se.begin()) {
-				auto ihei = hairu;
-				ihei--;
-				posl = *ihei;
-				gaps.erase(gaps.find(pos - posl));
-			}
-
-			if (++hairu != se.end()) {
-				posr = *hairu;
-				gaps.erase(gaps.find(posr - pos));
-			}
-
-			if (posl != -1 and posr != -1) {
-				gaps.insert(posr - posl);
-			}
-			se.erase(pos);
-		} else {
-			auto hairu = se.lower_bound(pos);
-			lld posl = -1, posr = -1;
-			if (hairu != se.begin()) {
-				auto ihei = hairu;
-				ihei--;
-				posl = *ihei;
-				gaps.insert((pos - posl));
-			}
-
-			if (hairu != se.end()) {
-				posr = *hairu;
-				gaps.insert((posr - pos));
-			}
-
-			if (posl != -1 and posr != -1) {
-				gaps.erase(gaps.find(posr - posl));
-			}
-			se.insert(pos);
-		}
-		if (len(se) and len(gaps)) {
-			ans = (*se.rbegin() - *se.begin() - *gaps.rbegin());
-		}
-		println(ans);
-	}
-
-
-	// cout << "\n";
-	return;
+    // cout << "\n"; 
+    return;
 }
 
 
 signed main() {
-	ios_base::sync_with_stdio(false); cin.tie(0);
-	cout.precision(10); cout << fixed;
+    ios_base::sync_with_stdio(false); cin.tie(0);
+    cout.precision(10); cout<<fixed;
 
-	lld T3X0 = 0, T353 = 1;
+    lld T3X0 = 0, T353 = 1;
 
-	// TESTCASES()
-	solveEachTest(T353 - T3X0);
-
-	return luctivud();
+    // TESTCASES() 
+        solveEachTest(T353 - T3X0);
+        
+    return luctivud();
 }
 
-// Random Thought :  null
+// Random Thought :  null  
 /*
         Grab my throat and lift me in the air!
 */

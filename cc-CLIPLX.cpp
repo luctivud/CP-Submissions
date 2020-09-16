@@ -138,75 +138,20 @@ void add_undirected_edge(lld a, lld b, vector<lld> adj[]) {
 
 void solveEachTest(lld _TestCase) {
 	// cout << "Case#" << _TestCase << ": ";
-	lld n, m; read(n, m);
+	lld x, y; read(x, y);
 
-	vector<lld> arr(n); read(arr);
+	lld lo = 0ll, hi = x;
 
-	sort(all(arr));
-
-	set<lld> se;
-	multiset<lld> gaps;
-
-	forn(i, n) {
-		if (i) {
-			gaps.insert(arr[i] - arr[i - 1]);
-		}
-		se.insert(arr[i]);
-	}
-
-	lld ans = 0ll;
-	if (len(se) and len(gaps)) {
-		ans = (*se.rbegin() - *se.begin() - *gaps.rbegin());
-	}
-	println(ans);
-
-	forn(qq, m) {
-		lld type, pos; read(type, pos);
-		ans = 0;
-		if (type == 0) {
-			auto hairu = se.lower_bound(pos);
-			lld posl = -1, posr = -1;
-			if (hairu != se.begin()) {
-				auto ihei = hairu;
-				ihei--;
-				posl = *ihei;
-				gaps.erase(gaps.find(pos - posl));
-			}
-
-			if (++hairu != se.end()) {
-				posr = *hairu;
-				gaps.erase(gaps.find(posr - pos));
-			}
-
-			if (posl != -1 and posr != -1) {
-				gaps.insert(posr - posl);
-			}
-			se.erase(pos);
+	while (lo <= hi) {
+		lld mid = lo + (hi - lo) / 2;
+		if ((mid * 2 + y - mid) >= x ) {
+			hi = mid - 1;
 		} else {
-			auto hairu = se.lower_bound(pos);
-			lld posl = -1, posr = -1;
-			if (hairu != se.begin()) {
-				auto ihei = hairu;
-				ihei--;
-				posl = *ihei;
-				gaps.insert((pos - posl));
-			}
-
-			if (hairu != se.end()) {
-				posr = *hairu;
-				gaps.insert((posr - pos));
-			}
-
-			if (posl != -1 and posr != -1) {
-				gaps.erase(gaps.find(posr - posl));
-			}
-			se.insert(pos);
+			lo = mid + 1;
 		}
-		if (len(se) and len(gaps)) {
-			ans = (*se.rbegin() - *se.begin() - *gaps.rbegin());
-		}
-		println(ans);
 	}
+
+	println(lo);
 
 
 	// cout << "\n";
@@ -220,7 +165,7 @@ signed main() {
 
 	lld T3X0 = 0, T353 = 1;
 
-	// TESTCASES()
+	TESTCASES()
 	solveEachTest(T353 - T3X0);
 
 	return luctivud();

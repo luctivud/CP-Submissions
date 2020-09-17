@@ -1,0 +1,5 @@
+What I did :
+
+1. Precompiled bits/stdc++.h and created the .gch file using g++ bits/stdc++.h in pwd.
+
+2. Reduced optimisation settings for compiler.

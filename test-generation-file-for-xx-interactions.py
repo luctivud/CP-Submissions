@@ -1,0 +1,68 @@
+'''     J A I ~ S H R E E ~ R A M     '''
+
+# Title: test-generation-file-for-xx-interactions.py
+# created on: 18-07-2020 at 19:02:52
+# Creator & Template : Udit Gupta "@luctivud"
+# https://github.com/luctivud
+# https://www.linkedin.com/in/udit-gupta-1b7863135/
+
+
+import math; from collections import *
+import sys; from functools import reduce
+from itertools import groupby
+
+# sys.setrecursionlimit(10**6)
+sys.stdout = open("input.txt","w")
+
+def get_ints(): return map(int, input().strip().split())
+def get_list(): return list(get_ints())
+def get_string(): return list(input().strip().split())
+def printxsp(*args): return print(*args, end="")
+def printsp(*args): return print(*args, end=" ")
+
+
+DIRECTIONS = [[0, 1], [0, -1], [1, 0], [1, -1]] #up, down, right, left
+NEIGHBOURS = [(i, j) for i in range(-1, 2) for j in range(-1, 2) if (i!=0 or j!=0)]
+
+
+OrdUnicode_a = ord('a'); OrdUnicode_A = ord('A')
+CAPS_ALPHABETS = {chr(i+OrdUnicode_A) : i for i in range(26)}
+SMOL_ALPHABETS = {i : chr(i+OrdUnicode_a) for i in range(26)}
+
+
+MOD_JOHAN = int(1e9)+7; MOD_LIGHT = 998244353; INFINITY = float('inf')
+MAXN_EYEPATCH = int(1e5)+1; MAXN_FULLMETAL = 501
+
+# Custom input output is now piped through terminal commands.
+import random
+
+# for _testcases_ in range(int(input())): 
+names = set()
+for i in range(100000):
+    sz = random.randint(1, 10)
+    name = ''
+    for i in range(sz):
+        name += SMOL_ALPHABETS[random.randint(0, 25)]
+    names.add(name)
+names = list(names)
+
+# print(names)
+
+N = len(names) - 1
+
+print(names[random.randint(0, N)])
+
+interactions = random.randint(1, 100000)
+
+print(interactions)
+for _ in range(interactions):
+    a = names[random.randint(0, N)]
+    b = names[random.randint(0, N)]
+    while b == a:
+        b = names[random.randint(0, N)]
+    print(a, b)
+
+'''
+THE LOGIC AND APPROACH IS MINE ( UDIT GUPTA )
+Link may be copy-pasted here, otherwise.
+'''

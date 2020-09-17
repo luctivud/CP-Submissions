@@ -1,0 +1,8 @@
+test #82:
+	730 177 992
+	
+good:
+	/home/luctivud/CPPractice/cc-SC_05__Good.cpp: time limit exceeded (2 seconds)
+bad:
+	225932
+	

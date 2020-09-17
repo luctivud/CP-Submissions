@@ -1,4 +1,3 @@
-
 /*MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWO:,'..'xXWWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMO. .:kOo.,kNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMO. .lNWWo..lXMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -64,13 +63,6 @@ void huehue(istream_iterator<string> it, T a, Args... args) {
 	huehue(++it, args...);
 }
 
-
-template <class T> T inf() {
-	return numeric_limits<T>::max();
-}
-
-
-
 void read() { return; }
 void print() { return; }
 void println() { cout << "\n"; return; }
@@ -99,7 +91,23 @@ const int d4i[4] = { -1, 0, 1, 0}, d4j[4] = {0, 1, 0, -1};
 const int d8i[8] = { -1, -1, 0, 1, 1, 1, 0, -1}, d8j[8] = {0, 1, 1, 1, 0, -1, -1, -1};
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+lld search(vector<lld> immediatePrepareCost, lld remainingCoins) {
+	lld res = -1ll;
 
+	lld l = 0, r = len(immediatePrepareCost) - 1;
+
+	while (l <= r) {
+		lld mid = l + (r - l) / 2;
+		if (immediatePrepareCost[mid] <= remainingCoins) {
+			res = mid;
+			l = mid + 1;
+		} else {
+			r = mid - 1;
+		}
+	}
+
+	return res;
+}
 
 
 
@@ -110,20 +118,19 @@ void solveEachTest(lld _TestCase = 1) {
 	vector<lld> decreaseTime(m), decreaseTimeCost(m), immediatePrepare(k), immediatePrepareCost(k);
 	read(decreaseTime, decreaseTimeCost, immediatePrepare, immediatePrepareCost);
 
-	lld minTime = inf<lld>();
-	println(minTime);
+	lld minTime = INT_MAX;
 	decreaseTime.pb(x);
 	decreaseTimeCost.pb(0);
 
-	for4(i, 0, m+1, 1) {
+	for4(i, 0, m + 1, 1) {
 		lld remainingCoins = s - decreaseTimeCost[i];
 		lld nowTimeTaken = decreaseTime[i];
 		lld todoPotions = n;
 		if (remainingCoins < 0) {
-			nowTimeTaken = x;
-			remainingCoins = s;
+			continue;
 		}
-		lld chosen = lld(upper_bound(all(immediatePrepareCost), remainingCoins) - immediatePrepareCost.begin()) - 1ll;
+
+		lld chosen = search(immediatePrepareCost, remainingCoins);
 		if (chosen != -1) {
 			todoPotions -= immediatePrepare[chosen];
 		}

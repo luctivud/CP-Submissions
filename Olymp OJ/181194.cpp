@@ -1,10 +1,10 @@
 // ************************.- J A I  S H R E E  R A M -.*************************
 
 
-/* 
+/*
       ::: All is One ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-          Author   :  Udit "luctivud" Gupta 
+          Author   :  Udit "luctivud" Gupta
 
           linkedin :  https://www.linkedin.com/in/udit-gupta-1b7863135/
           github   :  https://github.com/luctivud
@@ -54,13 +54,13 @@ typedef unsigned long long int llu;
 void huehue(istream_iterator<string> it) {}
 template<typename T, typename... Args>
 void huehue(istream_iterator<string> it, T a, Args... args) {
-  cout << *it << " = " << a << ", ";
-  huehue(++it, args...);
+	cout << *it << " = " << a << ", ";
+	huehue(++it, args...);
 }
 
 
 template <class T> T inf() {
-  return numeric_limits<T>::max();
+	return numeric_limits<T>::max();
 }
 
 
@@ -88,8 +88,8 @@ template<typename T, typename... Args> void println(vector<T> &arr, Args &... ar
 template<typename T, typename... Args> void println(T a, Args... args) { cout << a << " "; println(args...); };
 
 
-const lld d4i[4]={-1, 0, 1, 0}, d4j[4]={0, 1, 0, -1};
-const lld d8i[8]={-1, -1, 0, 1, 1, 1, 0, -1}, d8j[8]={0, 1, 1, 1, 0, -1, -1, -1};
+const lld d4i[4] = { -1, 0, 1, 0}, d4j[4] = {0, 1, 0, -1};
+const lld d8i[8] = { -1, -1, 0, 1, 1, 1, 0, -1}, d8j[8] = {0, 1, 1, 1, 0, -1, -1, -1};
 
 
 
@@ -97,27 +97,27 @@ const auto start_time = std::chrono::high_resolution_clock::now();
 
 signed light() {
 
-    ios_base::sync_with_stdio(false); cin.tie(0);
-    cout.precision(10); cout << fixed;
+	ios_base::sync_with_stdio(false); cin.tie(0);
+	cout.precision(10); cout << fixed;
 
-    #ifdef LUCTIVUD
-      freopen("/home/luctivud/CPPractice/Zinput.txt", "r", stdin);
-      freopen("/home/luctivud/CPPractice/Zoutput.txt", "w", stdout);
-    #endif
+#ifdef LUCTIVUD
+	freopen("/home/luctivud/CPPractice/Zinput.txt", "r", stdin);
+	freopen("/home/luctivud/CPPractice/Zoutput.txt", "w", stdout);
+#endif
 
-    return 0;
+	return 0;
 }
 
 
 signed luctivud() {
 
-    #ifdef LUCTIVUD
-      auto end_time = std::chrono::high_resolution_clock::now();
-      std::chrono::duration<double> diff = end_time - start_time;
-      cerr << "Finished in : " << diff.count() << "\n";
-    #endif
+#ifdef LUCTIVUD
+	auto end_time = std::chrono::high_resolution_clock::now();
+	std::chrono::duration<double> diff = end_time - start_time;
+	cerr << "Finished in : " << diff.count() << "\n";
+#endif
 
-    return 0; 
+	return 0;
 }
 
 
@@ -133,9 +133,9 @@ const int INFi = inf<int>();
 
 
 void add_undirected_edge(lld a, lld b, vector<lld> adj[]) {
-    adj[a].pb(b);
-    adj[b].pb(a);
-    return;
+	adj[a].pb(b);
+	adj[b].pb(a);
+	return;
 }
 
 
@@ -150,30 +150,40 @@ void add_undirected_edge(lld a, lld b, vector<lld> adj[]) {
 
 
 void solveEachTest(lld _TestCase) {
-    // cout << "Case #" << _TestCase << ": ";
-    lld n; read(n);
+	// cout << "Case #" << _TestCase << ": ";
 
-    lld dp[n+1][2][3] = {0};
+	lld n; read(n);
+	lld arr[n + 3];
+	forn1(i, n) {
+		read(arr[i]);
+	}
+	arr[n + 1] = mod, arr[n + 2] = mod;
 
-    
-    
+	lld dp[n + 2] = {0};
+	dp[n + 2] = mod, dp[n + 1] = mod;
+	dp[n] = 0;
 
-    // cout << "\n"; 
-    return;
+	for4(i, n - 1, 0, -1) {
+		dp[i] = min(dp[i + 1] + llabs(arr[i] - arr[i + 1]), dp[i + 2] + llabs(arr[i] - arr[i + 2]));
+	}
+
+	println(dp[1]);
+	// cout << "\n";
+	return;
 }
 
 
 signed main() {
-    
-    light(); lld T3X0 = 0, T353 = 1;
 
-    // TESTCASES() 
-        solveEachTest(T353 - T3X0);
-        
-    PLEASE_AC luctivud(); 
+	light(); lld T3X0 = 0, T353 = 1;
+
+	// TESTCASES()
+	solveEachTest(T353 - T3X0);
+
+	PLEASE_AC luctivud();
 }
 
-// Random Thought :  null  
+// Random Thought :  null
 /*
         My lungs will fill and then deflate
         They fill with fire, exhale desire

@@ -153,10 +153,21 @@ void solveEachTest(lld _TestCase) {
     // cout << "Case #" << _TestCase << ": ";
     lld n; read(n);
 
-    lld dp[n+1][2][3] = {0};
+    vector<lld> arr(n); read(arr);
 
-    
-    
+    sort(all(arr));
+
+    arr.insert(arr.begin(), -INFi);
+    arr.pb(INFi);
+    lld ans = 0ll;
+    forn1(i, n) {
+    	ans += min(arr[i] - arr[i-1], arr[i+1]-arr[i]);
+    }
+
+
+    println(ans);
+
+
 
     // cout << "\n"; 
     return;

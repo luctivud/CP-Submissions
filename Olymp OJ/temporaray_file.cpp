@@ -151,12 +151,8 @@ void add_undirected_edge(lld a, lld b, vector<lld> adj[]) {
 
 void solveEachTest(lld _TestCase) {
     // cout << "Case #" << _TestCase << ": ";
-    lld n; read(n);
-
-    lld dp[n+1][2][3] = {0};
-
     
-    
+
 
     // cout << "\n"; 
     return;
@@ -167,7 +163,7 @@ signed main() {
     
     light(); lld T3X0 = 0, T353 = 1;
 
-    // TESTCASES() 
+    TESTCASES() 
         solveEachTest(T353 - T3X0);
         
     PLEASE_AC luctivud(); 

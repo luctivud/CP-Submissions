@@ -144,6 +144,12 @@ void add_undirected_edge(lld a, lld b, vector<lld> adj[]) {
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 */
 
+struct Person {
+	lld a, b, c;
+	void setPerson(lld x, lld y, lld z) {
+		a = x, b = y, c = z;
+	}
+};
 
 
 
@@ -152,11 +158,30 @@ void add_undirected_edge(lld a, lld b, vector<lld> adj[]) {
 void solveEachTest(lld _TestCase) {
     // cout << "Case #" << _TestCase << ": ";
     lld n; read(n);
+    lld dp[5001] = {0};
+    vector<Person> ppl;
 
-    lld dp[n+1][2][3] = {0};
+    forn(i, n) {
+    	lld a, b, c; read(a, b, c);
+    	Person p; p.setPerson(a, b, c);
+    	ppl.pb(p);
+    }
 
-    
-    
+    forn(i, n) {
+    	lld temp1, temp2;
+    	if (i-1 >= 0) {
+    		temp1 = dp[i-1];
+    	} else {
+    		temp1 = 0;
+    	}
+
+    	if (i-2 >= 0) {
+    		temp2 = dp[i-2];
+    	} else {
+    		temp
+    	}
+    	dp[i+1] = min()
+    }
 
     // cout << "\n"; 
     return;
@@ -167,7 +192,7 @@ signed main() {
     
     light(); lld T3X0 = 0, T353 = 1;
 
-    // TESTCASES() 
+    // TESTCASES() 	
         solveEachTest(T353 - T3X0);
         
     PLEASE_AC luctivud(); 

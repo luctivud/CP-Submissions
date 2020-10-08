@@ -122,7 +122,7 @@ signed luctivud() {
 
 
 
-const lld MOD = lld(1e9) + 7ll;
+const lld MOD = 12345;
 const lld mod = MOD;
 
 
@@ -153,21 +153,17 @@ void solveEachTest(lld _TestCase) {
 	// cout << "Case #" << _TestCase << ": ";
 	lld n; read(n);
 
-	lld dp[n + 1][2][2];
-	dp[1][0][0] = 1, dp[1][1][0] = 1;
-	dp[1][0][1] = 0, dp[1][1][1] = 0;
+	lld dp[n + 1][3];
+
+	dp[1][0] = 1, dp[1][1] = 1, dp[1][2] = 0;
 
 	for4(i, 2, n + 1, 1) {
-		dp[i][0][0] = dp[i - 1][1][1] + dp[i - 1][1][0];
-		dp[i][1][0] = dp[i - 1][0][1] + dp[i - 1][0][0];
-		dp[i][0][1] = dp[i - 1][0][0];
-		dp[i][1][1] = dp[i - 1][1][0];
-		// error(i, dp[i][0][0], dp[i][0][1], dp[i][1][0], dp[i][1][1]);
+		dp[i][0] = (dp[i - 1][0] + dp[i - 1][1] + dp[i - 1][2]) % MOD;
+		dp[i][1] = dp[i - 1][0];
+		dp[i][2] = dp[i - 1][1];
 	}
 
-	println(dp[n][0][1] + dp[n][0][0] + dp[n][1][0] + dp[n][1][1]);
-
-
+	println((dp[n][0] + dp[n][1] + dp[n][2]) % MOD);
 	// cout << "\n";
 	return;
 }

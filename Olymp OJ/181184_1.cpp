@@ -152,20 +152,19 @@ void add_undirected_edge(lld a, lld b, vector<lld> adj[]) {
 void solveEachTest(lld _TestCase) {
 	// cout << "Case #" << _TestCase << ": ";
 	lld n; read(n);
+	vector<lld> arr(n); read(arr);
 
-	lld dp[n + 1][2][2];
-	dp[1][0][0] = 1, dp[1][1][0] = 1;
-	dp[1][0][1] = 0, dp[1][1][1] = 0;
+	sort(all(arr));
 
-	for4(i, 2, n + 1, 1) {
-		dp[i][0][0] = dp[i - 1][1][1] + dp[i - 1][1][0];
-		dp[i][1][0] = dp[i - 1][0][1] + dp[i - 1][0][0];
-		dp[i][0][1] = dp[i - 1][0][0];
-		dp[i][1][1] = dp[i - 1][1][0];
-		// error(i, dp[i][0][0], dp[i][0][1], dp[i][1][0], dp[i][1][1]);
+	lld dp[n + 1][2] = {0};
+	dp[0][1] = 0, dp[0][0] = 0;
+	forn(i, n) {
+		dp[i + 1][0] = dp[i][1];
+		dp[i + 1][1] =  dp[i][0] + arr[i] - ((i - 1 >= 0) ? arr[i - 1] : 0);
+		error(i, dp[i+1][0], dp[i+1][1]);
 	}
 
-	println(dp[n][0][1] + dp[n][0][0] + dp[n][1][0] + dp[n][1][1]);
+	println(dp[n][1]);
 
 
 	// cout << "\n";

@@ -151,33 +151,36 @@ void add_undirected_edge(lld a, lld b, vector<lld> adj[]) {
 
 void solveEachTest(lld _TestCase) {
     // cout << "Case #" << _TestCase << ": ";
-    lld n; read(n);
+    
+	lld n; read(n);
+	vector<lld> arr(n); read(arr);
 
-    vector<lld> arr(n); read(arr);
+	lld dp[n+1][3];
+	mems(dp, 0);
 
-    lld dp[n+1][3] = {0};
+	forn1(i, n) {
+		if (arr[i] == 0) {
+			dp[i][0] = min({dp[i-1][0], dp[i-1][1], dp[i-1][2]}) + 1;
+			dp[i][1] = dp[i-1][1];
+			dp[i][2] = dp[i-1][2];
+		} else if (arr[i] == 1) {
+			dp[i][0] = dp[i-1][0] + 1;
+			dp[i][1] = min(dp[i-1][0], dp[i-1][2]);
+			dp[i][2] = dp[i-1][2];
+		} else if (arr[i] == 2) {
+			dp[i][0] = dp[i-1][0] + 1;
+			dp[i][1] = dp[i-1][1];
+			dp[i][2] = min(dp[i-1][0], dp[i-1][1]);
+		} else {
+			dp[i][0] = dp[i-1][0] + 1;
+			dp[i][1] = min(dp[i-1][0], dp[i-1][2]);
+			dp[i][2] = min(dp[i-1][0], dp[i-1][1]);
+		}
+		error(dp[i][0], dp[i][1], dp[i][2], i);
+	}	
 
-    forn1(i, n) {
-    	if (arr[i-1] == 0) {
-    		dp[i][0] = max({dp[i-1][0], dp[i-1][1], dp[i-1][2]});
-    		dp[i][1] = dp[i-1][1];
-    		dp[i][2] = dp[i-1][2];
-    	} else if (arr[i-1] == 1) {
-    		dp[i][0] = max({dp[i-1][0], dp[i-1][1], dp[i-1][2]});
-    		dp[i][1] = 1 + max(dp[i-1][0], dp[i-1][2]);
-    		dp[i][2] = dp[i-1][2];
-    	} else if (arr[i-1] == 2) {
-    		dp[i][0] = max({dp[i-1][0], dp[i-1][1], dp[i-1][2]});
-    		dp[i][1] = dp[i-1][1];
-    		dp[i][2] = 1 + max(dp[i-1][0], dp[i-1][1]);
-    	} else if (arr[i-1] == 3) {
-    		dp[i][1] = 1 + min({dp[i-1][0], dp[i-1][2]});
-    		dp[i][2] = 1 + min(dp[i-1][0], dp[i-1][1]);
-    		dp[i][0] = min({dp[i-1][0], dp[i-1][1], dp[i-1][2]});
-    	}
-    }	
+	println(min({dp[n][0], dp[n][1], dp[n][2]}));
 
-    println(n - max({dp[n][0], dp[n][1], dp[n][2]}));
 
     // cout << "\n"; 
     return;

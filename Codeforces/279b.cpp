@@ -151,46 +151,36 @@ void add_undirected_edge(lld a, lld b, vector<lld> adj[]) {
 
 void solveEachTest(lld _TestCase) {
     // cout << "Case #" << _TestCase << ": ";
-    lld n, sum; read(n, sum);
+    lld n, m; read(n, m);
+    vector<lld> arr(n); read(arr);
 
-    if (sum == 0) {
-    	if (n == 1) {
-    		println(0, 0);
+    lld ans = 0ll;
+
+    lld l = 0, r = n;
+    while (l <= r) {
+    	lld mid = l + (r - l) / 2;
+    	lld tot = 0ll;
+    	forn(i, mid) {
+    		tot += arr[i];
+    	}
+
+    	bool ok = tot <= m;
+    	for4(i, mid, n, 1) {
+    		tot -= arr[i-mid];
+    		tot += arr[i];
+    		ok |= tot <= m;
+    	}
+
+    	if (ok) {
+    		ans = max(ans, mid);
+    		l = mid + 1;
     	} else {
-    		println(-1, -1);
+    		r = mid - 1;
     	}
-    	return;
     }
 
-    string mx = "", mn = "";
-    lld curr = 1ll;
-    while (curr <= n) {
-    	lld thisNum = min(sum, 9ll);
-    	sum -= thisNum;
-    	mx += char('0' + thisNum);
-    	curr++;
-    }
+    println(ans);
 
-    // error(sum);
-    if (sum > 0) {
-    	println(-1, -1);
-    	return;
-    }
-    string mxCopy = mx;
-
-    bool ok = mx[n-1] - '0';
-    if (!ok) {
-    	mx[n-1] = char(1+mx[n-1]);
-    }
-    forn(i, n) {
-    	if (!ok and (mx[n-1-i] - '0') and i) {
-    		mx[n-i-1] = char(mx[n-i-1]-1);
-    		ok = true;
-    	}
-    	mn += mx[n-i-1];
-    }
-
-    println(mn, mxCopy);
 
     // cout << "\n"; 
     return;

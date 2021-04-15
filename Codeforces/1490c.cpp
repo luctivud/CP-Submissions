@@ -146,36 +146,26 @@ void add_undirected_edge(lld a, lld b, vector<lld> adj[]) {
 */
 
 
+set<int> se;
 
+bool isPresent(int num) {
+	return se.find(num) != se.end();
+}
 
 
 
 void solveEachTest(int _TestCase) {
     // cout << "Case #" << _TestCase << ": ";
-    int n, k; read(n, k);
-    int arr[n]; 
-    set<int> se; 
-    forn(i, n) {
-    	read(arr[i]);
-    	se.insert(arr[i]);
+    int n; read(n);
+
+    int i = 1;
+    bool ok = false;
+    while (i*i*i < n and !ok) {
+    	ok |= (isPresent(i*i*i) & isPresent(n - i*i*i));
+    	i++;
     }
 
-    int sz = se.size();
-    vector<lld> ans;
-    for (auto i : se) {
-    	ans.pb(i);
-    }
-    forn(i, k-len(se)) {
-    	ans.pb(1);
-    }
-    if (sz <= k) {
-    	println(n * k);
-    	forn(i, n) {
-    		print(ans);
-    	} cout << "\n";
-    } else {
-    	println(-1);
-    }
+    println(ok ? "YES" : "NO");
 
     // cout << "\n"; 
     return;
@@ -184,14 +174,15 @@ void solveEachTest(int _TestCase) {
 
 signed main() {
     light(); int T3X0 = 0, T353 = 1;
+    int num = 1;
+    while (num <= int(1e4)) {
+    	se.insert(num * num * num);
+    	num++;
+    }
     TESTCASES() 
         solveEachTest(T353 - T3X0);
     PLEASE_AC luctivud(); 
 }
 
-// Random Thought : 
-
-/*
-        My lungs will fill and then deflate
-        They fill with fire, exhale desire
-*/
+/*        0.2s   Domain Expansion:  
+                              MALEVOLENT SHRINE     */

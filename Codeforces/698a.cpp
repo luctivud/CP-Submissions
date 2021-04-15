@@ -28,6 +28,7 @@ using namespace std;
 
 typedef long long int lld;
 typedef unsigned long long int llu;
+#define int lld
 
 #define         TESTCASES()    cin >> (T3X0); T353 = T3X0; while(T3X0--)
 #define          input(V3C)    for(auto &V3C_I7 : (V3C)) cin >> (V3C_I7)
@@ -149,38 +150,25 @@ void add_undirected_edge(lld a, lld b, vector<lld> adj[]) {
 
 
 
-void solveEachTest(lld _TestCase) {
+void solveEachTest(int _TestCase) {
     // cout << "Case #" << _TestCase << ": ";
-    
-	lld n; read(n);
-	vector<lld> arr(n); read(arr);
+    int n; read(n);
+    int arr[n]; forn(i, n) read(arr[i]);
 
-	lld dp[n+1][3];
-	mems(dp, 0);
+    int dp[n+1][3]; mems(dp, 0);
+    forn(i, n) {
+    	dp[i+1][0] = min({dp[i][0], dp[i][1], dp[i][2]}) + 1;
+    	dp[i+1][1] = n;
+    	dp[i+1][2] = n;
+    	if (arr[i] == 1 or arr[i] == 3) {
+    		dp[i+1][1] = min(dp[i][0], dp[i][2]);
+    	}
+    	if (arr[i] == 2 or arr[i] == 3) {	
+    		dp[i+1][2] = min(dp[i][0], dp[i][1]);
+    	}
+    }
 
-	forn1(i, n) {
-		if (arr[i] == 0) {
-			dp[i][0] = min({dp[i-1][0], dp[i-1][1], dp[i-1][2]}) + 1;
-			dp[i][1] = dp[i-1][1];
-			dp[i][2] = dp[i-1][2];
-		} else if (arr[i] == 1) {
-			dp[i][0] = dp[i-1][0] + 1;
-			dp[i][1] = min(dp[i-1][0], dp[i-1][2]);
-			dp[i][2] = dp[i-1][2];
-		} else if (arr[i] == 2) {
-			dp[i][0] = dp[i-1][0] + 1;
-			dp[i][1] = dp[i-1][1];
-			dp[i][2] = min(dp[i-1][0], dp[i-1][1]);
-		} else {
-			dp[i][0] = dp[i-1][0] + 1;
-			dp[i][1] = min(dp[i-1][0], dp[i-1][2]);
-			dp[i][2] = min(dp[i-1][0], dp[i-1][1]);
-		}
-		error(dp[i][0], dp[i][1], dp[i][2], i);
-	}	
-
-	println(min({dp[n][0], dp[n][1], dp[n][2]}));
-
+    println(*min_element(dp[n], dp[n]+3));
 
     // cout << "\n"; 
     return;
@@ -188,17 +176,11 @@ void solveEachTest(lld _TestCase) {
 
 
 signed main() {
-    
-    light(); lld T3X0 = 0, T353 = 1;
-
+    light(); int T3X0 = 0, T353 = 1;
     // TESTCASES() 
         solveEachTest(T353 - T3X0);
-        
     PLEASE_AC luctivud(); 
 }
 
-// Random Thought :  null  
-/*
-        My lungs will fill and then deflate
-        They fill with fire, exhale desire
-*/
+/*        0.2s   Domain Expansion:  
+                              MALEVOLENT SHRINE     */

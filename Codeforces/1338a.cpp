@@ -152,30 +152,21 @@ void add_undirected_edge(lld a, lld b, vector<lld> adj[]) {
 
 void solveEachTest(int _TestCase) {
     // cout << "Case #" << _TestCase << ": ";
-    int n, k; read(n, k);
-    int arr[n]; 
-    set<int> se; 
-    forn(i, n) {
-    	read(arr[i]);
-    	se.insert(arr[i]);
+    int n; read(n);
+    int arr[n]; forn(i, n) read(arr[i]);
+
+    int mx = 0ll;
+    forn(i, n-1) {
+    	mx = max(mx, arr[i]-arr[i+1]);
+    	arr[i+1] = max(arr[i], arr[i+1]);
     }
 
-    int sz = se.size();
-    vector<lld> ans;
-    for (auto i : se) {
-    	ans.pb(i);
+    int ans = 1;
+    while ((int)pow(2, ans-1) <= mx) {
+    	ans++;
     }
-    forn(i, k-len(se)) {
-    	ans.pb(1);
-    }
-    if (sz <= k) {
-    	println(n * k);
-    	forn(i, n) {
-    		print(ans);
-    	} cout << "\n";
-    } else {
-    	println(-1);
-    }
+
+    println(--ans);
 
     // cout << "\n"; 
     return;
@@ -189,9 +180,5 @@ signed main() {
     PLEASE_AC luctivud(); 
 }
 
-// Random Thought : 
-
-/*
-        My lungs will fill and then deflate
-        They fill with fire, exhale desire
-*/
+/*        0.2s   Domain Expansion:  
+                              MALEVOLENT SHRINE     */

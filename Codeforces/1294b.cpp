@@ -152,29 +152,38 @@ void add_undirected_edge(lld a, lld b, vector<lld> adj[]) {
 
 void solveEachTest(int _TestCase) {
     // cout << "Case #" << _TestCase << ": ";
-    int n, k; read(n, k);
-    int arr[n]; 
-    set<int> se; 
+    int n; read(n);
+    pair<int, char> dp[102][102];
+    int arr[102][102]; mems(arr, 0);
     forn(i, n) {
-    	read(arr[i]);
-    	se.insert(arr[i]);
+    	arr[read(_TestCase)+1][read(_TestCase)+1] = 1;
+    }
+    forn1(i, 102) {
+      	forn1(j, 102) {
+        	dp[i-1][j-1].f1 = 0;
+        	dp[i-1][j-1].s2 = 'Z';
+     	}
     }
 
-    int sz = se.size();
-    vector<lld> ans;
-    for (auto i : se) {
-    	ans.pb(i);
+    for4(i, 100, 0, -1) {
+    	for4(j, 100, 0, -1) {
+    		int val = arr[i][j] + max(dp[i+1][j].f1, dp[i][j+1].f1);
+			if (dp[i+1][j].f1 < dp[i][j+1].f1) {
+				dp[i][j].s2 = 'R';
+			} else if (dp[i+1][j].f1 > dp[i][j+1].f1) {
+				dp[i][j].s2 = 'U';
+			} else if ((dp[i+1][j].f1 == dp[i][j+1].f1) and (dp[i+1][j].f1 > dp[i][j].f1)) {
+				dp[i][j].s2 = 'R';
+			}
+			dp[i][j].f1 = val;
+    	}
     }
-    forn(i, k-len(se)) {
-    	ans.pb(1);
-    }
-    if (sz <= k) {
-    	println(n * k);
-    	forn(i, n) {
-    		print(ans);
-    	} cout << "\n";
-    } else {
-    	println(-1);
+
+    for (int i = 1; i<6; i++) {
+      	for (int j = 1; j<6; j++) {
+        	cout << dp[i][j].f1 << ":" << dp[i][j].s2 << " ";
+     	}
+     	cout << "\n";
     }
 
     // cout << "\n"; 
@@ -189,9 +198,5 @@ signed main() {
     PLEASE_AC luctivud(); 
 }
 
-// Random Thought : 
-
-/*
-        My lungs will fill and then deflate
-        They fill with fire, exhale desire
-*/
+/*        0.2s   Domain Expansion:  
+                              MALEVOLENT SHRINE     */

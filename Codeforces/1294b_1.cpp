@@ -152,29 +152,41 @@ void add_undirected_edge(lld a, lld b, vector<lld> adj[]) {
 
 void solveEachTest(int _TestCase) {
     // cout << "Case #" << _TestCase << ": ";
-    int n, k; read(n, k);
-    int arr[n]; 
-    set<int> se; 
+    int n; read(n);
+
+    pair<int, int> arr[n+1];
     forn(i, n) {
-    	read(arr[i]);
-    	se.insert(arr[i]);
+    	read(arr[i].f1, arr[i].s2);
+    }
+    arr[n].f1 = 0; arr[n].s2 = 0;
+
+    sort(arr, arr+n+1, [](pair<int, int> &a, pair<int, int> &b) {
+    	return a.f1 == b.f1 ? a.s2 < b.s2 : a.f1 < b.f1;
+    });
+
+
+    bool ok = true;
+    string ans;
+
+    // forn(i, n+1) {
+    // 	println(arr[i].f1, arr[i].s2);
+    // }
+
+    forn(i, n) {
+    	ok &= (arr[i].f1 <= arr[i+1].f1 and arr[i].s2 <= arr[i+1].s2);
+    	forn(j, arr[i+1].f1 - arr[i].f1) {
+    		ans += 'R';
+    	}
+    	forn(j, arr[i+1].s2 - arr[i].s2) {
+    		ans += 'U';
+    	}
     }
 
-    int sz = se.size();
-    vector<lld> ans;
-    for (auto i : se) {
-    	ans.pb(i);
-    }
-    forn(i, k-len(se)) {
-    	ans.pb(1);
-    }
-    if (sz <= k) {
-    	println(n * k);
-    	forn(i, n) {
-    		print(ans);
-    	} cout << "\n";
+    if (ok) {
+    	println("YES");
+    	println(ans);
     } else {
-    	println(-1);
+    	println("NO");
     }
 
     // cout << "\n"; 
@@ -189,9 +201,5 @@ signed main() {
     PLEASE_AC luctivud(); 
 }
 
-// Random Thought : 
-
-/*
-        My lungs will fill and then deflate
-        They fill with fire, exhale desire
-*/
+/*        0.2s   Domain Expansion:  
+                              MALEVOLENT SHRINE     */

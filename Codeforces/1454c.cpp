@@ -153,33 +153,23 @@ void add_undirected_edge(lld a, lld b, vector<lld> adj[]) {
 void solveEachTest(int _TestCase) {
     // cout << "Case #" << _TestCase << ": ";
     int n; read(n);
-    int arr[n]; 
-    multiset<int> se;
-    forn(i, n) {
-    	read(arr[i]);
-    	se.insert(arr[i]);
+    int arr[n]; forn(i, n) read(arr[i]);
+    vector<int> cnt(n+1, 1);
+
+    n = unique(arr, arr+n)-arr;
+
+    for4(i, 0, n, 1) {
+    	cnt[arr[i]] += 1;
     }
+    cnt[arr[0]] -= 1;
+    cnt[arr[n-1]] -= 1;
 
-    vector<int> ans;
-
-    forn(xx, 2) {
-    	int num = *se.rbegin();
-    	int i = 1; 
-    	while (i*i < num) {
-    		if (num % i == 0) {
-	    		se.erase(se.find(i));
-	    		se.erase(se.find(num/i));
-	    	}
-    		i++;
-    	}
-    	if (i * i == num) {
-    		se.erase(se.find(i));
-    	}
-    	ans.pb(num);
+    int ans = INFi;
+    forn(i, n) {
+    	ans = min(ans, cnt[arr[i]]);
     }
 
     println(ans);
-
 
     // cout << "\n"; 
     return;
@@ -188,7 +178,7 @@ void solveEachTest(int _TestCase) {
 
 signed main() {
     light(); int T3X0 = 0, T353 = 1;
-    // TESTCASES() 
+    TESTCASES() 
         solveEachTest(T353 - T3X0);
     PLEASE_AC luctivud(); 
 }

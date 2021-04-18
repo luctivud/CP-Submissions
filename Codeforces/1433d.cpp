@@ -149,16 +149,48 @@ void add_undirected_edge(lld a, lld b, vector<lld> adj[]) {
 
 
 
-
 void solveEachTest(int _TestCase) {
     // cout << "Case #" << _TestCase << ": ";
-    int x; read(x);
+    int n; read(n);
+    map<int, vector<int>> cities;
+    forn(i, n) {
+    	cities[read(_TestCase)].pb(i+1);
+    }
 
-    int ans = 0ll;
-    while (ans * (ans + 1) < 2 * x) ans++;
-    if (ans * (ans + 1) == 2 * (x + 1)) ans++;
+    int mn = n, mx = 0, mxNum = n, mnNum = n;
+    if (len(cities) <= 1) {
+    	println("NO");
+    	return;
+    }
 
-    println((ans));
+    // error(n);
+    // for (auto i : cities) {
+    // 	print(i.f1, ":"); println(i.s2);
+    // }println();
+
+    println("YES");
+    for (auto i : cities) {
+    	if (len(i.s2) < mn) {
+    		mn = len(i.s2);
+    		mnNum = i.f1;
+    	}
+    	if (len(i.s2) > mx or (mx == mn and mx == len(i.s2))) {
+    		mx = len(i.s2);
+    		mxNum = i.f1;
+    	}
+    }
+
+    for (auto i : cities) {
+    	if (i.f1 == mnNum) {
+    		forn1(j, mn-1) {
+    			println(cities[mxNum][0], i.s2[j]);
+    		}
+    	} else {
+    		for (auto j : i.s2) {
+    			println(j, cities[mnNum][0]);
+    		}
+    	}
+    }
 
     // cout << "\n"; 
     return;
@@ -172,6 +204,5 @@ signed main() {
     PLEASE_AC luctivud(); 
 }
 
-/*       
-   Domain Expansion:  
+/*        0.2s   Domain Expansion:  
                               MALEVOLENT SHRINE     */

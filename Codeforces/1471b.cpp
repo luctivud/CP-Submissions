@@ -152,13 +152,34 @@ void add_undirected_edge(lld a, lld b, vector<lld> adj[]) {
 
 void solveEachTest(int _TestCase) {
     // cout << "Case #" << _TestCase << ": ";
-    int x; read(x);
+    int n, k; read(n, k);
+    int mn = 1e5, mnInd = n;
+    int count[n];
+    int arr[n]; 
+    forn(i, n) {
+    	read(arr[i]);
+    	int num = arr[i];
+    	int cnt = 1ll;
+    	while (num % k == 0) {
+    		cnt++;
+    		num /= k;
+    	}
+    	if (cnt < mn) {
+    		mn = cnt; 
+    		mnInd = i;
+    	}
+    	count[i] = cnt;
+    }
 
     int ans = 0ll;
-    while (ans * (ans + 1) < 2 * x) ans++;
-    if (ans * (ans + 1) == 2 * (x + 1)) ans++;
-
-    println((ans));
+    forn(i, n) {
+    	if (i < mnInd) {
+    		ans += arr[i] * min(count[i], mn+1);
+    	} else {
+    		ans += arr[i] * min(count[i], mn);
+    	}
+    }
+    println(ans);
 
     // cout << "\n"; 
     return;
@@ -172,6 +193,5 @@ signed main() {
     PLEASE_AC luctivud(); 
 }
 
-/*       
-   Domain Expansion:  
+/*        0.2s   Domain Expansion:  
                               MALEVOLENT SHRINE     */

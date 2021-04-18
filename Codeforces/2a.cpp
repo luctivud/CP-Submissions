@@ -152,13 +152,51 @@ void add_undirected_edge(lld a, lld b, vector<lld> adj[]) {
 
 void solveEachTest(int _TestCase) {
     // cout << "Case #" << _TestCase << ": ";
-    int x; read(x);
+    int n; read(n);
 
-    int ans = 0ll;
-    while (ans * (ans + 1) < 2 * x) ans++;
-    if (ans * (ans + 1) == 2 * (x + 1)) ans++;
+    pair<string, int> arr[n];
+    map<string, int> cnt;
+    int mx = -INFi;
 
-    println((ans));
+    forn(i, n) {
+    	string s; read(s);
+    	int score; read(score);
+    	arr[i] = make_pair(s, score);
+    	cnt[s] += score;
+    	// println(s, cnt[s]);
+    }
+
+    for (auto i : cnt) {
+    	mx = max(mx, i.s2);
+    	// error(i.f1, i.s2);
+    }
+
+    set<string> win; 
+
+    for (auto i : cnt) {
+    	if (i.s2 == mx) {
+    		win.insert(i.f1);
+    	}
+    }
+
+    if (len(win) != 1) {
+    	set<string> win2 = win;
+    	win.clear();
+    	cnt.clear();
+    	forn(i, n) {
+    		string s = arr[i].f1;
+    		int score = arr[i].s2;
+    		cnt[s] += score;
+    		if ((cnt[s] >= mx) and (len(win) == 0) and (win2.find(s) != win2.end())) {
+    			win.insert(s);
+    			break;
+    		}
+    	}
+    }
+
+	println(*win.begin());
+
+
 
     // cout << "\n"; 
     return;
@@ -167,11 +205,10 @@ void solveEachTest(int _TestCase) {
 
 signed main() {
     light(); int T3X0 = 0, T353 = 1;
-    TESTCASES() 
+    // TESTCASES() 
         solveEachTest(T353 - T3X0);
     PLEASE_AC luctivud(); 
 }
 
-/*       
-   Domain Expansion:  
+/*        0.2s   Domain Expansion:  
                               MALEVOLENT SHRINE     */

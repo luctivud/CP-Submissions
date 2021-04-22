@@ -29,15 +29,24 @@ n, k = get_ints()
 s = input()
 c = sorted(Counter(s).items(), key = lambda x : -x[1])
 
-li = []
-i = 0
+li, se = [], set()
+sz, i, sz1, sz2 = k-1, 0, 1, k-1
 # print(c)
 while (len(li) < k-1):
 	ch = c[i][0];
 	for ind, val in enumerate(s, 1):
 		if val == ch and ind != n:
-			li.append((ind, len(li)+1))
-		if len(li) == k-1:
+			if ind not in se:
+				se.add(ind)
+				li.append((ind, sz1))
+				sz1 += 1
+				sz -= 1
+			if sz and ind-1 and ind-1 not in se:
+				se.add(ind-1)
+				li.append((ind-1, sz2))
+				sz2 -= 1
+				sz -= 1
+		if sz == 0:
 			break
 	i += 1
 li.append((n, k))
@@ -45,10 +54,14 @@ li.sort(key = lambda x : x[0])
 
 for i in range(k):
 	yo = li[i][0]
-	print(yo, 1 if (i>0 and s[yo-1] == s[li[i-1][0]]) else 0)
-# print(li)
+	print(yo, 0)
+
 print(*[i[1] for i in li])
+
+# print(li)
 # hairu = list(range(1, k+1))
+# random.shuffle(hairu)
+# random.shuffle(hairu)
 # random.shuffle(hairu)
 # print(*hairu)
 

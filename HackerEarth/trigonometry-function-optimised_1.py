@@ -10,12 +10,14 @@ for i in range(2,100):
 	li.append((li[-1]+ans) % mod)
 	prev1, prev2 = prev2, num1
 
-while len(set(li)) > 1:
-	print(li)
-	li2 = []
-	for i in range(len(li)-1):
-		li2.append(li[i+1]-li[i])
-	li = li2
+
+
+# while len(set(li)) > 1:
+# 	print(li)
+# 	li2 = []
+# 	for i in range(len(li)-1):
+# 		li2.append(li[i+1]-li[i])
+# 	li = li2
 
 # t = int(input())
 # while t:

@@ -148,18 +148,48 @@ void add_undirected_edge(lld a, lld b, vector<lld> adj[]) {
 
 
 
+/*          D S U         */
+
+void makeSet(lld n, vector<lld> &parent, vector<lld> &rank) {
+    iota(all(parent), 0ll);
+}
+
+lld find_repr(lld x, vector<lld> &parent, vector<lld> &rank) {
+    if (x != parent[x])
+        parent[x] = find_repr(parent[x], parent, rank);
+    return parent[x];
+}
+
+void Union(lld x, lld y, vector<lld> &parent, vector<lld> &rank) {
+    x = find_repr(x, parent, rank);
+    y = find_repr(y, parent, rank);
+
+    if (x == y) return;
+
+    if (rank[x] < rank[y]) { 
+        parent[x] = y; 
+    } else if (rank[x] > rank[y]) { 
+        parent[y] = x; 
+    } else { 
+        parent[y] = x; 
+        rank[x] = rank[x] + 1; 
+    } 
+    return;
+}
+
+
+
+    // create parent and rank at the place.
+    vector<lld> parent(n, 0);
+    vector<lld> rank(n, 0);
+    makeSet(n, parent, rank);
+
 
 
 void solveEachTest(int _TestCase) {
   // cout << "Case #" << _TestCase << ": ";
   lld n; read(n);
-  lld ans = INFll;
 
-  for (lld i = 1; i*i <= n; i++) {
-  	ans = min(ans, (i-1) + (n-i+i-1)/i);
-  }
-
-  println(ans);
 
   // cout << "\n"; 
   return;
@@ -168,7 +198,7 @@ void solveEachTest(int _TestCase) {
 
 signed main() {
   light(); int T3X0 = 0, T353 = 1;
-  TESTCASES() 
+  // TESTCASES() 
       solveEachTest(T353 - T3X0);
   PLEASE_AC luctivud(); 
 }

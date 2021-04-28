@@ -152,14 +152,13 @@ void add_undirected_edge(lld a, lld b, vector<lld> adj[]) {
 
 void solveEachTest(int _TestCase) {
   // cout << "Case #" << _TestCase << ": ";
-  lld n; read(n);
-  lld ans = INFll;
+  
+	lld a, b, c; read(a, b, c);
+	lld s1 = lld(sqrt(a*b*c)) / a;
+	lld s2 = lld(sqrt(a*b*c)) / b;
+	lld s3 = lld(sqrt(a*b*c)) / c;
 
-  for (lld i = 1; i*i <= n; i++) {
-  	ans = min(ans, (i-1) + (n-i+i-1)/i);
-  }
-
-  println(ans);
+	println(4*(s1+s2+s3));
 
   // cout << "\n"; 
   return;
@@ -168,7 +167,7 @@ void solveEachTest(int _TestCase) {
 
 signed main() {
   light(); int T3X0 = 0, T353 = 1;
-  TESTCASES() 
+  // TESTCASES() 
       solveEachTest(T353 - T3X0);
   PLEASE_AC luctivud(); 
 }

@@ -1,10 +1,10 @@
 // ************************.- J A I  S H R E E  R A M -.*************************
 
 
-/*
+/* 
       ::: All is One ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-          Author   :  Udit "luctivud" Gupta
+          Author   :  Udit "luctivud" Gupta 
 
           linkedin :  https://www.linkedin.com/in/udit-gupta-1b7863135/
           github   :  https://github.com/luctivud
@@ -55,13 +55,13 @@ typedef unsigned long long int llu;
 void huehue(istream_iterator<string> it) {}
 template<typename T, typename... Args>
 void huehue(istream_iterator<string> it, T a, Args... args) {
-	cout << *it << " = " << a << ", ";
-	huehue(++it, args...);
+  cout << *it << " = " << a << ", ";
+  huehue(++it, args...);
 }
 
 
 template <class T> T inf() {
-	return numeric_limits<T>::max();
+  return numeric_limits<T>::max();
 }
 
 
@@ -89,8 +89,8 @@ template<typename T, typename... Args> void println(vector<T> &arr, Args &... ar
 template<typename T, typename... Args> void println(T a, Args... args) { cout << a << " "; println(args...); };
 
 
-const lld d4i[4] = { -1, 0, 1, 0}, d4j[4] = {0, 1, 0, -1};
-const lld d8i[8] = { -1, -1, 0, 1, 1, 1, 0, -1}, d8j[8] = {0, 1, 1, 1, 0, -1, -1, -1};
+const lld d4i[4]={-1, 0, 1, 0}, d4j[4]={0, 1, 0, -1};
+const lld d8i[8]={-1, -1, 0, 1, 1, 1, 0, -1}, d8j[8]={0, 1, 1, 1, 0, -1, -1, -1};
 
 
 
@@ -98,27 +98,27 @@ const auto start_time = std::chrono::high_resolution_clock::now();
 
 signed light() {
 
-	ios_base::sync_with_stdio(false); cin.tie(0);
-	cout.precision(10); cout << fixed;
+  ios_base::sync_with_stdio(false); cin.tie(0);
+  cout.precision(10); cout << fixed;
 
-#ifdef LUCTIVUD
-	freopen("/home/luctivud/CPPractice/Zinput.txt", "r", stdin);
-	freopen("/home/luctivud/CPPractice/Zoutput.txt", "w", stdout);
-#endif
+  #ifdef LUCTIVUD
+    freopen("/home/luctivud/CPPractice/Zinput.txt", "r", stdin);
+    freopen("/home/luctivud/CPPractice/Zoutput.txt", "w", stdout);
+  #endif
 
-	return 0;
+  return 0; 
 }
 
 
 signed luctivud() {
 
-#ifdef LUCTIVUD
-	auto end_time = std::chrono::high_resolution_clock::now();
-	std::chrono::duration<double> diff = end_time - start_time;
-	cerr << "Finished in : " << diff.count() << "\n";
-#endif
+  #ifdef LUCTIVUD
+    auto end_time = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> diff = end_time - start_time;
+    cerr << "Finished in : " << diff.count() << "\n";
+  #endif
 
-	return 0;
+  return 0; 
 }
 
 
@@ -134,9 +134,9 @@ const int INFi = inf<int>();
 
 
 void add_undirected_edge(lld a, lld b, vector<lld> adj[]) {
-	adj[a].pb(b);
-	adj[b].pb(a);
-	return;
+  adj[a].pb(b);
+  adj[b].pb(a);
+  return;
 }
 
 
@@ -146,106 +146,51 @@ void add_undirected_edge(lld a, lld b, vector<lld> adj[]) {
 */
 
 
-/*          D S U         */
 
-void makeSet(lld n, vector<lld> &parent, vector<lld> &rank) {
-	iota(all(parent), 0ll);
-}
-
-lld find_repr(lld x, vector<lld> &parent, vector<lld> &rank) {
-	if (x != parent[x])
-		parent[x] = find_repr(parent[x], parent, rank);
-	return parent[x];
-}
-
-void Union(lld x, lld y, vector<lld> &parent, vector<lld> &rank) {
-	x = find_repr(x, parent, rank);
-	y = find_repr(y, parent, rank);
-
-	if (x == y) return;
-
-	if (rank[x] < rank[y]) {
-		parent[x] = y;
-	} else if (rank[x] > rank[y]) {
-		parent[y] = x;
-	} else {
-		parent[y] = x;
-		rank[x] = rank[x] + 1;
-	}
-	return;
-}
-
-
-
-// create parent and rank at the place.
 
 
 
 void solveEachTest(int _TestCase) {
-	// cout << "Case #" << _TestCase << ": ";
-	lld n; read(n);
-	vector<lld> parent(1001, 0);
-	vector<lld> rank(1001, 0);
-	makeSet(1001, parent, rank);
+  // cout << "Case #" << _TestCase << ": ";
+  lld n, m; read(n, m);
 
-	pair<lld, lld> coordinates[n];
-	forn(i, n) {
-		read(coordinates[i].f1, coordinates[i].s2);
-	}
-
-	sort(coordinates, coordinates+n);
-
-	lld prev = -1;
-	set<lld> points;
-	forn(i, n) {
-		points.insert(coordinates[i].f1);
-		points.insert(coordinates[i].s2);
-		// error(i, coordinates[i].f1, coordinates[i].s2);
-		if (coordinates[i].f1 == prev) {
-			Union(coordinates[i].f1, coordinates[i].s2, parent, rank);
-			Union(coordinates[i].s2, coordinates[i-1].s2, parent, rank);
-		}
-		prev = coordinates[i].f1;
-	}
-
-
-	sort(coordinates, coordinates+n, [](pair<lld, lld> &a, pair<lld, lld> &b){
-		return a.s2 < b.s2;
-	});
-
-	prev = -1;
-	forn(i, n) {
-		error(i, coordinates[i].f1, coordinates[i].s2);
-		
-		if (coordinates[i].s2 == prev) {
-			Union(coordinates[i].f1, coordinates[i].s2, parent, rank);
-			Union(coordinates[i].f1, coordinates[i-1].f1, parent, rank);
-		}
-		prev = coordinates[i].s2;
-	}
+  if ((n > m+1) or (m > 2*(n+1))) {
+  	println("-1");
+  } else if (n == m+1) {
+  	n--;
+  	print("0");
+  	while (n--) {
+  		print("10");
+  	}
+  } else {
+  	while (n > 0 and (n-1 < m-2)) {
+  		print("110");
+  		m -= 2;
+  		n -= 1;
+  	}
+  	while (m > 0 and n > 0) {
+  		m--;
+  		n--;
+  		print("10");
+  	}
+  	while (m > 0) {
+  		print("1");
+  		m--;
+  	}
+  }
 
 
-	set<lld> components;
-
-	EACH(i, points) {
-		components.insert(parent[i]);
-		// error(i, parent[i]);
-	}
-
-	println(len(components)-1);
-
-
-	// cout << "\n";
-	return;
+  // cout << "\n"; 
+  return;
 }
 
 
 signed main() {
-	light(); int T3X0 = 0, T353 = 1;
-	// TESTCASES()
-	solveEachTest(T353 - T3X0);
-	PLEASE_AC luctivud();
+  light(); int T3X0 = 0, T353 = 1;
+  // TESTCASES() 
+      solveEachTest(T353 - T3X0);
+  PLEASE_AC luctivud(); 
 }
 
-/*        0.2s   Domain Expansion:
+/*        0.2s   Domain Expansion:  
                               MALEVOLENT SHRINE     */

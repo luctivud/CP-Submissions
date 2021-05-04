@@ -154,25 +154,22 @@ void add_undirected_edge(lld a, lld b, vector<lld> adj[]) {
 void solveEachTest(int _TestCase) {
     // cout << "Case #" << _TestCase << ": ";
     lld n; read(n);
-
-    if (n & 1) {
-    	println("NO");
-    } else {
-    	bool flag = false;
-    	if (n % 4 == 0) {
-    		lld num = lld(sqrt(n / 4));
-    		if (num * num * 4 == n) {
-    			flag = true;
-    		}
-    	}
-
-    	lld num = lld(sqrt(n/2));
-    	if (num * num * 2 == n) {
-    		flag = true;
-    	}
-    	println("NO\0YES" + 3* (flag));
+    vector<lld> pos[n];
+    forn(i, n) {
+    	lld el; read(el);
+    	pos[el-1].pb(i);
     }
 
+    lld ans = lld(1e9);
+    forn(i, n) {
+    	if (len(pos[i]) > 1) {
+    		forn1(j, len(pos[i])-1) {
+    			ans = min(ans, pos[i][j] - pos[i][j-1] + 1);
+    		}
+    	}
+    }
+
+    println(ans == lld(1e9) ? -1 : ans);
 
     // cout << "\n"; 
     return;

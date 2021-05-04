@@ -2,14 +2,14 @@
 
 
 /* 
-      ::: All is One ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+      ::: ---------- ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
           Author   :  Udit "luctivud" Gupta 
 
           linkedin :  https://www.linkedin.com/in/udit-gupta-1b7863135/
           github   :  https://github.com/luctivud
 
-      :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: One is All :::
+      :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: ---------- :::
 */
 
 
@@ -126,7 +126,7 @@ signed luctivud() {
 
 const lld MOD = lld(1e9) + 7ll;
 const lld mod = MOD;
-
+lld TempVar;
 
 const long double EPS = 1e-6;
 
@@ -146,33 +146,77 @@ void add_undirected_edge(lld a, lld b, vector<lld> adj[]) {
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 */
 
+lld n, m; 
+lld arr[101][101], brr[101][101], crr[101][101];
+// lld ans[101][101];
 
+void Make_unset(lld i, lld j) {
+	forn(xx, n) {
+		brr[xx][j] = 0;
+	}
+	forn(xx, m) {
+		brr[i][xx] = 0;
+	}
+}
 
-
+void Make_Set(lld i, lld j) {
+	forn(xx, n) {
+		crr[xx][j] = 1;
+	}
+	forn(xx, m) {
+		crr[i][xx] = 1;
+	}
+}
 
 
 void solveEachTest(int _TestCase) {
     // cout << "Case #" << _TestCase << ": ";
-    lld n; read(n);
+    read(n, m);
 
-    if (n & 1) {
-    	println("NO");
-    } else {
-    	bool flag = false;
-    	if (n % 4 == 0) {
-    		lld num = lld(sqrt(n / 4));
-    		if (num * num * 4 == n) {
-    			flag = true;
-    		}
+    forn(i, n) {
+    	forn(j, m) {
+    		brr[i][j] = 1;
+    		crr[i][j] = 0;
     	}
-
-    	lld num = lld(sqrt(n/2));
-    	if (num * num * 2 == n) {
-    		flag = true;
-    	}
-    	println("NO\0YES" + 3* (flag));
     }
 
+    forn(i, n) {
+    	forn(j, m) {
+    		read(arr[i][j]);
+    		if (arr[i][j] == 0) {
+    			Make_unset(i, j);
+    		}
+    	}
+    }
+
+    
+    // copy(&brr[0][0], &brr[0][0]+(101*101),&ans[0][0]);
+
+
+    forn(i, n) {
+    	forn(j, m) {
+    		if (brr[i][j]) {
+    			Make_Set(i, j);
+    		}
+    	}
+    }
+
+    bool ok = true;
+    forn(i, n) {
+    	forn(j, m) {
+    		ok &= (arr[i][j] == crr[i][j]);
+    	}
+    }
+
+    println("NO\0YES" + 3 * (ok));
+
+    if (ok) {
+    	forn(i, n) {
+    		forn(j, m) {
+    			print(brr[i][j], "");
+    		}println();
+    	}
+    }
 
     // cout << "\n"; 
     return;
@@ -181,7 +225,7 @@ void solveEachTest(int _TestCase) {
 
 signed main() {
     light(); int T3X0 = 0, T353 = 1;
-    TESTCASES() 
+    // TESTCASES() 
         solveEachTest(T353 - T3X0);
     PLEASE_AC luctivud(); 
 }

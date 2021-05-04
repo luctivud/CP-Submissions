@@ -126,7 +126,7 @@ signed luctivud() {
 
 const lld MOD = lld(1e9) + 7ll;
 const lld mod = MOD;
-
+lld TempVar;
 
 const long double EPS = 1e-6;
 
@@ -154,23 +154,16 @@ void add_undirected_edge(lld a, lld b, vector<lld> adj[]) {
 void solveEachTest(int _TestCase) {
     // cout << "Case #" << _TestCase << ": ";
     lld n; read(n);
-
-    if (n & 1) {
-    	println("NO");
-    } else {
-    	bool flag = false;
-    	if (n % 4 == 0) {
-    		lld num = lld(sqrt(n / 4));
-    		if (num * num * 4 == n) {
-    			flag = true;
-    		}
+    lld want = n;
+    bitset<(lld)1e5 +1> doneFor;
+    doneFor.set(false);
+    forn(i, n) {
+    	read(TempVar);
+    	doneFor.set(TempVar, true);
+    	while (want > 0 and doneFor[want]) {
+    		print(want--, "");
     	}
-
-    	lld num = lld(sqrt(n/2));
-    	if (num * num * 2 == n) {
-    		flag = true;
-    	}
-    	println("NO\0YES" + 3* (flag));
+    	println();
     }
 
 
@@ -181,7 +174,7 @@ void solveEachTest(int _TestCase) {
 
 signed main() {
     light(); int T3X0 = 0, T353 = 1;
-    TESTCASES() 
+    // TESTCASES() 
         solveEachTest(T353 - T3X0);
     PLEASE_AC luctivud(); 
 }

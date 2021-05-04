@@ -126,7 +126,7 @@ signed luctivud() {
 
 const lld MOD = lld(1e9) + 7ll;
 const lld mod = MOD;
-
+lld TempVar;
 
 const long double EPS = 1e-6;
 
@@ -155,33 +155,48 @@ void solveEachTest(int _TestCase) {
     // cout << "Case #" << _TestCase << ": ";
     lld n; read(n);
 
-    if (n & 1) {
+    if (!(n & 1)) {
     	println("NO");
-    } else {
-    	bool flag = false;
-    	if (n % 4 == 0) {
-    		lld num = lld(sqrt(n / 4));
-    		if (num * num * 4 == n) {
-    			flag = true;
-    		}
-    	}
-
-    	lld num = lld(sqrt(n/2));
-    	if (num * num * 2 == n) {
-    		flag = true;
-    	}
-    	println("NO\0YES" + 3* (flag));
+    	return;
     }
 
+    priority_queue<pair<lld, lld>, vector<pair<lld, lld>>, greater<pair<lld, lld>>> pq;
+    pq.push({0, 0});
+    pq.push({0, 1});
 
-    // cout << "\n"; 
+    lld pos[2*n];
+    for4(i, 2*n, 0, -1) {
+    	auto elem = pq.top();
+    	pq.pop();
+    	pos[i-1] = elem.s2;
+    	elem.f1 += i;
+    	pq.push(elem);
+    }
+
+    vector<lld> ans(2*n);
+
+    lld l = n, r = 0;
+    forn(i, 2*n) {
+    	// error(i, pos[i]);
+    	if (pos[i]== 1) {
+    		ans[r++] = i+1;
+    	} else {
+    		ans[l++] = i+1;
+    	}
+    }
+
+    println("YES");
+    println(ans);
+
+
+    // cout << "\n"; 	
     return;
 }
 
 
 signed main() {
     light(); int T3X0 = 0, T353 = 1;
-    TESTCASES() 
+    // TESTCASES() 
         solveEachTest(T353 - T3X0);
     PLEASE_AC luctivud(); 
 }

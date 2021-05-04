@@ -42,8 +42,8 @@ typedef unsigned long long int llu;
 #define              all(x)    (x).begin(), (x).end()
 #define             rall(x)    (x).rbegin(), (x).rend()
 #define                  pb    push_back
-#define         debhairu(x)    cout << #x << " = "; println(x);
-#define         debspace(x)    cout << #x << " = "; print(x); cout << " ";
+#define         debhairu(x)    cout << #x << " = "; Print_Valueln(x);
+#define         debspace(x)    cout << #x << " = "; Print_Value(x); cout << " ";
 #define                  f1    first
 #define                  s2    second
 #define           PLEASE_AC    return
@@ -66,28 +66,28 @@ template <class T> T inf() {
 
 
 
-void read() { return; }
-void print() { return; }
-void println() { cout << "\n"; return; }
-template<class T> T read(T& x)   { cin >> x; return x; }
-template<class T> void print(T a)   { cout << a; }
-template<class T> void println(T a) { cout << a << "\n"; }
+void Read_Int() { return; }
+void Print_Value() { return; }
+void Print_Valueln() { cout << "\n"; return; }
+template<class T> T Read_Int(T& x)   { cin >> x; return x; }
+template<class T> void Print_Value(T a)   { cout << a; }
+template<class T> void Print_Valueln(T a) { cout << a << "\n"; }
 
-template<class T> void read(vector<T> &arr)   { EACH(i, arr) cin >> (i); }
-template<class T> void print(vector<T> arr)   { EACH(i, arr) {cout << i << " ";} }
-template<class T> void println(vector<T> arr) { EACH(i, arr) {cout << i << " ";} cout << "\n"; }
+template<class T> void Read_Int(vector<T> &arr)   { EACH(i, arr) cin >> (i); }
+template<class T> void Print_Value(vector<T> arr)   { EACH(i, arr) {cout << i << " ";} }
+template<class T> void Print_Valueln(vector<T> arr) { EACH(i, arr) {cout << i << " ";} cout << "\n"; }
 
-template<class T> void read(vector<vector<T>> &arr)   { EACH(i, arr) read(i); }
-template<class T> void print(vector<vector<T>> arr)   { EACH(i, arr) println(i); }
-template<class T> void println(vector<vector<T>> arr) { EACH(i, arr) println(i); }
+template<class T> void Read_Int(vector<vector<T>> &arr)   { EACH(i, arr) Read_Int(i); }
+template<class T> void Print_Value(vector<vector<T>> arr)   { EACH(i, arr) Print_Valueln(i); }
+template<class T> void Print_Valueln(vector<vector<T>> arr) { EACH(i, arr) Print_Valueln(i); }
 
-template<typename T, typename... Args> void read(vector<T> &arr, Args &... args)   { read(arr); read(args...);}
-template<typename T, typename... Args> void read(vector<vector<T>> &arr, Args &... args)   { read(arr); read(args...);}
-template<typename T, typename... Args> void read(T &a, Args &... args) { cin >> (a); read(args...); }
-template<typename T, typename... Args> void print(vector<T> &arr, Args &... args)   { print(arr); print(args...);}
-template<typename T, typename... Args> void print(T a, Args... args) { cout << a << " "; print(args...); };
-template<typename T, typename... Args> void println(vector<T> &arr, Args &... args)   { print(arr); println(args...);}
-template<typename T, typename... Args> void println(T a, Args... args) { cout << a << " "; println(args...); };
+template<typename T, typename... Args> void Read_Int(vector<T> &arr, Args &... args)   { Read_Int(arr); Read_Int(args...);}
+template<typename T, typename... Args> void Read_Int(vector<vector<T>> &arr, Args &... args)   { Read_Int(arr); Read_Int(args...);}
+template<typename T, typename... Args> void Read_Int(T &a, Args &... args) { cin >> (a); Read_Int(args...); }
+template<typename T, typename... Args> void Print_Value(vector<T> &arr, Args &... args)   { Print_Value(arr); Print_Value(args...);}
+template<typename T, typename... Args> void Print_Value(T a, Args... args) { cout << a << " "; Print_Value(args...); };
+template<typename T, typename... Args> void Print_Valueln(vector<T> &arr, Args &... args)   { Print_Value(arr); Print_Valueln(args...);}
+template<typename T, typename... Args> void Print_Valueln(T a, Args... args) { cout << a << " "; Print_Valueln(args...); };
 
 
 const lld d4i[4]={-1, 0, 1, 0}, d4j[4]={0, 1, 0, -1};
@@ -126,7 +126,7 @@ signed luctivud() {
 
 const lld MOD = lld(1e9) + 7ll;
 const lld mod = MOD;
-
+lld TempVar;
 
 const long double EPS = 1e-6;
 
@@ -149,42 +149,43 @@ void add_undirected_edge(lld a, lld b, vector<lld> adj[]) {
 
 
 
+int One = 1;
+int Zero = 0;
 
 
-void solveEachTest(int _TestCase) {
-    // cout << "Case #" << _TestCase << ": ";
-    lld n; read(n);
+void SolveEachTest(int _TestCase) {
 
-    if (n & 1) {
-    	println("NO");
-    } else {
-    	bool flag = false;
-    	if (n % 4 == 0) {
-    		lld num = lld(sqrt(n / 4));
-    		if (num * num * 4 == n) {
-    			flag = true;
-    		}
-    	}
+    int Num; Read_Int(Num);
 
-    	lld num = lld(sqrt(n/2));
-    	if (num * num * 2 == n) {
-    		flag = true;
-    	}
-    	println("NO\0YES" + 3* (flag));
+    bool Flag = false;
+    int SumA = Zero, SumB = Zero;
+
+    for (int Itr = Zero; Itr < Num; Itr++) {
+    	int ANum, BNum; Read_Int(ANum, BNum);
+    	if ((ANum & One) ^ (BNum & One))
+    		Flag = true;
+    	SumA += ANum, SumB += BNum;
+    	SumA &= One, SumB &= One;
     }
 
+    char OnePossible[] = "1", NotPossible[] = "-1", AlreadyPossible[] = "0";
 
-    // cout << "\n"; 
+    if (!SumA & !SumB) Print_Value(AlreadyPossible, "\n");
+    else if (SumA & SumB)
+    	if (Flag) Print_Value(OnePossible, "\n");
+    	else Print_Value(NotPossible, "\n");
+    else Print_Value(NotPossible, "\n");
+
     return;
 }
 
 
 signed main() {
     light(); int T3X0 = 0, T353 = 1;
-    TESTCASES() 
-        solveEachTest(T353 - T3X0);
+    // TESTCASES() 
+        SolveEachTest(T353 - T3X0);
     PLEASE_AC luctivud(); 
 }
 
 /*        0.2s   Domain Expansion:  
-                              MALEVOLENT SHRINE     */
+                            SELF EMBODIMENT OF PERFECTION     */

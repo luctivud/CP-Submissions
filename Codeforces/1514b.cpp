@@ -126,7 +126,7 @@ signed luctivud() {
 
 const lld MOD = lld(1e9) + 7ll;
 const lld mod = MOD;
-
+lld TempVar;
 
 const long double EPS = 1e-6;
 
@@ -149,30 +149,32 @@ void add_undirected_edge(lld a, lld b, vector<lld> adj[]) {
 
 
 
+lld power(lld x, lld y) {
+	lld res = 1;
+
+	x = x % MOD;
+
+	if (x == 0) return 0;
+
+	while (y > 0)  {
+		if (y & 1)
+			res = (res * x) % MOD;
+
+		y = y >> 1; 
+		x = (x * x) % MOD;
+	}
+	return res;
+}
+
+
+
 
 
 void solveEachTest(int _TestCase) {
     // cout << "Case #" << _TestCase << ": ";
-    lld n; read(n);
+    lld n, k; read(n, k);
 
-    if (n & 1) {
-    	println("NO");
-    } else {
-    	bool flag = false;
-    	if (n % 4 == 0) {
-    		lld num = lld(sqrt(n / 4));
-    		if (num * num * 4 == n) {
-    			flag = true;
-    		}
-    	}
-
-    	lld num = lld(sqrt(n/2));
-    	if (num * num * 2 == n) {
-    		flag = true;
-    	}
-    	println("NO\0YES" + 3* (flag));
-    }
-
+    println(power(n, k));
 
     // cout << "\n"; 
     return;

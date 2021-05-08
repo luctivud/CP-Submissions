@@ -107,7 +107,7 @@ const long double EPS = 1e-6;
 void solveEachTest(int _TestCase) {
     // cout << "Case #" << _TestCase << ": ";
     
-
+		
 
     // cout << "\n"; 
     return;

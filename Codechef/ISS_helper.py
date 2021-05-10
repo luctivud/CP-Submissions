@@ -37,25 +37,37 @@ d4j = [+0, +1, +0, -1]; d8j = [+0, +1, +1, +1, +0, -1, -1, -1];
 
 def solveEachTest(_TestCase):
 	# printsp("Case #{}: ".format(_TestCase)) 
-	n = 10; m = 19
-	for a in range(1, n+1):
-		for b in range(a+1, n+1):
-			v = b * (m // b)
-			if ((m % a) % b == (m % b) % a):
-				# if not (v / a == v // a):
-				print(a, b)
+	# k = int(input())
+	k = _TestCase
+	# print(k)
+	li = []
+	
+	for i in range(1, 2*k+2):
+		li.append(k+(i**2))
+	# print(li)
+	gc = []
+	ans = 0
+	for i in range(2*k):
+		gc.append(math.gcd(li[i], li[i+1]))
+	ans = []
+	for (ke, va) in sorted(collections.Counter(gc).items()):
+		ans.append((ke, va, ke*va))
+	if True or len(ans) > 5:
+		print(["{}:{} = {}".format(a, b, c) for a, b, c in ans])
+		# print(li)
+		# print(gc)
+		print([(gc[-1]-len(gc)+i+1, gc[i]) for i in range(len(gc))])
+		print()
+	# print((k, sum(gc)))
+	# printsp(sum(gc))
 
 
-	# m = 67681
-	# se = set()
-	# for i in range(1, 1000):
-	# 	se.add(i * (m // i))
-	# # print(se)
-	# print(min(se), max(se), - min(se) + max(se))
+
+
 
 
 _T0T4 = 1;
-# _T0T4 = int(input()) 
+_T0T4 = int(input()) 
 for _TestCase in range(1, _T0T4 + 1): 
 	solveEachTest(_TestCase)
 

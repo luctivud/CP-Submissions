@@ -32,13 +32,21 @@ d4j = [+0, +1, +0, -1]; d8j = [+0, +1, +1, +1, +0, -1, -1, -1];
 # >>>>>>--->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 
+def isp(n):
+	i = 2
+	print(n)
+	while i * i <= n[0]:
+		if n[0] % i:
+			return False
+		i += 1
+	return True;
 
 
 
 def solveEachTest(_TestCase):
 	# printsp("Case #{}: ".format(_TestCase)) 
 	# k = int(input())
-	k = _TestCase
+	k = _TestCase + 10000
 	# print(k)
 	li = []
 	
@@ -53,11 +61,12 @@ def solveEachTest(_TestCase):
 	for (ke, va) in sorted(collections.Counter(gc).items()):
 		ans.append((ke, va, ke*va))
 	if True or len(ans) > 5:
-		print(["{}:{} = {}".format(a, b, c) for a, b, c in ans])
+		# print(["{}:{} = {}".format(a, b, c) for a, b, c in ans])
 		# print(li)
 		# print(gc)
-		print([(gc[-1]-len(gc)+i+1, gc[i]) for i in range(len(gc))])
-		print()
+		# print([(gc[-1]-len(gc)+i+1, gc[i]) for i in range(len(gc))])
+		# print(([i for i in ans if isp(i)]))
+		# print(ans)
 	# print((k, sum(gc)))
 	# printsp(sum(gc))
 

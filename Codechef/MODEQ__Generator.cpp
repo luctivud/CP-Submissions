@@ -67,8 +67,8 @@ signed _LIGHT_IO() {
     cout.precision(10); cout << fixed;
 
     #ifdef LUCTIVUD
-      // freopen("/home/luctivud/CPPractice/Zinput.txt", "r", stdin);
-      // freopen("/home/luctivud/CPPractice/Zoutput.txt", "w", stdout);
+      freopen("/home/luctivud/CPPractice/Zinput.txt", "r", stdin);
+      freopen("/home/luctivud/CPPractice/Zoutput.txt", "w", stdout);
     #endif
 
     return 0; 

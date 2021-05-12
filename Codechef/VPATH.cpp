@@ -100,60 +100,16 @@ const long double EPS = 1e-6;
 */
 
 
-lld seiki(lld n) {
-    return (n * (n+1)) / 2;
-}
-
-lld nc2(lld n) {
-    return (n * (n-1)) / 2;   
-}
-
-
 
 
 
 
 void solveEachTest(int _TestCase) {
     // cout << "Case #" << _TestCase << ": ";
-    lld n, m; cin >> n >> m;
+    
 
-    lld ans = 0ll;
 
-    vector<bool> visited(n+1, false);
-
-    for (lld i = min(n, m); i > 1; i--) {
-        lld zeta = i * (m / i);
-        lld res1 = 0ll, res2 = 0ll;
-        for (lld j = 2; j * j <= zeta; j++) {
-            if (visited[i]) continue;
-            if (zeta % j == 0) {
-                lld zeta2 = j * (m / j);
-                if (zeta2 == zeta) {
-                    visited[j] = true;
-                    res1 += 1;
-                } else {
-                    res2 += 1;
-                }
-                if (j * j != zeta and m/j <= n) {
-                    zeta2 = (zeta / j) * ((m * j) / zeta);
-                    if (zeta2 == zeta) {
-                        visited[m / j] = true;
-                        res1 += 1;
-                    } else {
-                        res2 += 1;
-                    }
-                }
-            }
-            // error(i, res1, res2);
-            ans += nc2(res1);
-            ans += res2;
-        }
-    }
-
-    ans += n-1;
-
-    cout << ans;
-    cout << "\n"; 
+    // cout << "\n"; 
     return;
 }
 

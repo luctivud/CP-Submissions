@@ -108,13 +108,13 @@ void solveEachTest(int _TestCase) {
     // cout << "Case #" << _TestCase << ": ";
     srand(unsigned(time(NULL)));
 
-    int t = (rand() % 10) + 1;
+    int t = (rand() % 1000) + 1;
     cout << t << "\n";
 
     forn(i, t) {
     	int n, m;
-    	n = (rand() % 100) + 1;
-    	m = (rand() % 100) + 1;
+    	n = (rand() % 10000) + 1;
+    	m = (rand() % 10000) + 1;
     	cout << n << " " << m << "\n";
     }
 

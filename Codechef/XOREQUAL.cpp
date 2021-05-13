@@ -35,14 +35,11 @@ typedef unsigned long long int llu;
 #define   for4(I7,S4,E4,S7)    for(auto I7=(S4); CH3K(I7,E4,S7); (I7)+=(S7))
 #define        forn(I7, E4)    for(lld I7=0ll; I7 < E4; (I7)+=1ll)
 #define       forn1(I7, E4)    for(lld I7=1ll; I7 < E4+1; (I7)+=1ll)
-#define        EACH(I7, A7)    for (auto& I7: A7)
 #define              len(v)    ((int)((v).size()))
 #define              all(x)    (x).begin(), (x).end()
 #define             rall(x)    (x).rbegin(), (x).rend()
-#define                  pb    push_back
 #define                  f1    first
 #define                  s2    second
-#define           PLEASE_AC    return
 
 
 
@@ -59,35 +56,6 @@ const lld d4i[4]={-1, 0, 1, 0}, d4j[4]={0, 1, 0, -1};
 const lld d8i[8]={-1, -1, 0, 1, 1, 1, 0, -1}, d8j[8]={0, 1, 1, 1, 0, -1, -1, -1};
 
 
-const auto start_time = std::chrono::high_resolution_clock::now();
-
-signed _LIGHT_IO() {
-
-    ios_base::sync_with_stdio(false); cin.tie(0);
-    cout.precision(10); cout << fixed;
-
-    #ifdef LUCTIVUD
-      freopen("/home/luctivud/CPPractice/Zinput.txt", "r", stdin);
-      freopen("/home/luctivud/CPPractice/Zoutput.txt", "w", stdout);
-    #endif
-
-    return 0; 
-}
-
-
-signed _LUCTIV_CRONO() {
-
-    #ifdef LUCTIVUD
-      auto end_time = std::chrono::high_resolution_clock::now();
-      std::chrono::duration<double> diff = end_time - start_time;
-      cerr << "Finished in : " << diff.count() << "\n";
-    #endif
-
-  return 0; 
-}
-
-
-
 const lld MOD = lld(1e9) + 7ll;
 const lld mod = MOD;
 
@@ -100,53 +68,24 @@ const long double EPS = 1e-6;
 */
 
 
-lld ans = 0ll;
-
-void add_undirected_edge(lld a, lld b, vector<lld> adj[]) {
-    adj[a].pb(b);
-    adj[b].pb(a);
-    return;
-}
 
 
-lld nC2x2petra(vector<lld> arr) {
-	lld hairu = 0ll, iehi = 0ll;
-	for (auto i : arr) {
-		i -= 1;
-		hairu += i;
-		iehi += (i * i) % MOD;
-		hairu %= mod;
-		iehi %= MOD;
+
+lld power(lld x, lld y) {
+	lld res = 1;
+
+	x = x % MOD;
+
+	if (x == 0) return 0;
+
+	while (y > 0)  {
+		if (y & 1)
+			res = (res * x) % MOD;
+
+		y = y >> 1; 
+		x = (x * x) % MOD;
 	}
-	return ((hairu * hairu) % MOD - iehi + MOD) % MOD;
-}
-
-
-lld findByDfs(lld node, lld parent, vector<lld> adj[]) {
-
-	vector<lld> children_res;
-
-	for (auto child : adj[node]) {
-		if (child != parent) {
-			children_res.push_back(findByDfs(child, node, adj));
-		}
-	}
-
-	// for (auto i : children_res) {
-	// 	cout << i << " ";
-	// } error(node, parent);
-
-	if (len(children_res) == 0) {
-		return 2ll;
-	} else if (len(children_res) == 1) {
-		return (children_res[0] << 1ll) % MOD;
-	} else {
-		lld nullSets = len(children_res);
-		lld validSets = accumulate(all(children_res), 0ll) - nullSets;
-		ans += (nC2x2petra(children_res)) % MOD;
-		ans %= MOD;
-		return ((++validSets) << 1ll) % MOD;
-	}
+	return res;
 }
 
 
@@ -155,19 +94,8 @@ lld findByDfs(lld node, lld parent, vector<lld> adj[]) {
 void solveEachTest(int _TestCase) {
     // cout << "Case #" << _TestCase << ": ";
     lld n; cin >> n;
+    cout << power(2, n-1);
 
-	vector<lld> adj[n+1];
-	forn(i, n-1) {
-		lld a, b;
-		cin >> a >> b;
-		add_undirected_edge(a, b, adj);
-	}
-
-	ans = 0ll;
-
-	ans += findByDfs(1, 0, adj);
-
-	cout << (--ans + MOD) % MOD;
 
     cout << "\n"; 
     return;
@@ -175,14 +103,30 @@ void solveEachTest(int _TestCase) {
 
 
 signed main() {
-    _LIGHT_IO(); int _T0T4 = 1;
+    ios_base::sync_with_stdio(false); cin.tie(0);
+
+    #ifdef LUCTIVUD
+      // const auto start_time = std::chrono::high_resolution_clock::now();
+      freopen("/home/luctivud/CPPractice/Zinput.txt", "r", stdin);
+      freopen("/home/luctivud/CPPractice/Zoutput.txt", "w", stdout);
+    #endif
+
+
+    lld _T0T4 = 1;
     cin >> _T0T4; 
 
     for (int _TestCase = 1; _TestCase <= _T0T4; _TestCase++) {
         solveEachTest(_TestCase);
     }
 
-    PLEASE_AC _LUCTIV_CRONO(); 
+
+    #ifdef LUCTIVUD
+      // auto end_time = std::chrono::high_resolution_clock::now();
+      // std::chrono::duration<double> diff = end_time - start_time;
+      // cerr << "Finished in : " << diff.count() << "\n";
+    #endif
+
+    return 0; 
 }
 
 /*        0.2s   Ryoki Tenkai:  

@@ -37,36 +37,18 @@ d4j = [+0, +1, +0, -1]; d8j = [+0, +1, +1, +1, +0, -1, -1, -1];
 
 def solveEachTest(_TestCase):
 	# printsp("Case #{}: ".format(_TestCase)) 
-	# n = 16; m = 25; 
+	n = _TestCase
 	ans = 0
-	n, m = Read_Ints()
-	cnt = collections.defaultdict(int)
-	for a in range(1, n+1):
-		for b in range(a+1, n+1):
-			# v = b * (m // b)
-			if (a == b) : continue;
-			if ((m % a) % b == (m % b) % a):
-				# if not (v / a == v // a):
-				# if (a == 5 or b == 5):
-				# 	print(a, b)
-				ans += 1
-				# print(a, b)
-				cnt[a] += 1
-				# cnt[b] += 1
-	print(cnt)
+	for i in range(2**n):
+		if (i ^ (i+1) == (i+2) ^ (i+3)):
+			# printsp(i)
+			ans += 1
 	print(ans)
-	d = collections.defaultdict(list)
-	for i in range(1, n+1):
-		d[m % i].append(i)
-	print(*sorted(d.items(), key = lambda x : (x[0], -len(x[1]))))
-	# print([(i, m % i) for i in range(1, n+1)])
+	
 
-	# m = 67681
-	# se = set()
-	# for i in range(1, 1000):
-	# 	se.add(i * (m // i))
-	# # print(se)
-	# print(min(se), max(se), - min(se) + max(se))
+
+
+
 
 
 _T0T4 = 1;

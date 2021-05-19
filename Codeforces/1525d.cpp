@@ -1,38 +1,19 @@
-// ************************.- J A I  S H R E E  R A M -.*************************
-
-
-/* 
-      ::: ---------- ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-          Author   :  Udit "luctivud" Gupta 
-
-          linkedin :  https://www.linkedin.com/in/udit-gupta-1b7863135/
-          github   :  https://github.com/luctivud
-
-      :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: ---------- :::
-*/
-
+//  J A I  S H R E E  R A M  //
 
 #include <bits/stdc++.h>
 
-
 #pragma GCC optimize "trapv"
-#pragma GCC optimize ("Ofast")
-// #pragma GCC target ("fpmath=sse,sse2")
-#pragma GCC target ("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx")
-#pragma GCC optimize ("-ffloat-store")
+// #pragma GCC optimize ("Ofast")
+// // #pragma GCC target ("fpmath=sse,sse2")
+// #pragma GCC target ("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx")
+// #pragma GCC optimize ("-ffloat-store")
 
 
 using namespace std;
 
-
 typedef long long int lld;
 typedef unsigned long long int llu;
 
-
-#define   mems(A77AY, V4LU)    memset((A77AY), (V4LU), sizeof((A77AY)))
-#define    CH3K(I7, E4, S7)    (((S7)>0) ? (I7)<(E4) : (I7)>(E4))
-#define   for4(I7,S4,E4,S7)    for(auto I7=(S4); CH3K(I7,E4,S7); (I7)+=(S7))
 #define        forn(I7, E4)    for(lld I7=0ll; I7 < E4; (I7)+=1ll)
 #define       forn1(I7, E4)    for(lld I7=1ll; I7 < E4+1; (I7)+=1ll)
 #define              len(v)    ((int)((v).size()))
@@ -41,27 +22,20 @@ typedef unsigned long long int llu;
 #define                  f1    first
 #define                  s2    second
 
-
-
-#define error(args...) { string _s = #args; replace(_s.begin(), _s.end(), ',', ' '); stringstream _ss(_s); istream_iterator<string> _it(_ss); huehue(_it, args); cout << "\n";}
-
-void huehue(istream_iterator<string> it) {}
-template<typename T, typename... Args>
-void huehue(istream_iterator<string> it, T a, Args... args) {
-    cout << *it << " = " << a << ", ";
-    huehue(++it, args...);
-}
+template<typename A, typename B> ostream& operator<<(ostream &os, const pair<A, B> &p) { return os << '(' << p.first << ", " << p.second << ')'; }
+template < typename T_container, typename T = typename enable_if < !is_same<T_container, string>::value, typename T_container::value_type >::type >
+ostream & operator<<(ostream &os, const T_container &v) { os << '{'; string sep; for (const T &x : v) os << sep << x, sep = ", "; return os << '}'; }
+void dbg_out() { cout << "\n"; }
+template<typename Head, typename... Tail> void dbg_out(Head H, Tail... T) { cout << H << ", "; dbg_out(T...);}
+#define _____error_____(...) cout << #__VA_ARGS__ << " : ", dbg_out(__VA_ARGS__)
 
 const lld d4i[4]={-1, 0, 1, 0}, d4j[4]={0, 1, 0, -1};
 const lld d8i[8]={-1, -1, 0, 1, 1, 1, 0, -1}, d8j[8]={0, 1, 1, 1, 0, -1, -1, -1};
 
 
-const lld MOD = lld(1e9) + 7ll;
-const lld mod = MOD;
-
-lld TempVar;
-
 const long double EPS = 1e-6;
+lld TempVar, mod, MOD;
+
 
 /*
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -74,57 +48,29 @@ const long double EPS = 1e-6;
 
 void solveEachTest(int _TestCase) {
     // cout << "Case #" << _TestCase << ": ";
-    lld n; cin >> n;
-    set<lld> zeroes, ones;
-    forn(i, n) {
-    	cin >> TempVar;
-    	if (TempVar) {
-    		ones.insert(i);
-    	} else {
-    		zeroes.insert(i);
-    	}
-    }
+    
+	lld n, m; cin >> n;
 
+	vector<lld> ones, zeroes;
+	forn(i, n) {
+		cin >> TempVar;
+		(TempVar ? ones : zeroes).push_back(i);
+	}
 
-    lld ans = 0ll;
+	n = len(ones), m = len(zeroes);
 
-    if (len(ones) == len(zeroes)) {
-    	forn(i, n/2) {
-    		ans += llabs(*ones.begin() - *zeroes.begin());
-    		zeroes.erase(zeroes.begin());
-    		ones.erase(ones.begin());
-    	}
-    	cout << ans << "\n";
-    	return;
-    }
+	vector<vector<lld>> dp(n+1, vector<lld>(m+1, lld(1e9)));
+	
+	forn(i, m+1) dp[0][i] = 0ll;
+	forn1(i, n) {
+		forn1(j, m) {
+			dp[i][j] = min(dp[i][j-1], llabs(ones.at(i-1) - zeroes.at(j-1)) + dp[i-1][j-1]);
+			// _____error_____(dp[i][j]);
+		}
+	}
 
-    for (auto onePos : ones) {
-    	auto posTobe = zeroes.upper_bound(onePos);
-    	if (posTobe == zeroes.begin()) {
-    		ans += llabs(onePos - *posTobe);
-    		zeroes.erase(posTobe);
-    	} else if (posTobe == zeroes.end()) {
-    		posTobe--;
-    		ans += llabs(onePos - *posTobe);
-    		zeroes.erase(posTobe);
-    	} else {
-    		auto posTobe2 = posTobe;
-    		posTobe2--;
-    		lld diff1 = llabs(onePos - *posTobe);
-    		lld diff2 = llabs(onePos - *posTobe2);
-    		if (diff1 < diff2) {
-    			ans += diff1;
-    			zeroes.erase(posTobe);
-    		} else {
-    			ans += diff2;
-    			zeroes.erase(posTobe2);
-    		}
-    	}
-    }
-
-
-    cout << ans << "\n"; 
-
+	cout << dp[n][m];
+    
     return;
 }
 
@@ -139,11 +85,13 @@ signed main() {
     #endif
 
 
+    MOD = mod = lld(1e9) + 7ll;
     lld _T0T4 = 1;
     // cin >> _T0T4; 
 
     for (int _TestCase = 1; _TestCase <= _T0T4; _TestCase++) {
         solveEachTest(_TestCase);
+        cout << "\n"; 
     }
 
 
@@ -156,5 +104,8 @@ signed main() {
     return 0; 
 }
 
-/*        0.2s   Ryoki Tenkai:  
-                                  Jihei Endonka     */
+
+/*  ~~
+Author   :  Udit "luctivud" Gupta 
+linkedin :  https://www.linkedin.com/in/udit-gupta-1b7863135/
+*/

@@ -42,16 +42,16 @@ def solveEachTest(_TestCase):
 		se.add(i *i)
 	cnt = collections.defaultdict(int)
 
-	for c in range(1, 100):
-		for b in range(1, 100):	
+	for c in range(1, 121):
+		for b in range(1, 121):	
 			if (b ** 2 - c) in se:
 				cnt[c] += 1;
 				# if c == 15:
 				# 	print(b)
 
-	print(sorted(cnt.items(), key = lambda x: x[0]))
+	print([(i % 4, j) for (i, j) in sorted(cnt.items(), key = lambda x: x[0])])
 	res = 0
-	for i in range(1, 35):
+	for i in range(1, 121):
 		printsp(cnt[i])
 
 

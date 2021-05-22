@@ -74,63 +74,21 @@ const long double EPS = 1e-6;
 
 void solveEachTest(int _TestCase) {
 	// cout << "Case #" << _TestCase << ": ";
-	string s, sTemp; cin >> s;
-	sTemp = s, s = "";
-	char prevChr = '$';
-	map<char, lld> occurence_of_char;
+	string s; cin >> s;
 	lld n = len(s);
-	forn(i, n) {
-		if (sTemp[i] != prevChr) {
-			s += sTemp[i];
-			occurence_of_char[sTemp[i]] += 1;
-		}
-		prevChr = sTemp[i];
-	}
-
-	n = len(s);
-
 	set<pair<lld, lld>> captured_castle;
 
 	map<lld, vector<lld>> pos_of_letters;
 
-	vector<pair<char,char>> pair_of_chars;
-	map<pair<char, char>, lld> count_of_pair_of_chars;
-	
-	forn(i, n-1) {
-		char c1 = s[i], c2 = s[i+1];
-		if (c1 > c2) {
-			swap(c1, c2);
-		}
-		if (count_of_pair_of_chars[{c1, c2}] == 0) {
-			pair_of_chars.push_back({c1, c2});
-		}
-		count_of_pair_of_chars[{c1, c2}] += 1;
+	lld mxCnt = 0;
+	char mxCntLetter = 'a';
+	forn(i, n) {
 		pos_of_letters[s[i]].push_back(i);
+		if (len(pos_of_letters[s[i]]) > mxCnt) {
+			mxCnt = len(pos_of_letters[s[i]]);
+			mxCntLetter = s[i];
+		}
 	}
-
-	sort(all(pair_of_chars), [&] (auto &a, auto &b) {
-		return
-		count_of_pair_of_chars[a] == count_of_pair_of_chars[b] 
-		? max(occurence_of_char[a.f1], occurence_of_char[a.s2]) 
-			> max(occurence_of_char[b.f1], occurence_of_char[b.s2])
-		: count_of_pair_of_chars[a] > count_of_pair_of_chars[b];
-	});
-
-	map<char, pair<lld, lld>> coordinate_of_letter;
-	auto [c11, c12] = len(pair_of_chars) ? pair_of_chars[0] : (pair<char, char>){'$', '$'};
-	coordinate_of_letter[c11] = {0, 0};
-	coordinate_of_letter[c12] = {0, 1};
-	for (auto [c1, c2] : pair_of_chars)	{
-		if ()
-	}
-
-
-	forn(i, 26) {
-
-	}
-
-
-/*	
 
 	map<char, pair<lld, lld>> coordinate_of_letter;
 	coordinate_of_letter[mxCntLetter] = {0, 0};
@@ -187,9 +145,6 @@ void solveEachTest(int _TestCase) {
 	}
 
 	// cout << "\n";
-
-*/
-
 	return;
 }
 

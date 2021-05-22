@@ -66,12 +66,14 @@ void solveEachTest(int _TestCase) {
     cin >> n >> m >> x >> q;
 
     // PBSET<lld> ml;
-    multiset<lld> ml;
+    multiset<pair<lld, lld>> ml;
     forn1(i, n) {
     	forn1(j, m) {
-    		ml.insert(i+j+x);
+    		ml.insert(i+j);
     	}
     }
+
+    _____error_____(ml);
 
     forn(qq, q) {
     	lld qt, a, b, c;
@@ -80,6 +82,7 @@ void solveEachTest(int _TestCase) {
     		cin >> a >> b>> c;
     		for (lld i = b; i <= c; i++) {
     			// _____error_____(a+i+x);
+
     			ml.erase(ml.find(a+i+x));
     		}
     	} else {
@@ -89,6 +92,7 @@ void solveEachTest(int _TestCase) {
     		} else {
     			--a;
     			// cout << *ml.find_by_order(a) << "\n";
+                // _____error_____(ml);
     			auto it = ml.begin();
     			forn(xx, a) {
     				it++;

@@ -1,0 +1,28 @@
+test #36:
+	5
+	6 26
+	ngajxm
+	3 11
+	cch
+	6 3
+	aaacca
+	4 11
+	kbdd
+	7 24
+	vdajktn
+	
+	
+good:
+	Case #1: 8945
+	Case #2: 25
+	Case #3: 1
+	Case #4: 112
+	Case #5: 292042
+	
+bad:
+	Case #1: 8944
+	Case #2: 25
+	Case #3: 1
+	Case #4: 111
+	Case #5: 292041
+	

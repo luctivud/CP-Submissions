@@ -1,0 +1,48 @@
+test #249:
+	10
+	3 26
+	nbp
+	5 8
+	fgdag
+	8 8
+	abeabghc
+	4 14
+	namc
+	1 9
+	c
+	3 10
+	chi
+	5 11
+	fahdd
+	3 4
+	cdd
+	3 2
+	bbb
+	1 21
+	m
+	
+	
+good:
+	Case #1: 340
+	Case #2: 371
+	Case #3: 97
+	Case #4: 183
+	Case #5: 2
+	Case #6: 28
+	Case #7: 613
+	Case #8: 12
+	Case #9: 3
+	Case #10: 12
+	
+bad:
+	Case #1: 340
+	Case #2: 371
+	Case #3: 97
+	Case #4: 183
+	Case #5: 2
+	Case #6: 28
+	Case #7: 613
+	Case #8: 12
+	Case #9: 3
+	Case #10: 12
+	

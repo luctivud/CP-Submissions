@@ -1,0 +1,1 @@
+print("".join([dict({'6':'9', '9':'6'})[i] if i in dict({'6':'9', '9':'6'}) else i for i in list(reversed(input()))]))

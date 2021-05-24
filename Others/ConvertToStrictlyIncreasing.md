@@ -2,6 +2,7 @@
 <i>- by Udit Gupta </i>
 
 </br>
+<br>
 
 <h3> Problem Statement </h3>
 
@@ -29,6 +30,7 @@ Cost of each operation is 1 unit.
   </hr>
   </br>
   
+<br>
 
 <h3> Solution </h3>
 
@@ -65,12 +67,26 @@ The sequence represented by (A<sub>i</sub>-i) &nbsp; &forall; &nbsp; i &isin; [1
 
 To achieve this we take use of dynamic programming and brute force our way to make the subsequent array element equal to the previous one if not or leaving it as it is depending on the previous dp state. 
 
+This idea here comes from observation 2 and we can even end up converting the whole array to a single element. 
+
+
 DP transition states:
 
 dp[j] = min(dp[j-1], dp[j] + abs(A[i] - A[j])) &nbsp; &forall; &nbsp; i, j &isin; [1, N]. 
 
 Please note that the array **A** here is the converted array represented by (A<sub>i</sub>-i) &nbsp; &forall; &nbsp; i &isin; [1, N]. 
 
+Our final answer that represents the minimum cost is stored in the final index of our **dp** array which represents the optimal array till last index of **A**.
+
+If our minimum cost is not more than **K** then we can certainly achieve the optimal solution.
+
+Note : This dp solution can be made more state verbose by storing the brute forced optimal substructure into their respective states in dp[i][j] but I prefer it this way. 
+
+''' Code here '''
+
+Time Complexity : O(N<sup>2</sup>)
+
+Space Complexity : O (N)
 
 
 

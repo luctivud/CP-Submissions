@@ -72,9 +72,9 @@ This idea, here, comes from observation 2 and we can even end up converting the 
 <p style = "padding-left: 50pt;">
 DP transition states:
 
-- **dp[j] = min(dp[j-1], dp[j] + abs(A[i] - A[j]))** &nbsp; &forall; &nbsp; i, j &isin; [1, N]. 
+- **dp[j] = min(dp[j-1], dp[j] + abs(A[i] - B[j]))** &nbsp; &forall; &nbsp; i, j &isin; [1, N]. 
 
-Please note that the array **A** here is the converted array represented by (A<sub>i</sub>-i) &nbsp; &forall; &nbsp; i &isin; [1, N]. 
+Please note that the array **A** here is the converted array represented by (A<sub>i</sub>-i) &nbsp; &forall; &nbsp; i &isin; [1, N] and **B** is its sorted version. 
 
 Our final answer that represents the minimum cost is stored in the final index of our **dp** array which represents the optimal array till last index of **A**.
 </p>

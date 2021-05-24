@@ -17,11 +17,11 @@ Cost of each operation is 1 unit.
 
 <h3> Constraints </h3>
 
-<b> N < 3000 </b>
+- <b> N < 3000 </b>
   
-<b> K < 5000 </b>
+- <b> K < 5000 </b>
   
-<b> |A<sub>i</sub>| < 10<sup>9</sup> </b> for all i from 1 to N.
+- <b> |A<sub>i</sub>| < 10<sup>9</sup> </b> for all i from 1 to N.
   
 </br>
 
@@ -87,7 +87,9 @@ Note : This dp solution can be made more state verbose by storing the brute forc
   <summary> CODE (C++) </summary>
     <code>
     ```cpp
+      
     print("hello world!")
+      
     ```
     </code>
 </details>
@@ -96,7 +98,9 @@ Note : This dp solution can be made more state verbose by storing the brute forc
     <summary> Code (Python) </summary>
     <code>
     ```python
+      
     print("hello world!")
+      
     ```
     </code>
 </details>

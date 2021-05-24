@@ -26,8 +26,8 @@ Cost of each operation is 1 unit.
 
 <h4> Expected Time Complexity : O(N<sup>2</sup>) </h4>
   
-  </ hr>
-  </ br>
+  </hr>
+  </br>
   
 
 <h3> Solution </h3>
@@ -42,21 +42,27 @@ Cost of each operation is 1 unit.
 
 The problem statement above can be translated into simpler terms by stating that 
 
-for each i from _1_ to _N-1_,  &nbsp; **A<sub>i</sub> < A<sub>i+1</sub>**
+for each i from _1_ to _N-1_,  &nbsp; **A<sub>i</sub> &nbsp; < &nbsp; A<sub>i+1</sub>**
 
 Now we shall work on simplifying it further and deducing a general formula for all terms, 
 
-A<sub>i</sub> &le; A<sub>i+1</sub> - 1
+A<sub>i</sub> &nbsp; &le; &nbsp; A<sub>i+1</sub> - 1
 
 - Subtracting i from both sides, 
 
-A<sub>i</sub> - i &le; A<sub>i+1</sub> - 1 -  i
+A<sub>i</sub>-i &nbsp; &le; &nbsp; A<sub>i+1</sub>-1-i
 
 _or_
 
-A<sub>i</sub> - i &le; A<sub>i+1</sub> - (i + 1)
+A<sub>i</sub>-i &nbsp; &le; &nbsp; A<sub>i+1</sub>-(i+1)
 
 This is the general formulation which should work for all indices in range [1, N].
+i.e.  
+
+The sequence represented by (A<sub>i</sub>-i) &nbsp; &forall; &nbsp; i &nbsp; &isin; &nbsp; [1, N] should be a **non decreasing sequence**.
+
+
+
 
 
   

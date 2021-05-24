@@ -35,7 +35,7 @@ Cost of each operation is 1 unit.
 <h3> Solution </h3>
 
 <h4> Observation </h4>
-  <p>
+  <p style = "padding-left: 50pt;">
     
   1. After solving a few examples on pen and paper, we get to see that a greedy solution would fail on cases like [8, 1, 2, 3, 4] or [7, 1, 5, 2, 4, 8, 6].
   

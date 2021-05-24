@@ -82,28 +82,23 @@ If our minimum cost is not more than **K** then we can certainly achieve the opt
 
 Note : This dp solution can be made more state verbose by storing the brute forced optimal substructure into their respective states in dp[i][j] but I prefer it this way. 
 
+<!--  C++ code  -->
 <details>
-  <summary> 
-    CODE 
-  </summary>
-  <!--  C++ code  -->
-  <details>
-    <summary> C++ </summary>
+  <summary> CODE (C++) </summary>
     <code>
     ```cpp
     print("hello world!")
     ```
     </code>
-  </details>
-  <!--  Python code  -->
-  <details>
-    <summary> Python </summary>
+</details>
+<!--  Python code  -->
+<details>
+    <summary> Code (Python) </summary>
     <code>
     ```python
     print("hello world!")
     ```
     </code>
-  </details>
 </details>
 
 

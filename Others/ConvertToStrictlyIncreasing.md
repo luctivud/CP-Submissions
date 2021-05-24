@@ -88,22 +88,18 @@ Note : This dp solution can be made more state verbose by storing the brute forc
   </summary>
   <!--  C++ code  -->
   <details>
-    <summary> 
-      CODE 
-    </summary>
+    <summary> C++ </summary>
     <code>
-    ```c++
+    ```
     #include<stdio.h>
     ```
     </code>
   </details>
   <!--  Python code  -->
   <details>
-    <summary> 
-      CODE 
-    </summary>
+    <summary> Python </summary>
     <code>
-    ```python
+    ```
     print("hello world!")
     ```
     </code>

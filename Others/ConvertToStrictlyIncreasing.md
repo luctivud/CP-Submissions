@@ -50,15 +50,15 @@ for each i from _1_ to _N-1_,  &nbsp; **A<sub>i</sub> &nbsp; < &nbsp; A<sub>i+1<
 
 Now we shall work on simplifying it further and deducing a general formula for all terms, 
 
-A<sub>i</sub> &nbsp; &le; &nbsp; A<sub>i+1</sub> - 1
+**A<sub>i</sub> &nbsp; &le; &nbsp; A<sub>i+1</sub> - 1**
 
 - Subtracting i from both sides, 
 
-A<sub>i</sub>-i &nbsp; &le; &nbsp; A<sub>i+1</sub>-1-i
+**A<sub>i</sub>-i &nbsp; &le; &nbsp; A<sub>i+1</sub>-1-i**
 
 _or_
 
-A<sub>i</sub>-i &nbsp; &le; &nbsp; A<sub>i+1</sub>-(i+1)
+**A<sub>i</sub>-i &nbsp; &le; &nbsp; A<sub>i+1</sub>-(i+1)**
 
 This is the general formulation which should work for all indices in range [1, N].
 i.e.  
@@ -67,12 +67,12 @@ The sequence represented by (A<sub>i</sub>-i) &nbsp; &forall; &nbsp; i &isin; [1
 
 To achieve this we take use of dynamic programming and brute force our way to make the subsequent array element equal to the previous one if not or leaving it as it is depending on the previous dp state. 
 
-This idea here comes from observation 2 and we can even end up converting the whole array to a single element. 
+This idea, here, comes from observation 2 and we can even end up converting the whole array to a single element. 
 
 
 DP transition states:
 
-dp[j] = min(dp[j-1], dp[j] + abs(A[i] - A[j])) &nbsp; &forall; &nbsp; i, j &isin; [1, N]. 
+**dp[j] = min(dp[j-1], dp[j] + abs(A[i] - A[j]))** &nbsp; &forall; &nbsp; i, j &isin; [1, N]. 
 
 Please note that the array **A** here is the converted array represented by (A<sub>i</sub>-i) &nbsp; &forall; &nbsp; i &isin; [1, N]. 
 

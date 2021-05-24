@@ -1,5 +1,5 @@
 <h2> Convert an array into Strictly Increasing Array </h2>
-- by Udit Gupta
+<i>- by Udit Gupta </i>
 
 <h3> Problem Statement </h3>
 
@@ -11,9 +11,12 @@ Operations allowed :
 Cost of each operation is 1 unit.
 
 <h3> Constraints </h3>
+
 <b> N < 3000 </b>
+  
 <b> K < 5000 </b>
+  
 <b> |A<sub>i</sub>| < 10<sup>9</sup> </b> for all i from 1 to N.
 
-  <h4> Expected Time Complexity : $\mathcal{O} ($N^2$)</h4>
+<h4> Expected Time Complexity : O(N<sup>2</sup>) </h4>
   

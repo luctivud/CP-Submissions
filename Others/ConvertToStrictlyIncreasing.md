@@ -85,24 +85,22 @@ Note : This dp solution can be made more state verbose by storing the brute forc
 <!--  C++ code  -->
 <details>
   <summary> CODE (C++) </summary>
-    <code>
-    ```cpp
-      
-    print("hello world!")
-      
+    ```ruby
+    require 'redcarpet'
+    markdown = Redcarpet.new("Hello World!")
+    puts markdown.to_html
     ```
-    </code>
 </details>
+
 <!--  Python code  -->
 <details>
     <summary> Code (Python) </summary>
-    <code>
+
     ```python
       
     print("hello world!")
       
     ```
-    </code>
 </details>
 
 

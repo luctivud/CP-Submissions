@@ -69,7 +69,7 @@ To achieve this we take use of dynamic programming and brute force our way to ma
 
 This idea, here, comes from observation 2 and we can even end up converting the whole array to a single element. 
 
-
+<p>
 DP transition states:
 
 **dp[j] = min(dp[j-1], dp[j] + abs(A[i] - A[j]))** &nbsp; &forall; &nbsp; i, j &isin; [1, N]. 
@@ -77,6 +77,7 @@ DP transition states:
 Please note that the array **A** here is the converted array represented by (A<sub>i</sub>-i) &nbsp; &forall; &nbsp; i &isin; [1, N]. 
 
 Our final answer that represents the minimum cost is stored in the final index of our **dp** array which represents the optimal array till last index of **A**.
+</p>
 
 If our minimum cost is not more than **K** then we can certainly achieve the optimal solution.
 

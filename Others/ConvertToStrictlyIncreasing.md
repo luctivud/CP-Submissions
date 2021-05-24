@@ -35,7 +35,7 @@ Cost of each operation is 1 unit.
 <h3> Solution </h3>
 
 <h4> Observation </h4>
-  <p style = "padding-left: 50pt;">
+  <p>
     
   1. After solving a few examples on pen and paper, we get to see that a greedy solution would fail on cases like [8, 1, 2, 3, 4] or [7, 1, 5, 2, 4, 8, 6].
   
@@ -69,7 +69,7 @@ To achieve this we take use of dynamic programming and brute force our way to ma
 
 This idea, here, comes from observation 2 and we can even end up converting the whole array to a single element. 
 
-<p>
+<p style = "padding-left: 50pt;">
 DP transition states:
 
 **dp[j] = min(dp[j-1], dp[j] + abs(A[i] - A[j]))** &nbsp; &forall; &nbsp; i, j &isin; [1, N]. 

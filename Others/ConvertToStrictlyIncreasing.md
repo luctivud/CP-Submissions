@@ -34,8 +34,10 @@ Cost of each operation is 1 unit.
 
 <h4> Observation </h4>
   <p>
-    1. After solving a few examples on pen and paper, we get to see that a greedy solution would fail on cases like [8, 1, 2, 3, 4] or [7, 1, 5, 2, 4, 8, 6].
-    2. Another key observation is that in the transformed array which is strictly increasing, we will find that  there is atleast one element which remains unchanged. 
+    
+  1. After solving a few examples on pen and paper, we get to see that a greedy solution would fail on cases like [8, 1, 2, 3, 4] or [7, 1, 5, 2, 4, 8, 6].
+  
+  2. Another key observation is that in the transformed array which is strictly increasing, we will find that  there is atleast one element which remains unchanged. 
   </p>
   
 <h4> Deduction </h4>
@@ -59,7 +61,15 @@ A<sub>i</sub>-i &nbsp; &le; &nbsp; A<sub>i+1</sub>-(i+1)
 This is the general formulation which should work for all indices in range [1, N].
 i.e.  
 
-The sequence represented by (A<sub>i</sub>-i) &nbsp; &forall; &nbsp; i &nbsp; &isin; &nbsp; [1, N] should be a **non decreasing sequence**.
+The sequence represented by (A<sub>i</sub>-i) &nbsp; &forall; &nbsp; i &isin; [1, N] should be a **non decreasing sequence**.
+
+To achieve this we take use of dynamic programming and brute force our way to make the subsequent array element equal to the previous one if not or leaving it as it is depending on the previous dp state. 
+
+DP transition states:
+
+dp[j] = min(dp[j-1], dp[j] + abs(A[i] - A[j])) &nbsp; &forall; &nbsp; i, j &isin; [1, N]. 
+
+Please note that the array **A** here is the converted array represented by (A<sub>i</sub>-i) &nbsp; &forall; &nbsp; i &isin; [1, N]. 
 
 
 

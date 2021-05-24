@@ -1,5 +1,5 @@
 <h2> Convert an array into Strictly Increasing Array </h2>
-<i>- by Udit Gupta </i>
+<i> Solution by Udit Gupta </i>
 
 </br>
 <br>
@@ -82,7 +82,17 @@ If our minimum cost is not more than **K** then we can certainly achieve the opt
 
 Note : This dp solution can be made more state verbose by storing the brute forced optimal substructure into their respective states in dp[i][j] but I prefer it this way. 
 
-''' Code here '''
+<details>
+  <summary>Code</summary>
+<code>
+
+```python
+print("hello world!")
+```
+
+</code>
+</details>
+
 
 Time Complexity : O(N<sup>2</sup>)
 

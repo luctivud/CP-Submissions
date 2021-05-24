@@ -35,27 +35,28 @@ Cost of each operation is 1 unit.
 <h4> Observation </h4>
   <p>
     1. After solving a few examples on pen and paper, we get to see that a greedy solution would fail on cases like [8, 1, 2, 3, 4] or [7, 1, 5, 2, 4, 8, 6].
-    
     2. Another key observation is that in the transformed array which is strictly increasing, we will find that  there is atleast one element which remains unchanged. 
   </p>
   
 <h4> Deduction </h4>
 
-The problem stated above can be translated into simpler terms by stating that 
-for each i from _1_ to _N-1_, 
-A<sub>i</sub> < A<sub>i+1</sub>
+The problem statement above can be translated into simpler terms by stating that 
 
-Now we shall work on simplifying it further.
-A<sub>i</sub> \leqslant A<sub>i+1</sub> - 1
+for each i from _1_ to _N-1_,  &nbsp; **A<sub>i</sub> < A<sub>i+1</sub>**
+
+Now we shall work on simplifying it further and deducing a general formula for all terms, 
+
+A<sub>i</sub> &le; A<sub>i+1</sub> - 1
 
 - Subtracting i from both sides, 
-A<sub>i</sub> - i \leqslant A<sub>i+1</sub> - 1 -  i
+
+A<sub>i</sub> - i &le; A<sub>i+1</sub> - 1 -  i
 
 _or_
 
-A<sub>i</sub> - i \leqslant A<sub>i+1</sub> - (i + 1)
+A<sub>i</sub> - i &le; A<sub>i+1</sub> - (i + 1)
 
-This is a general formulation which should work for all indices in range [1, N].
+This is the general formulation which should work for all indices in range [1, N].
 
 
   

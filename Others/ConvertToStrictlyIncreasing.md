@@ -90,19 +90,15 @@ Note : This dp solution can be made more state verbose by storing the brute forc
   <details>
     <summary> C++ </summary>
     <code>
-    ```
     #include<stdio.h>
-    ```
     </code>
   </details>
   <!--  Python code  -->
   <details>
     <summary> Python </summary>
-    <code>
     ```
     print("hello world!")
     ```
-    </code>
   </details>
 </details>
 

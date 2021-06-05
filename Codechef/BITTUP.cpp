@@ -39,6 +39,25 @@ lld &mod = MOD;
 
 
 
+lld power(lld x, lld y) {
+    lld res = 1;
+
+    x = x % MOD;
+
+    if (x == 0) return 0;
+
+    while (y > 0)  {
+        if (y & 1)
+            res = (res * x) % MOD;
+
+        y = y >> 1; 
+        x = (x * x) % MOD;
+    }
+    return res;
+}
+
+
+
 
 
 
@@ -54,13 +73,17 @@ public:
 public:
     void SolveEachTest(int _TestCase) {
         // cout << "Case #" << _TestCase << ":";
-        
+        lld n, m; cin >> n >> m;
+        lld ans = (power(2, n) - 1 +  mod) % mod;
+        ans = power(ans, m);
+        cout << ans;
     }
 
 public:
     void ResetTestCase() {
         cout << "\n";
     }
+
 };
 
 

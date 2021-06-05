@@ -54,7 +54,38 @@ public:
 public:
     void SolveEachTest(int _TestCase) {
         // cout << "Case #" << _TestCase << ":";
-        
+        lld n, m; cin >> n >> m;
+        lld station[n], dest[m];
+        forn(i, n) {
+            cin >> station[i];
+        }
+        forn(i, m) {
+            cin >> dest[i];
+            --dest[i];
+        }
+
+        vector<lld> fromLeft(n, -1), fromRight(n, -1);
+        lld prev = -lld(1e15);
+        for (int i = 0; i < n; i++) {
+            fromLeft[i] = i - prev;
+            if (station[i] == 1) prev = i;
+        }
+
+        prev = lld(1e15);
+        for (lld i = n-1; i>=0; i--) {
+            fromRight[i] = prev - i;
+            if (station[i] == 2) prev = i;
+        }
+
+        // fromLeft[0] = 0, fromRight[0] = 0;
+        // _____error_____(fromLeft);
+        // _____error_____(fromRight);
+
+        for (lld i = 0; i < m; i++) {
+            lld res = min(fromLeft[dest[i]], fromRight[dest[i]]);
+            if (res >= n) res = -1;
+            cout << res << " ";
+        }
     }
 
 public:

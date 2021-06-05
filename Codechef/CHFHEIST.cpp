@@ -54,12 +54,20 @@ public:
 public:
     void SolveEachTest(int _TestCase) {
         // cout << "Case #" << _TestCase << ":";
-        
+        lld D, d, P, Q; cin >> D >> d >> P >> Q;
+        auto [zeta, rem] = divMod(D, d);
+        lld ans = d * zeta * (2 * P + (zeta - 1) * Q) / 2;
+        ans += rem * (P + zeta * Q);
+        cout << ans;
     }
 
 public:
     void ResetTestCase() {
         cout << "\n";
+    }
+
+    pair<lld, lld> divMod(lld N, lld D) {
+        return {(N / D), (N % D)};
     }
 };
 

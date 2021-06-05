@@ -54,7 +54,17 @@ public:
 public:
     void SolveEachTest(int _TestCase) {
         // cout << "Case #" << _TestCase << ":";
-        
+        int n; cin >> n;
+        int pos, neg, zer;
+        pos = neg = zer = 0;
+        forn(i, n) {
+            int TempVar; cin >> TempVar;
+            if (TempVar > 0) pos++;
+            else if (TempVar < 0) neg++;
+            else zer++;
+        }
+        int inf = int(1e9);
+        cout << max(pos+zer, neg+zer) << " " << min({(pos ? pos : inf), (neg ? neg : inf), (zer ? zer : inf)});
     }
 
 public:

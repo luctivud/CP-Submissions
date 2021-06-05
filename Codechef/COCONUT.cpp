@@ -54,7 +54,9 @@ public:
 public:
     void SolveEachTest(int _TestCase) {
         // cout << "Case #" << _TestCase << ":";
-        
+        lld a, b, c, d; cin >> a >> b >> c >> d;
+
+        cout << ((c + a - 1) / a) + ((d + b - 1) / b);
     }
 
 public:

@@ -13,7 +13,6 @@ using namespace std;
 #endif
 #pragma GCC optimize "trapv"
 
-
 /*:::::::::::::::::::SNIPS::::::::::::::::::::::::::::*/
 
 typedef long long lld; typedef unsigned long long llu;
@@ -26,10 +25,8 @@ typedef long long lld; typedef unsigned long long llu;
 #define            f1 first
 #define            s2 second
 
-
 /*::::::::::::::::::/SNIPS::::::::::::::::::::::::::::*/
 /*:::::::::::::::::::UTILS::::::::::::::::::::::::::::*/
-
 
 const long double EPS = 1e-6;
 lld MOD = int(1e9) + 7;
@@ -40,64 +37,34 @@ lld &mod = MOD;
 
 
 
-
-
-
 /*:::::::::::::::::::::/UTILS:::::::::::::::::::::::::*/
 /*::::::::::::::::::::::LOGIC:::::::::::::::::::::::::*/
 
-class Solution {
-    static const int maxN = int(1e5) + 2;
-public:
-    Solution() {
-    }
-public:
-    void SolveEachTest(int _TestCase) {
-        // cout << "Case #" << _TestCase << ":";
-        lld n, m; cin >> n >> m;
-        lld station[n], dest[m];
+
+
+void solveEachTest(int _TestCase) {
+    // cout << "Case #" << _TestCase << ": ";
+    srand(unsigned(time(0)));
+    int t = rand() % 10 + 1;
+    cout << t << "\n";
+
+    int num[] = {0, 1, 2};
+    forn(tt, t) {
+        int n = 1 + rand() % 10;
+        int m = 1 + rand() % 10;
+        cout << n <<  " " << m << "\n";
         forn(i, n) {
-            cin >> station[i];
-        }
+            cout << num[rand() % 3] << " ";
+        } cout << "\n";
+
         forn(i, m) {
-            cin >> dest[i];
-            --dest[i];
-        }
-
-        vector<lld> fromLeft(n, -1), fromRight(n, -1);
-        lld prev = -1;
-        for (int i = 0; i < n; i++) {
-            if (station[i] == 1) prev = i;
-            fromLeft[i] = prev;
-        }
-
-        prev = -1;
-        for (lld i = n-1; i>=0; i--) {
-            if (station[i] == 2) prev = i;
-            fromRight[i] = prev;
-        }
-
-        // fromLeft[0] = 0, fromRight[0] = 0;
-        // _____error_____(fromLeft);
-        // _____error_____(fromRight);
-
-        for (lld i = 0; i < m; i++) {
-            lld d = dest[i], res = -1;
-            if (fromLeft[d] != -1) res = d - fromLeft[d];
-            if (fromRight[d] != -1) {
-                if (res == -1) res = fromRight[d] - d;
-                else res = min(res, fromRight[d] - d);
-            }
-            if (dest[i] == 0) res = 0;//, _____error_____(dest[i]);
-            cout << res << " ";
-        }
+            cout << 1 + rand() % n << " ";
+        } cout << "\n";
     }
 
-public:
-    void ResetTestCase() {
-        cout << "\n";
-    }
-};
+    
+    return;
+}
 
 
 
@@ -113,13 +80,13 @@ signed main() {
     #endif
 
 
+    MOD = mod = lld(1e9) + 7ll;
     int _T0T4 = 1;
-    cin >> _T0T4; 
-    
-    Solution Aurora;
+    // cin >> _T0T4; 
+
     for (int _TestCase = 1; _TestCase <= _T0T4; _TestCase++) {
-        Aurora.SolveEachTest(_TestCase);
-        Aurora.ResetTestCase();
+        solveEachTest(_TestCase);
+        cout << "\n"; 
     }
 
 
@@ -132,9 +99,9 @@ signed main() {
     return 0; 
 }
 
+
 /*:::::::::::::::::::::/INVOC:::::::::::::::::::::::::*/
 /*  ~~
 Author   :  Udit "luctivud" Gupta 
 linkedin :  https://www.linkedin.com/in/udit-gupta-1b7863135/
 */
-

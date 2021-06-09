@@ -2,25 +2,6 @@
 /*:::::::::::::J A I  S H R E E  R A M::::::::::::::::*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 
-
-/* Points not to forget when this thing is left in peace for some days :
-
-    1. The first optimal set of nodes to include is diameter.
-    2. Run markNodeEmpty from the selected node till the parent which is already empty.
-    3. To select a node use lifting, check with a brute force if this will work.
-        Lets do binary search on depth with lifting.
-        O 2.n(picking diameter) + (n.log(n).log(n))(choosing node) + O(n ~ log(n))(markNodeEmpty)
-
-    4. Where to keep node in? pQue, set, or vector..? 
-    5. Choose vector in brute force cuz depth will be changing in each pass. pop is O1.
-        !important sort by increasing.
-    6. Work around with pQue then, but I dont think it should work.
-    7. If not lifting then, ??
-    8. Check bf first, parent -> parent thing.
-
-*/
-
-
 #include <bits/stdc++.h>
 using namespace std;
 #ifdef LUCTIVUD
@@ -35,10 +16,10 @@ using namespace std;
 
 /*:::::::::::::::::::SNIPS::::::::::::::::::::::::::::*/
 
-// typedef long long int; typedef unsigned long long llu;
+typedef long long lld; typedef unsigned long long llu;
 
-#define  forn(I7, E4) for(int I7=0ll; I7 < E4; (I7)+=1)
-#define forn1(I7, E4) for(int I7=1ll; I7 < E4+1; (I7)+=1)
+#define  forn(I7, E4) for(lld I7=0; I7 < E4; (I7)+=1)
+#define forn1(I7, E4) for(lld I7=1; I7 < E4+1; (I7)+=1)
 #define        len(v) ((int)((v).size()))
 #define        all(x) (x).begin(), (x).end()
 #define       rall(x) (x).rbegin(), (x).rend()
@@ -51,8 +32,8 @@ using namespace std;
 
 
 const long double EPS = 1e-6;
-int MOD = int(1e9) + 7;
-int &mod = MOD;
+lld MOD = int(1e9) + 7;
+lld &mod = MOD;
 
 
 class BinaryLift {
@@ -103,14 +84,22 @@ public:
 
 class Solution {
     static const int maxN = int(1e5) + 2;
-    int n, k; 
 public:
     Solution() {
     }
 public:
     void SolveEachTest(int _TestCase) {
+        int n, k; cin >> n >> k;
+        if (n >= 1000) {
+            SolveEachTest_Good(n, k);
+        } else {
+            SolveEachTest_Brute(n, k);
+        }
+
+    }
+
+    void SolveEachTest_Brute(int n, int k) {
         // cout << "Case #" << _TestCase << ":";
-        cin >> n >> k;
         // if (k == 1) {
         //     cout << "1";
         //     return;
@@ -133,7 +122,7 @@ public:
         // _____error_____(oneEnd, depth);
         // int otherEnd = max_element(depth.begin()+1, depth.begin() + n+1) - depth.begin();
         set<int> leaves;
-        forn1(i, n) {
+        for (int i = 1; i <= n; i++) {
             if (len(adj[i]) == 1 and i != oneEnd) {
                 leaves.insert(i);
             }
@@ -232,6 +221,70 @@ public:
         }
         return depth[node] = getVal(parent[node], depth, parent) + 1;
     }
+
+    void SolveEachTest_Good(int n, int k) {
+        // cout << "Case #" << _TestCase << ":";
+        if (k <= 1) {
+            cout << k;
+            return;
+        }
+        vector<int> adj[n+1];
+        forn(xx, n-1) {
+            int a, b; cin >> a >> b;
+            adj[a].push_back(b);
+            adj[b].push_back(a);
+        }
+        vector<int> depth(n+1, 0);
+        dfs1(1, 0, depth, adj);
+        int oneEnd = int(max_element(depth.begin()+1, depth.begin() + n+1) - depth.begin());
+        vector<pair<int, int>> leaves;
+        leaves.push_back(dfs2(oneEnd, 0, adj, leaves));
+        // _____error_____(leaves);
+        // NonIterable.print(leaves);
+
+        sort(all(leaves), compareBySecond);
+        int ans = 1;
+        for (int i = 0; i < len(leaves); i++) {
+            if (k <= 0) break;
+            k -= leaves[i].s2;
+            ans++;
+        }
+        cout << ans;
+    }
+
+
+    void dfs1(int node, int par, vector<int>&depth, vector<int> adj[]) {
+        depth[node] = depth[par] + 1;
+        for (auto i : adj[node]) {
+            if (i != par) {
+                dfs1(i, node, depth, adj);
+            }
+        }
+    }
+
+    static bool compareBySecond(pair<int, int> &a, pair<int, int> &b) {
+        return a.s2 > b.s2;
+    }
+
+    pair<int, int> dfs2(int node, int par, vector<int> adj[], vector<pair<int, int>> &leaves) {
+        vector<pair<int, int>> res;
+        // _____error_____(node, par);
+        for (auto i : adj[node]) {
+            if (i != par) {
+                res.push_back(dfs2(i, node, adj, leaves));
+            }
+        }
+        if (len(res) == 0) {
+            return {node, 1};
+        }
+        sort(all(res), compareBySecond);
+        for (int i = 1; i < len(res); ++i) {
+            leaves.push_back(res[i]);
+        }
+        
+        // _____error_____(node, res);
+        return {res[0].f1, res[0].s2+1};
+    }
 };
 
 
@@ -268,7 +321,6 @@ signed main() {
 }
 
 /*:::::::::::::::::::::/INVOC:::::::::::::::::::::::::*/
-
 /*  ~~
 Author   :  Udit "luctivud" Gupta 
 linkedin :  https://www.linkedin.com/in/udit-gupta-1b7863135/

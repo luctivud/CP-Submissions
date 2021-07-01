@@ -1,0 +1,6 @@
+1. We have to find the most optimal pair that utlised the maximum memory, so we will keep a variable current memory to store current utlised memory.
+2. We store our optimal pairs in ans.
+3. If any pair has more optimal usage, then we clear ans and replace it with subsequent usage.
+4. We traverse on foreground process and find the most optimal pair in background using binary search (upper bound).
+5. Complexity of this process is O(n.logn)
+6. Space Complexity is O(1)

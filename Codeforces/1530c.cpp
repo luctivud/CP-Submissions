@@ -1,0 +1,146 @@
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+/*:::::::::::::J A I  S H R E E  R A M::::::::::::::::*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+
+#include <bits/stdc++.h>
+using namespace std;
+#ifdef LUCTIVUD
+    #include <buggyBaby.hpp>
+    pretty:: PrettyPrinter NonIterable;
+    #define cerr cout
+#else
+    #define _____error_____(...)
+#endif
+#pragma GCC optimize "trapv"
+
+
+/*:::::::::::::::::::SNIPS::::::::::::::::::::::::::::*/
+
+typedef long long lld; typedef unsigned long long llu;
+
+#define  forn(I7, E4) for(lld I7=0ll; I7 < E4; (I7)+=1ll)
+#define forn1(I7, E4) for(lld I7=1ll; I7 < E4+1; (I7)+=1ll)
+#define        len(v) ((int)((v).size()))
+#define        all(x) (x).begin(), (x).end()
+#define       rall(x) (x).rbegin(), (x).rend()
+#define            f1 first
+#define            s2 second
+
+
+/*::::::::::::::::::/SNIPS::::::::::::::::::::::::::::*/
+/*:::::::::::::::::::UTILS::::::::::::::::::::::::::::*/
+
+
+const long double EPS = 1e-6;
+lld MOD = int(1e9) + 7;
+lld &mod = MOD;
+
+
+
+
+
+
+
+
+
+/*:::::::::::::::::::::/UTILS:::::::::::::::::::::::::*/
+/*::::::::::::::::::::::LOGIC:::::::::::::::::::::::::*/
+
+class Solution {
+    static const int maxN = int(1e5) + 2;
+public:
+    Solution() {
+    }
+public:
+    void SolveEachTest(int _TestCase) {
+        // cout << "Case #" << _TestCase << ":";
+        lld n; cin >> n;
+        vector<lld> arr(n), brr(n);
+        forn(i, n) {
+            cin >> arr[i];
+        }
+        forn(i, n) {
+            cin >> brr[i];
+        }
+        sort(rall(arr));
+        sort(rall(brr));
+        // _____error_____(arr);
+        // _____error_____(brr);
+        // forn1(i, n-1) {
+        //     arr[i] += arr[i-1];
+        //     brr[i] += brr[i-1];
+        // }
+        lld l = 0, r = 1e12, ans = r;
+        while (l <= r) {
+            lld k = l + (r - l) / 2;
+            // lld myScore = k * 100 + arr[n-1], IlyaScore = brr[n-1];
+            // lld doof = ((k + n) / 4);
+            // myScore -= arr[min(max(0ll, doof-1), n-1)];
+            // myScore -= (doof - min(doof, n)) * 100;
+            // if (doof > k) {
+            //     IlyaScore -= brr[doof - k];
+            // }
+            lld myScore = 100*k, IlyaScore = 0ll;
+            lld doof = (n + k) / 4;
+            forn(i, n-doof) {
+                myScore += arr[i];
+            }
+            forn(i, min(n, n+k-doof)) {
+                IlyaScore += brr[i];
+            }
+            // _____error_____(doof, k, myScore, IlyaScore);
+            if (myScore >= IlyaScore) {
+                ans = k;
+                r = k - 1;
+            } else {
+                l = k + 1;
+            }
+        }
+        cout << ans;
+    }
+
+public:
+    void ResetTestCase() {
+        cout << "\n";
+    }
+};
+
+
+
+/*:::::::::::::::::::::/LOGIC:::::::::::::::::::::::::*/
+/*::::::::::::::::::::::INVOC:::::::::::::::::::::::::*/
+signed main() {
+    ios_base::sync_with_stdio(false); cin.tie(0);
+    // cout.precision(10); cout << fixed;
+    #ifdef LUCTIVUD
+      // const auto start_time = std::chrono::high_resolution_clock::now();
+      freopen("/home/luctivud/CPPractice/Zinput.txt", "r", stdin);
+      freopen("/home/luctivud/CPPractice/Zoutput.txt", "w", stdout);
+    #endif
+
+
+    int _T0T4 = 1;
+    cin >> _T0T4; 
+    
+    Solution Aurora;
+    for (int _TestCase = 1; _TestCase <= _T0T4; _TestCase++) {
+        Aurora.SolveEachTest(_TestCase);
+        Aurora.ResetTestCase();
+    }
+
+
+    #ifdef LUCTIVUD
+      // auto end_time = std::chrono::high_resolution_clock::now();
+      // std::chrono::duration<double> diff = end_time - start_time;
+      // cerr << "Finished in : " << diff.count() << "\n";
+    #endif
+
+    return 0; 
+}
+
+/*:::::::::::::::::::::/INVOC:::::::::::::::::::::::::*/
+/*  ~~
+Author   :  Udit "luctivud" Gupta 
+linkedin :  https://www.linkedin.com/in/udit-gupta-1b7863135/
+*/
+

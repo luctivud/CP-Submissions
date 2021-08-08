@@ -120,12 +120,34 @@ void IAmJustice(void) {
 
 
 
+
+
 void solveEachTest(int _TestCase) {
     // cout << "Case #" << _TestCase << ": ";
-    int i = 5;
-    int a = (i++) + (i++);
-    _____error_____(i);
-    cout << a;
+    lld n; cin >> n;
+    vector<lld> szArr[n];
+    lld ans = 0ll;
+    forn(i, n) {
+        lld k; cin >> k;
+        forn(j, k) {
+            lld temp; cin >> temp;
+            szArr[i].push_back(temp);
+        }
+        lld sz = 1ll, mxSz = 1ll, cnt = 0ll;
+        forn1(j, k-1) {
+            if (szArr[i][j-1] <= szArr[i][j]) {
+                sz += 1;
+            } else {
+                cnt += 1;
+                sz = 1;
+            }
+            mxSz = max(sz, mxSz);
+        }
+        ans += (k - sz);
+        _____error_____(mxSz, cnt);
+    }
+
+    cout << ans;    
 
 
     
@@ -142,7 +164,7 @@ signed main() {
     IAmJustice();
 
     int _T0T4 = 1;
-    // cin >> _T0T4; 
+    cin >> _T0T4; 
     
     for (int _TestCase = 1; _TestCase <= _T0T4; _TestCase++) {
         solveEachTest(_TestCase);

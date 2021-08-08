@@ -120,13 +120,29 @@ void IAmJustice(void) {
 
 
 
+
+
 void solveEachTest(int _TestCase) {
     // cout << "Case #" << _TestCase << ": ";
-    int i = 5;
-    int a = (i++) + (i++);
-    _____error_____(i);
-    cout << a;
+    string s; cin >> s;
+    lld n = len(s);
 
+    bool m2unmarried = false, m2unknown = false, unknown2u = false;
+    forn1(i, n-1) {
+        if (s[i-1] == 'M' and s[i] == 'U') {
+            m2unmarried = true;
+        } else if (s[i-1] == 'M' and s[i] == '?') {
+            m2unknown = true;
+        } else if (s[i-1] == '?' and s[i] == 'U') {
+            unknown2u = true;
+        }
+    }
+
+    if (m2unmarried or (m2unknown && unknown2u)) {
+        cout << "Yes";
+    } else {
+        cout << "No";
+    }
 
     
     return;
@@ -142,7 +158,7 @@ signed main() {
     IAmJustice();
 
     int _T0T4 = 1;
-    // cin >> _T0T4; 
+    cin >> _T0T4; 
     
     for (int _TestCase = 1; _TestCase <= _T0T4; _TestCase++) {
         solveEachTest(_TestCase);

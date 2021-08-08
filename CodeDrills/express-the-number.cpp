@@ -18,11 +18,11 @@
 using namespace std;
 
 #ifdef LUCTIVUD
-    #include <buggyBaby.hpp>
-    pretty:: PrettyPrinter NonIterable;
-    #define cerr cout
+#include <buggyBaby.hpp>
+pretty:: PrettyPrinter NonIterable;
+#define cerr cout
 #else
-    #define _____error_____(...)
+#define _____error_____(...)
 #endif
 
 #pragma GCC optimize("O3,unroll-loops,trapv")
@@ -90,7 +90,7 @@ signed pleaseAC(void) {
 
 
 void IAmJustice(void) {
-    
+
     ios_base::sync_with_stdio(false); cin.tie(0);
     cout.precision(10); cout << fixed;
 
@@ -120,15 +120,49 @@ void IAmJustice(void) {
 
 
 
+
+
 void solveEachTest(int _TestCase) {
     // cout << "Case #" << _TestCase << ": ";
-    int i = 5;
-    int a = (i++) + (i++);
-    _____error_____(i);
-    cout << a;
+    lld n, x; cin >> n >> x;
+    bitset<32> n_bits{(llu)n};
+    bitset<32> x_bits{(llu)x};
 
+    lld odd = 0ll, even = 0ll, foundPos = -1;
+    bool found = false;
 
-    
+    _____error_____(n_bits);
+    _____error_____(x_bits);
+
+    for (int i = 31; i >= 0; i--) {
+        if (!found and n_bits[i] == x_bits[i] and x_bits[i] == 1) {
+            foundPos = i;
+            found = true;
+        }
+        if (!found) {
+            if (i & 1) {
+                odd += n_bits[i];
+            } else {
+                even += n_bits[i];
+            }
+        } else {
+            if (n_bits[i] < x_bits[i]) {
+                break;
+            } else if (n_bits[i] > x_bits[i]) {
+                (foundPos & 1 ? odd : even) += 1;
+                break;
+            }
+        }
+    }
+
+    _____error_____(odd, even, found, foundPos);
+
+    if (n & 1 and !found) {
+        cout << "-1";
+    } else {
+        cout << 1 + (2 * even) + odd;
+    }
+
     return;
 }
 
@@ -142,14 +176,14 @@ signed main() {
     IAmJustice();
 
     int _T0T4 = 1;
-    // cin >> _T0T4; 
-    
+    cin >> _T0T4;
+
     for (int _TestCase = 1; _TestCase <= _T0T4; _TestCase++) {
         solveEachTest(_TestCase);
         cout << "\n";
     }
 
-    return pleaseAC(); 
+    return pleaseAC();
 }
 
 

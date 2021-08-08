@@ -120,13 +120,26 @@ void IAmJustice(void) {
 
 
 
+
+
 void solveEachTest(int _TestCase) {
     // cout << "Case #" << _TestCase << ": ";
-    int i = 5;
-    int a = (i++) + (i++);
-    _____error_____(i);
-    cout << a;
+    string s; cin >> s;
+    lld x = 0ll, y = 0ll;
 
+    lld n = len(s);
+    sort(all(s));
+    forn(i, n) {
+        if (i & 1) {
+            ((y *= 10) += s[i] - '0');
+        } else {
+            ((x *= 10) += s[i] - '0');
+        }
+    }
+
+    _____error_____(x, y);
+
+    cout << x + y;
 
     
     return;
@@ -142,7 +155,7 @@ signed main() {
     IAmJustice();
 
     int _T0T4 = 1;
-    // cin >> _T0T4; 
+    cin >> _T0T4; 
     
     for (int _TestCase = 1; _TestCase <= _T0T4; _TestCase++) {
         solveEachTest(_TestCase);

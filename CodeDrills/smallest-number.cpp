@@ -18,11 +18,11 @@
 using namespace std;
 
 #ifdef LUCTIVUD
-    #include <buggyBaby.hpp>
-    pretty:: PrettyPrinter NonIterable;
-    #define cerr cout
+#include <buggyBaby.hpp>
+pretty:: PrettyPrinter NonIterable;
+#define cerr cout
 #else
-    #define _____error_____(...)
+#define _____error_____(...)
 #endif
 
 #pragma GCC optimize("O3,unroll-loops,trapv")
@@ -90,7 +90,7 @@ signed pleaseAC(void) {
 
 
 void IAmJustice(void) {
-    
+
     ios_base::sync_with_stdio(false); cin.tie(0);
     cout.precision(10); cout << fixed;
 
@@ -120,15 +120,41 @@ void IAmJustice(void) {
 
 
 
+
+
 void solveEachTest(int _TestCase) {
     // cout << "Case #" << _TestCase << ": ";
-    int i = 5;
-    int a = (i++) + (i++);
-    _____error_____(i);
-    cout << a;
+    lld n; cin >> n;
+    string s; cin >> s;
+
+    string ans;
+
+    for (lld i = n - 1; i >= 0; i--) {
+        if (s[i] != '2') {
+            ans.push_back(s[i]);
+        }
+    }
 
 
-    
+    while ((lld)ans.size() < n) {
+        ans.push_back('2');
+    }
+
+    reverse(all(ans));
+
+    lld sz = n;
+    forn(i, n) {
+        if (ans[i] == '3') {
+            sz = i;
+            break;
+        }
+    }
+
+    sort(ans.begin(), ans.begin() + sz);
+
+    cout << ans;
+
+
     return;
 }
 
@@ -142,14 +168,14 @@ signed main() {
     IAmJustice();
 
     int _T0T4 = 1;
-    // cin >> _T0T4; 
-    
+    cin >> _T0T4;
+
     for (int _TestCase = 1; _TestCase <= _T0T4; _TestCase++) {
         solveEachTest(_TestCase);
         cout << "\n";
     }
 
-    return pleaseAC(); 
+    return pleaseAC();
 }
 
 

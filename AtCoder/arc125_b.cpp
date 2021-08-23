@@ -52,7 +52,7 @@ typedef long long lld; typedef unsigned long long llu;
 /*  Utils   */
 
 
-const lld MOD = int(1e9) + 7;
+const lld MOD = 998244353;
 const lld &mod = MOD;
 
 const long double EPS = 1e-6;
@@ -125,23 +125,53 @@ void IAmJustice(void) {
 void solveEachTest(int _TestCase) {
     // cout << "Case #" << _TestCase << ": ";
     lld n; cin >> n;
-    string s, t; cin >> s >> t;
-    lld ans = 2 * n;
-    forn(j, n) {
-        lld res = 2*n;
-        forn(i, n) {
-            if (i+j >= n) break;
-            if (s[i+j] == t[i]) {
-                res--;
-            } else {
-                break;
+
+    // vector<lld> powaa;
+    // lld mxx = lld(1e16                                                                                                                                                                          );
+    // forn(i, mxx) {
+    //     if (i * i > mxx) {
+    //         break;
+    //     }
+    //     powaa.push_back(i * i);
+    // }
+
+    // _____error_____(len(powaa));
+
+
+    lld ans = 0ll;
+    // forn1(i, n) {
+    //     if (i >= len(powaa)) break;
+    //     lld gotcha = powaa[i] - n;
+    //     if (gotcha < 0) gotcha = 0;
+    //     lld res = (lld)i - (lld)(lower_bound(all(powaa), gotcha) - powaa.begin());
+    //     // _____error_____(res);
+    //     if (res <= 0) break;
+    //     ans += res;
+    //     ans %= mod;
+    // }
+
+    lld i = 1, j = 0;
+    while (i < n) {
+        if ((i * i - j * j) > n) {
+            lld l = j, r = i;
+            while (l <= r) {
+                lld mid = (l + r) / 2;
+                if ((i * i - mid * mid) <= n) {
+                    j = mid;
+                    r = mid - 1;
+                } else {
+                    l = mid + 1;
+                }
             }
         }
-        ans = min(ans, res);
+        // _____error_____(i, j);
+        ans += (i  - j);
+        if (j == i) break;
+        ans %= mod;
+        i++;
     }
 
     cout << ans;
-
 
     return;
 }
@@ -169,7 +199,8 @@ signed main() {
 
 
 
-/*  ~~
+/*
+
     I ponder of something great
     My lungs will fill and then deflate
     They fill with fire, exhale desire

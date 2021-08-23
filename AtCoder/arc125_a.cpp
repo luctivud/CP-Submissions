@@ -18,11 +18,11 @@
 using namespace std;
 
 #ifdef LUCTIVUD
-#include <buggyBaby.hpp>
-pretty:: PrettyPrinter NonIterable;
-#define cerr cout
+    #include <buggyBaby.hpp>
+    pretty:: PrettyPrinter NonIterable;
+    #define cerr cout
 #else
-#define _____error_____(...)
+    #define _____error_____(...)
 #endif
 
 #pragma GCC optimize("O3,unroll-loops,trapv")
@@ -90,7 +90,7 @@ signed pleaseAC(void) {
 
 
 void IAmJustice(void) {
-
+    
     ios_base::sync_with_stdio(false); cin.tie(0);
     cout.precision(10); cout << fixed;
 
@@ -124,25 +124,51 @@ void IAmJustice(void) {
 
 void solveEachTest(int _TestCase) {
     // cout << "Case #" << _TestCase << ": ";
-    lld n; cin >> n;
-    string s, t; cin >> s >> t;
-    lld ans = 2 * n;
-    forn(j, n) {
-        lld res = 2*n;
-        forn(i, n) {
-            if (i+j >= n) break;
-            if (s[i+j] == t[i]) {
-                res--;
-            } else {
-                break;
-            }
+    lld n, m; cin >> n >> m;
+    lld arr[n], brr[m];
+    bool onePresent = false, zeroPresent = false;
+    bool onePresent2 = false, zeroPresent2 = false;
+    forn(i, n) cin >> arr[i], onePresent |= (arr[i]), zeroPresent |= (!arr[i]);
+    forn(i, m) cin >> brr[i], onePresent2 |= (brr[i]), zeroPresent2 |= (!brr[i]);
+
+    _____error_____(onePresent2, onePresent, zeroPresent2, zeroPresent);
+    if ((onePresent2 and !onePresent) or (zeroPresent2 and !zeroPresent)) {
+        cout << "-1";
+        return;
+    }
+
+    lld beb = inf;
+    forn(i, n) {
+        if (arr[i] != arr[0]) {
+            beb = min(beb, i);
+            break;
         }
-        ans = min(ans, res);
+    }
+
+    forn(i, n) {
+        if (arr[n-i-1] != arr[0]) {
+            beb = min(beb, i+1);
+            // _____error_____(i+1);
+            break;
+        }
+    }
+
+    _____error_____(beb);
+
+    lld ans = m;
+
+    lld prev = arr[0];
+    forn(i, m) {
+        if (brr[i] != prev) {
+            prev ^= 1;
+            ans += beb;
+            beb = 1;
+        }
     }
 
     cout << ans;
 
-
+    
     return;
 }
 
@@ -156,14 +182,14 @@ signed main() {
     IAmJustice();
 
     int _T0T4 = 1;
-    // cin >> _T0T4;
-
+    // cin >> _T0T4; 
+    
     for (int _TestCase = 1; _TestCase <= _T0T4; _TestCase++) {
         solveEachTest(_TestCase);
         cout << "\n";
     }
 
-    return pleaseAC();
+    return pleaseAC(); 
 }
 
 

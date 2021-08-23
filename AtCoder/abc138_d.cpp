@@ -25,8 +25,8 @@ pretty:: PrettyPrinter NonIterable;
 #define _____error_____(...)
 #endif
 
-#pragma GCC optimize("O3,unroll-loops,trapv")
-#pragma GCC target("avx,avx2,fma,sse,sse2,sse3,sse4,popcnt,lzcnt")
+// #pragma GCC optimize("O3,unroll-loops,trapv")
+// #pragma GCC target("avx,avx2,fma,sse,sse2,sse3,sse4,popcnt,lzcnt")
 // #pragma GCC optimize "trapv"
 
 
@@ -110,38 +110,52 @@ void IAmJustice(void) {
 
 
 
+const lld maxn = lld(2e5) + 2;
 
-
-
+vector<lld> adj[maxn];
 
 
 
 /*:::::::::::::::::::::: LOGIC :::::::::::::::::::::::::*/
 
 
+void dfsolve(lld node, lld par, vector<lld> &ans, vector<lld> &val) {
+    ans[node] += ans[par] + val[node];
+    for (auto i : adj[node]) {
+        if (i != par) {
+            dfsolve(i, node, ans, val);
+        }
+    }
+}
 
 
 
 void solveEachTest(int _TestCase) {
     // cout << "Case #" << _TestCase << ": ";
-    lld n; cin >> n;
-    string s, t; cin >> s >> t;
-    lld ans = 2 * n;
-    forn(j, n) {
-        lld res = 2*n;
-        forn(i, n) {
-            if (i+j >= n) break;
-            if (s[i+j] == t[i]) {
-                res--;
-            } else {
-                break;
-            }
-        }
-        ans = min(ans, res);
+    lld n, q; cin >> n >> q;
+
+    forn(i, n-1) {
+        lld a, b; cin >> a >> b;
+        adj[a].push_back(b);
+        adj[b].push_back(a);
     }
 
-    cout << ans;
+    vector<lld> val(n+1, 0);
 
+    forn(qq, q) {
+        lld node, v; cin >> node >> v;
+        val[node] += v;
+    }
+
+    vector<lld> ans(n + 1, 0);
+
+    _____error_____(val);
+
+    dfsolve(1, 0, ans, val);
+
+    forn1(i, n) {
+        cout << ans[i] << " ";
+    }
 
     return;
 }

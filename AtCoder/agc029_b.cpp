@@ -125,23 +125,36 @@ void IAmJustice(void) {
 void solveEachTest(int _TestCase) {
     // cout << "Case #" << _TestCase << ": ";
     lld n; cin >> n;
-    string s, t; cin >> s >> t;
-    lld ans = 2 * n;
-    forn(j, n) {
-        lld res = 2*n;
-        forn(i, n) {
-            if (i+j >= n) break;
-            if (s[i+j] == t[i]) {
-                res--;
-            } else {
-                break;
-            }
+    map<lld, lld> num;
+    vector<lld> arr(n);
+    forn(i, n) {
+        cin >> arr[i];
+        num[arr[i]] += 1;
+    }
+
+    vector<lld> pow2 {1};
+    forn(i, 50) {
+        pow2.push_back(pow2.back() * 2);
+    }
+
+    // _____error_____(pow2);
+    sort(rall(arr));
+
+    lld ans = 0ll;
+    forn(i, n) {
+        lld nextPow = *upper_bound(all(pow2), arr[i]);
+        // _____error_____(arr[i], nextPow);
+        if (num[arr[i]] <= 0) continue;
+        lld want = (nextPow - arr[i]);
+        if ((arr[i] != want and num[want] > 0) or (arr[i] == want and num[want] > 1)) {
+            num[want] -= 1;
+            num[arr[i]] -= 1;
+            _____error_____(arr[i], want);
+            ans += 1;
         }
-        ans = min(ans, res);
     }
 
     cout << ans;
-
 
     return;
 }

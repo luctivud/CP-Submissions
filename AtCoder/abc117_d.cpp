@@ -18,11 +18,11 @@
 using namespace std;
 
 #ifdef LUCTIVUD
-#include <buggyBaby.hpp>
-pretty:: PrettyPrinter NonIterable;
-#define cerr cout
+    #include <buggyBaby.hpp>
+    pretty:: PrettyPrinter NonIterable;
+    #define cerr cout
 #else
-#define _____error_____(...)
+    #define _____error_____(...)
 #endif
 
 #pragma GCC optimize("O3,unroll-loops,trapv")
@@ -90,7 +90,7 @@ signed pleaseAC(void) {
 
 
 void IAmJustice(void) {
-
+    
     ios_base::sync_with_stdio(false); cin.tie(0);
     cout.precision(10); cout << fixed;
 
@@ -124,24 +124,43 @@ void IAmJustice(void) {
 
 void solveEachTest(int _TestCase) {
     // cout << "Case #" << _TestCase << ": ";
-    lld n; cin >> n;
-    string s, t; cin >> s >> t;
-    lld ans = 2 * n;
-    forn(j, n) {
-        lld res = 2*n;
-        forn(i, n) {
-            if (i+j >= n) break;
-            if (s[i+j] == t[i]) {
-                res--;
-            } else {
-                break;
-            }
+    lld n, m; cin >> n >> m;
+    vector<pair<lld, lld>> arr(61);
+    lld ans = 0ll;
+    forn(i, n) {
+        lld temp; cin >> temp;
+        ans += temp;
+        forn(j, 60) {
+            arr[j].f1 += temp & 1;
+            temp >>= 1;
         }
-        ans = min(ans, res);
     }
 
-    cout << ans;
+    forn(i, 60) {
+        arr[i].f1 = (n - 2 * arr[i].f1) * (1ll << i);
+        arr[i].s2 = i;
+    }
 
+    // NonIterable.print(arr);
+
+    sort(all(arr), [](auto &a, auto &b) {
+        return a.f1 > b.f1;
+    });
+
+    lld num = 0;
+
+    forn(i, 60) {
+        if (arr[i].f1 > 0) {
+            if (num + (1ll << arr[i].s2) <= m) {
+                num += (1ll << arr[i].s2);
+                ans += arr[i].f1;
+            }
+        } else {
+            break;
+        }
+    }
+    
+    cout << ans;
 
     return;
 }
@@ -156,14 +175,14 @@ signed main() {
     IAmJustice();
 
     int _T0T4 = 1;
-    // cin >> _T0T4;
-
+    // cin >> _T0T4; 
+    
     for (int _TestCase = 1; _TestCase <= _T0T4; _TestCase++) {
         solveEachTest(_TestCase);
         cout << "\n";
     }
 
-    return pleaseAC();
+    return pleaseAC(); 
 }
 
 

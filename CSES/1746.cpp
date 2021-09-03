@@ -3,11 +3,11 @@
 using namespace std;
 
 #ifdef LUCTIVUD
-    #include <buggyBaby.hpp>
-    pretty:: PrettyPrinter NonIterable;
-    #define cerr cout
+#include <buggyBaby.hpp>
+pretty:: PrettyPrinter NonIterable;
+#define cerr cout
 #else
-    #define _____error_____(...)
+#define _____error_____(...)
 #endif
 
 
@@ -76,15 +76,39 @@ void solveEachTest(int _TestCase) {
     vector<int> arr(n);
     forn(i, n) cin >> arr[i];
 
-    int dp[n+1][m+1];
-    memset(dp, 0, sizeof(dp));
-    forn(i, n) {
+    vector<vector<lld>> dp(n, vector<lld> (m + 1, 0ll));
+    if (arr[0] == 0) {
         forn1(j, m) {
-            
+            dp[0][j] = 1;
+        }
+    } else {
+        dp[0][arr[0]] = 1;
+    }
+    forn1(i, n - 1) {
+        forn1(j, m) {
+            if (arr[i] == 0 or arr[i] == j) {
+                for (int dif = -1; dif <= 1; dif += 1) {
+                    if (j + dif <= m and j + dif >= 0) {
+                        (dp[i][j] += dp[i - 1][j + dif]) %= mod;
+                    }
+                }
+            }
         }
     }
 
-    
+    lld ans = 0ll;
+    if (arr[n - 1] == 0) {
+        forn1(j, m) {
+            (ans += dp[n - 1][j]) %= mod;
+        }
+    } else {
+        ans = dp[n - 1][arr[n - 1]];
+    }
+
+    // NonIterable.print(dp);
+
+    cout << ans;
+
     return;
 }
 
@@ -98,30 +122,30 @@ signed main() {
     ios_base::sync_with_stdio(false); cin.tie(0);
     cout.precision(10); cout << fixed;
 
-    #ifdef LUCTIVUD
-        // const auto start_time = std::chrono::high_resolution_clock::now();
-        freopen("/home/luctivud/CPPractice/Zinput.txt", "r", stdin);
-        freopen("/home/luctivud/CPPractice/Zoutput.txt", "w", stdout);
-    #endif
+#ifdef LUCTIVUD
+    // const auto start_time = std::chrono::high_resolution_clock::now();
+    freopen("/home/luctivud/CPPractice/Zinput.txt", "r", stdin);
+    freopen("/home/luctivud/CPPractice/Zoutput.txt", "w", stdout);
+#endif
 
 
     int _T0T4 = 1;
-    // cin >> _T0T4; 
-    
+    // cin >> _T0T4;
+
     for (int _TestCase = 1; _TestCase <= _T0T4; _TestCase++) {
         solveEachTest(_TestCase);
         cout << "\n";
     }
 
 
-    #ifdef LUCTIVUD
-        // auto end_time = std::chrono::high_resolution_clock::now();
-        // std::chrono::duration<double> diff = end_time - start_time;
-        // cerr << "Finished in : " << diff.count() << "\n";
-    #endif
+#ifdef LUCTIVUD
+    // auto end_time = std::chrono::high_resolution_clock::now();
+    // std::chrono::duration<double> diff = end_time - start_time;
+    // cerr << "Finished in : " << diff.count() << "\n";
+#endif
 
 
-    return 0; 
+    return 0;
 }
 
 

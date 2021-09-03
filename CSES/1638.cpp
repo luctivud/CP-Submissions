@@ -71,33 +71,28 @@ const lld inf = 2e18;
 
 void solveEachTest(int _TestCase) {
     // cout << "Case #" << _TestCase << ": ";
-    string a, b; cin >> a >> b;
-    lld n = len(a), m = len(b);
+    lld n; cin >> n;
+    char matr[n][n];
 
-    vector<vector<lld>> dp(n+1, vector<lld>(m+1, 0));
+    forn(i, n) forn(j, n) cin >> matr[i][j];
 
-    forn(i, n+1) {
-        dp[i][0] = i;
-    }
-    forn(j, m+1) {
-        dp[0][j] = j;
-    }
+    vector<vector<lld>> dp(n, vector<lld>(n, 0));
 
+    dp[0][0] = 1;
     forn(i, n) {
-        forn(j, m) {
-            if (a[i] == b[j]) {
-                dp[i+1][j+1] = dp[i][j];
-            } else {
-                dp[i+1][j+1] = 1 + min({dp[i+1][j], dp[i][j+1], dp[i][j]});
+        forn(j, n) {
+            if (matr[i][j] == '*') {
+                dp[i][j] = 0ll;
+                continue;
             }
+            (dp[i][j] += (j-1>=0?dp[i][j-1]:0ll)) %= mod;
+            (dp[i][j] += (i-1>=0?dp[i-1][j]:0ll)) %= mod;
         }
     }
 
     // NonIterable.print(dp);
 
-    cout << dp[n][m];
-
-
+    cout << dp[n-1][n-1];
     
     return;
 }

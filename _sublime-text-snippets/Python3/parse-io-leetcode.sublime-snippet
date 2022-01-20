@@ -1,0 +1,16 @@
+<snippet>
+  <content><![CDATA[
+fileInput = open('input.txt', 'r')
+lines = fileInput.readlines()
+for line in lines:
+	line = line.strip('[]')
+	if ',' in line:
+		print(" ".join(map(lambda x: x.strip('\'') ,line.split(','))))
+	else:
+		print(line.strip('\''))
+]]></content>
+  <tabTrigger>snip-leetcode-input-parse</tabTrigger>
+  <description>parse input cases of leetcode to normal</description>
+  <!-- Optional: Set a scope to limit where the snippet will trigger -->
+  <scope >source.python</scope >
+</snippet>

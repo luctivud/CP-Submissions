@@ -1,0 +1,12 @@
+{
+    "scope": "source.python, meta.block.python, meta.function.python",
+
+    "completions":
+    [
+        {"trigger": "defaultdict", "contents": "collections.defaultdict(${0:int})"}, 
+        {"trigger": "deque", "contents": "collections.deque()"}, 
+        {"trigger": "Counter", "contents": "collections.Counter($0)"}, 
+        {"trigger": "OrderedDict", "contents": "collections.OrderedDict($0)"}, 
+        {"trigger": "groupby", "contents": "itertools.groupby($0)"}, 
+    ]
+}

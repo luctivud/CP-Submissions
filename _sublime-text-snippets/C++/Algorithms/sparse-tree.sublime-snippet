@@ -1,0 +1,82 @@
+<snippet>
+    <content><![CDATA[
+
+// sparse_table snippet from Aeren's repo (orz).
+
+
+/* As a BlackBox -
+
+Eg:
+
+    ---- ----
+
+    
+    lld merge_func(lld l,  lld r) {
+        return min(l, r);
+    }
+
+    vector<lld> arr(n);
+    forn(i, n) {
+        cin >> arr[i];
+    }
+
+    sparse_table sp(arr, merge_func, inf);
+
+
+    ---- ----
+
+    arr - is the array for original seg tree nodes
+    merge_func or class template F is function, can be passed as a lambda from ++2a
+
+
+    0-based indexing
+
+    pass for query [l, r)
+
+    set position (pos, val)
+
+    ---- ----
+
+    F -> Function
+    TT -> operation or real function
+    T -> data type
+    T_id -> default value for nodes in sparse_table
+
+    ---- ----
+
+*/
+
+
+
+template<class T, class F>
+struct sparse_table {
+    int n;
+    vector<vector<T>> data;
+    F TT;
+    T T_id;
+    sparse_table() { }
+    // O(n log n)
+    sparse_table(const vector<T> &a, F m_TT, T m_T_id): n((int)a.size()), data({a}), TT(m_TT), T_id(m_T_id) {
+        for (auto p = 1, i = 1; p << 1 <= n; p <<= 1, ++ i) {
+            data.emplace_back(n - (p << 1) + 1);
+            for (auto j = 0; j < (int)data[i].size(); ++ j) data[i][j] = TT(data[i - 1][j], data[i - 1][j + p]);
+        }
+    }
+    // O(1)
+    T query(int l, int r) const {
+        assert(0 <= l && l <= r && r <= n);
+        if (l == r) return T_id;
+        int d = __lg(r - l);
+        return TT(data[d][l], data[d][r - (1 << d)]);
+    }
+};
+
+
+
+
+]]></content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <tabTrigger>snip-sparse-table</tabTrigger> -->
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <scope>source.c++</scope> -->
+</snippet>

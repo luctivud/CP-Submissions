@@ -1,0 +1,23 @@
+{
+	"bootstrapped": true,
+	"in_process_packages":
+	[
+	],
+	"installed_packages":
+	[
+		"A File Icon",
+		"Bootstrap 4 Snippets",
+		"BracketHighlighter",
+		"CppFastOlympicCoding",
+		"Kotlin",
+		"Material Theme",
+		"Package Control",
+		"PackageResourceViewer",
+		"Seti_UI",
+		"SublimeAStyleFormatter",
+		"SublimeGDB"
+	],
+	"repositories":
+	[
+	],
+}

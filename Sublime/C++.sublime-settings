@@ -1,0 +1,19 @@
+{
+	"extensions":
+	[
+		"c",
+		"h",
+		"cc",
+		"cxx",
+		"c++",
+		"h",
+		"hpp",
+		"hxx",
+		"h++",
+		"inl",
+		"ipp",
+		"cpp"
+	],
+	"auto_complete_use_history": true,
+	"auto_complete_selector": "meta.tag, - string.quoted.double.block - string.quoted.single.block - string.unquoted.heredoc",
+}

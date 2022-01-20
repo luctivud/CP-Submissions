@@ -1,0 +1,37 @@
+{
+    // "cmd": "g++ \"${file}\" -o \"${file_path}/${file_base_name}\"",
+    "cmd" : ["g++ -std=c++17 -H -DLUCTIVUD -O2 -Wall -Wextra -fconcepts -Wno-unused-parameter -Wno-unused-result -Wno-char-subscripts -Wshadow -Wfloat-equal -Wconversion -Wformat-signedness -Wduplicated-cond -Wlogical-op -Warray-bounds -Wredundant-decls -fno-omit-frame-pointer -fno-optimize-sibling-calls -fsanitize=address -fsanitize=undefined -o a.out $file_name && timeout 4s ./a.out"], 
+    "file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
+    "working_dir": "${file_path}",
+    "selector": "source.c++",
+    "shell" : true,
+
+    "variants":
+    [
+        {
+            "name": "NoFlagExtended30sTimeout",
+            "cmd" : ["g++ -H -DLUCTIVUD -std=c++17 -O2 -o a.out $file_name && timeout 60s ./a.out"],
+        },
+        {
+            "name": "FullDebug",
+            "cmd" : ["g++ -ftime-report -O2 -DLUCTIVUD -Wall -Wextra -Wno-unused-parameter -Wno-unused-result -Wno-char-subscripts -Wshadow -Wfloat-equal -Wconversion -Wformat-signedness -Wvla -Wduplicated-cond -Wlogical-op -Wredundant-decls -ggdb3 -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=undefined,address,float-divide-by-zero,float-cast-overflow -fno-omit-frame-pointer -fno-optimize-sibling-calls -fstack-protector-all -fno-sanitize-recover=all -o a.out $file_name && timeout 2s ./a.out"], 
+        }
+
+    ]
+}
+
+// {
+//     // "cmd" : ["g++ -std=c++17 -O2 -o a.out $file_name && timeout 30s ./a.out"], 
+//     "cmd": "g++ \"${file}\" -o \"${file_path}/${file_base_name}\"",
+//     "file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
+//     "working_dir": "${file_path}",
+//     "selector": "source.c++",
+
+//     "variants":
+//     [
+//         {
+//             "name": "Run",
+//             "cmd": "g++ \"${file}\" -o \"${file_path}/${file_base_name}\" && \"${file_path}/${file_base_name}\""
+//         }
+//     ]
+// }

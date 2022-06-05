@@ -1,0 +1,37 @@
+test #378:
+    10
+    630 184
+    734 726
+    816 544
+    310 239
+    561 264
+    871 651
+    422 29
+    817 535
+    393 118
+    550 78
+    
+good:
+    EVEN
+    EVEN
+    EVEN
+    EVEN
+    EVEN
+    EVEN
+    EVEN
+    EVEN
+    EVEN
+    EVEN
+    
+bad:
+    EVEN
+    EVEN
+    EVEN
+    EVEN
+    EVEN
+    EVEN
+    EVEN
+    EVEN
+    EVEN
+    EVEN
+    
